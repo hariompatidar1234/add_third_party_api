@@ -6,13 +6,12 @@ Rails.application.routes.draw do
   resources :dishes, only: [:index, :show, :create, :update, :destroy] do
   end
 
-  resources :orders, only: [:index, :show, :create] do
+  resources :orders, only: [:index, :show, :create,:destroy] do
   end
   get 'restaurants/open', to: 'restaurants#open_restaurants'
   resource :users
   post '/users_login', to: 'users#login'
 
-  post '/additems', to: "carts#add_item"
   resources :carts
 
 end

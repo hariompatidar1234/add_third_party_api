@@ -1,3 +1,6 @@
 class CategorySerializer < ActiveModel::Serializer
-  attributes :id,:name
+  
+attributes :id ,:name
+has_many :dishes 
+
 end

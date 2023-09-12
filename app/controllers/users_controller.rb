@@ -8,6 +8,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_param)
     if user.save
+      UserMailer.with(user: user).welcome_email.deliver
       render json: { data: user, message: 'successfully created' }
     else
       render json: { error: 'User Registration failed' }
@@ -41,7 +42,7 @@ class UsersController < ApplicationController
 
   private
   def user_param
-    params.permit(%i[name email password type])
+    params.permit(:name, :email, :password, :type)
   end
 
 end
