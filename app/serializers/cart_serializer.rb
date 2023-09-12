@@ -1,3 +1,3 @@
 class CartSerializer < ActiveModel::Serializer
-  # attributes :id
+  attributes :id,:dish_id,:quantity,:total_amount
 end

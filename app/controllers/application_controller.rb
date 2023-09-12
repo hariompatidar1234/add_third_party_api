@@ -1,8 +1,7 @@
 # app/controllers/custom_application_controller.rb
-
 class ApplicationController < ActionController::API
   include JsonWebToken
-  before_action :authenticate_request, except: :create
+  before_action :authenticate_request
 
   private
 
@@ -17,7 +16,9 @@ class ApplicationController < ActionController::API
     render json: 'No record found..'
   end
 
-  attr_reader :current_user
+  def current_user
+    @current_user
+  end 
 
   def render_404
     render json: { error: 'Invalid URL' }, status: :not_found

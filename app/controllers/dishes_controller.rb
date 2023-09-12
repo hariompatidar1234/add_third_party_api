@@ -1,6 +1,7 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[update destroy]
-  load_and_authorize_resource # Load the dish and authorize actions using CanCanCan
+  before_action :authenticate_request
+  load_and_authorize_resource 
 
   def create
     @dish = Dish.new(dish_params) # Load a new dish
@@ -21,7 +22,7 @@ class DishesController < ApplicationController
 
   def update
     if @dish.update(dish_params)
-      render json: { message: 'Dish updated successfully!' }
+      render json: { datd: @dish,message: 'Dish updated successfully!' }
     else
       render json: { message: 'Dish update failed' }
     end
@@ -29,7 +30,7 @@ class DishesController < ApplicationController
 
   def destroy
     if @dish.destroy
-      render json: { message: 'Dish successfully deleted' }
+      render json: {data: @dish, message: 'Dish successfully deleted' }
     else
       render json: { message: 'Dish deletion failed' }
     end
@@ -44,7 +45,7 @@ class DishesController < ApplicationController
   private
 
   def dish_params
-    params.permit(:name, :description, :price, :category_id, :restaurant_id, :picture)
+    params.permit(:name, :price, :category_id, :restaurant_id, :picture)
   end
 
   def set_dish

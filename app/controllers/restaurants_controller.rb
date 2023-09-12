@@ -1,5 +1,6 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show update destroy]
+  before_action :authenticate_request
   load_and_authorize_resource
 
   def index
@@ -23,7 +24,7 @@ class RestaurantsController < ApplicationController
   def create
     restaurant = @current_user.restaurants.new(restaurant_params)
     if restaurant.save
-      render json: restaurant, status: :created
+       render json: {data: restaurant, message:'Restaurant added successfully' }, status: :created
     else
       render json: { errors: restaurant.errors.full_messages }, status: :unprocessable_entity
     end

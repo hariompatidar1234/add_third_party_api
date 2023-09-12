@@ -12,6 +12,8 @@
 
 ActiveRecord::Schema[7.0].define(version: 2023_09_11_161845) do
   create_table "cart_items", force: :cascade do |t|
+    t.decimal "total_amounts"
+    t.integer "quantity"
     t.integer "cart_id"
     t.integer "dish_id"
     t.datetime "created_at", null: false
@@ -21,8 +23,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_161845) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.string "status"
-    t.decimal "total_amounts"
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -56,7 +56,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_11_161845) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.string "status"
     t.decimal "order_amount"
     t.integer "user_id"
     t.datetime "created_at", null: false

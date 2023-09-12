@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :categories,param: :category_name,only:  [:index, :show, :create,:destroy] do
+  resources :categories,param: :category_name,only:  [:index, :show, :create,:update] do
   end
   resources :restaurants, param: :restaurant_name, only: [:index, :show, :create, :update, :destroy] do
   end
@@ -9,7 +9,10 @@ Rails.application.routes.draw do
   resources :orders, only: [:index, :show, :create] do
   end
   get 'restaurants/open', to: 'restaurants#open_restaurants'
-  resources :users
+  resource :users
   post '/users_login', to: 'users#login'
+
+  post '/additems', to: "carts#add_item"
+  resources :carts
 
 end

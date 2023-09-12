@@ -1,0 +1,18 @@
+current directory: /home/hp/Desktop/Uber_Eats/.gems/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+/usr/share/rvm/rubies/ruby-3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/hp/Desktop/Uber_Eats/.gems/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230912-12198-axaye6 sitelibdir\=./.gem.20230912-12198-axaye6 clean
+
+current directory: /home/hp/Desktop/Uber_Eats/.gems/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230912-12198-axaye6 sitelibdir\=./.gem.20230912-12198-axaye6
+compiling bootsnap.c
+linking shared-object bootsnap/bootsnap.so
+
+current directory: /home/hp/Desktop/Uber_Eats/.gems/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230912-12198-axaye6 sitelibdir\=./.gem.20230912-12198-axaye6 install
+/usr/bin/install -m 0755 bootsnap.so ./.gem.20230912-12198-axaye6/bootsnap
+
+current directory: /home/hp/Desktop/Uber_Eats/.gems/ruby/3.2.0/gems/bootsnap-1.16.0/ext/bootsnap
+make DESTDIR\= sitearchdir\=./.gem.20230912-12198-axaye6 sitelibdir\=./.gem.20230912-12198-axaye6 clean
