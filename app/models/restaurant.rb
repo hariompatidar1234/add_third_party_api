@@ -1,7 +1,7 @@
 class Restaurant < ApplicationRecord
   belongs_to :user
   has_many :dishes
-  
+
   has_one_attached :picture
 
   validates :name, :status, :address, presence: true

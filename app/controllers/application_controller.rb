@@ -16,9 +16,7 @@ class ApplicationController < ActionController::API
     render json: 'No record found..'
   end
 
-  def current_user
-    @current_user
-  end 
+  attr_reader :current_user
 
   def render_404
     render json: { error: 'Invalid URL' }, status: :not_found

@@ -1,6 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_request, except: %i[create login]
-  
+
+  def index
+    render json: User.all, status: :ok
+  end
+
   def show
     render json: @current_user
   end
@@ -17,7 +21,7 @@ class UsersController < ApplicationController
 
   def update
     if @current_user.update(user_param)
-      render json: {data: @current_user,  message: 'User updated' }
+      render json: { data: @current_user, message: 'User updated' }
     else
       render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -25,7 +29,7 @@ class UsersController < ApplicationController
 
   def destroy
     if @current_user.destroy
-      render json: {data: @current_user, message: 'User deleted' }, status: :no_content
+      render json: { data: @current_user, message: 'User deleted' }, status: :no_content
     else
       render json: { message: ' deletion failed' }
     end
@@ -41,8 +45,8 @@ class UsersController < ApplicationController
   end
 
   private
+
   def user_param
     params.permit(:name, :email, :password, :type)
   end
-
 end

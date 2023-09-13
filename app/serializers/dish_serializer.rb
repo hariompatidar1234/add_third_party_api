@@ -1,10 +1,10 @@
 class DishSerializer < ActiveModel::Serializer
-  attributes :id ,:name, :price ,:images
+  attributes :id, :name, :price, :picture_url
   
-  def images 
-    object.images.map do |data|
-      data.url
-    end
+  belongs_to :restaurant
+  belongs_to :category
+  
+  def picture_url
+    Rails.application.routes.url_helpers.rails_blob_path(object.picture, only_path: true) if object.picture.attached?
   end
-
 end

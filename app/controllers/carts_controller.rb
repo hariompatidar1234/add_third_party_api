@@ -1,6 +1,6 @@
 class CartsController < ApplicationController
   load_and_authorize_resource
-  
+
   def show
     @cart_data = @current_user.cart.cart_items.includes(:dish)
     cart_items_data = @cart_data.map do |cart_item|
@@ -11,18 +11,18 @@ class CartsController < ApplicationController
         quantity: cart_item.quantity
       }
     end
-      render json: cart_items_data
+    render json: cart_items_data
   end
 
-  def create 
-    cart_item=@current_user.cart.cart_items.new(cart_item_params)
+  def create
+    cart_item = @current_user.cart.cart_items.new(cart_item_params)
     if cart_item.save
-        render json: "Item Added Successfully", status:200
+      render json: 'Item Added Successfully', status: 200
     else
       render json: cart_item.errors, status: :unprocessable_entity
     end
-  end 
-  
+  end
+
   def destroy
     cart_item = @current_user.cart.cart_items.find(params[:id])
     if cart_item
@@ -32,9 +32,10 @@ class CartsController < ApplicationController
       render json: 'Deletion Failed'
     end
   end
-    
+
   private
+
   def cart_item_params
-      params.permit(:dish_id, :quantity)
+    params.permit(:dish_id, :quantity)
   end
-end 
+end

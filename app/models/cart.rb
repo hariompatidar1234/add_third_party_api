@@ -3,6 +3,4 @@ class Cart < ApplicationRecord
 
   has_many :cart_items
   has_many :dishes, through: :cart_items
-
- 
-end 
+end

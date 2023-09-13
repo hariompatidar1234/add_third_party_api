@@ -2,9 +2,9 @@ class User < ApplicationRecord
   has_many :restaurants
   has_one :cart
   has_many :orders
-  
+
   after_create :create_cart
-  validates :type, inclusion: { in: %w(Owner Customer) }
+  validates :type, inclusion: { in: %w[Owner Customer] }
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: true,
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Invalid email id!!!!' }
@@ -16,7 +16,6 @@ class User < ApplicationRecord
   end
 
   def self.create_cart
-    self.cart.create
-  end 
-
+    cart.create
+  end
 end

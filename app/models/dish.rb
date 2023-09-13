@@ -12,5 +12,5 @@ class Dish < ApplicationRecord
 
   validates :name, :price, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 0 }
-  validates :restaurant_id, uniqueness: { scope: :name ,message: 'dish already added '}
+  validates :restaurant_id, uniqueness: { scope: :name, message: 'dish already added ' }
 end
