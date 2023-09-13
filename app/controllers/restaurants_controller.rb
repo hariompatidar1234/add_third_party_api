@@ -11,8 +11,10 @@ class RestaurantsController < ApplicationController
                     Restaurant.where(status: 'open').page(page_number).per(2)
                   elsif status == 'closed'
                     Restaurant.where(status: 'closed').page(page_number).per(2)
-                  else
+                  elsif page =='page_number'
                     Restaurant.all.page(page_number).per(2)
+                  else 
+                    Restaurant.all
                   end
     render json: restaurants
   end

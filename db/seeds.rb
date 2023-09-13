@@ -1,4 +1,4 @@
-User.create(name:"hariom patidar",email:"hariom@123gmail.com",password:"hariom@123",type:"Owner")
+User.create(name:"hariom patidar",email:"hariompatidar32498@gmail.com",password:"hariom@123",type:"Owner")
 User.create(name:"sachin paidar",email:"sachin@123gmail.com",password:"sachin@123",type:"Customer")
 User.create(name:"devendra patidar",email:"devendra@123gmail.com",password:"devendra@123gmail.com",type:"Customer")
 

@@ -3,6 +3,7 @@ class User < ApplicationRecord
   has_one :cart
   has_many :orders
   
+  after_create :create_cart
   validates :type, inclusion: { in: %w(Owner Customer) }
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: true,
@@ -13,4 +14,9 @@ class User < ApplicationRecord
     self.name = name.strip
     self.email = email.strip
   end
+
+  def self.create_cart
+    self.cart.create
+  end 
+
 end
