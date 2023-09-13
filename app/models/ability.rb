@@ -7,7 +7,7 @@ class Ability
     if user.type == 'Owner'
       # Abilities for owners
       can :manage, [Restaurant, Category, Dish]
-      can :index, [Restaurant, Category, Dish, User]
+      can :index, [Restaurant, Category, Dish, User, Order]
       can :show, [Restaurant, Category, Dish]
       can :search, [Dish] # Search for dishes
       can :create, Restaurant
@@ -22,6 +22,7 @@ class Ability
       can :index, [Restaurant, Dish, Order]
       can :search, [Dish]
       can :read, Category
+      can :create,CartItem
       can :destroy, [Cart, Order]
       can :see_open, Restaurant, status: 'open' # See open restaurants
     end

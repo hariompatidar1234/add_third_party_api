@@ -2,11 +2,11 @@ class CartItem < ApplicationRecord
   belongs_to :cart
   belongs_to :dish
 
-  after_create :calculate_total_amount
+  # after_create :calculate_total_amount
 
-  private
+  # private
 
-  def calculate_total_amount
-    self.total_amounts = cart_items.includes(:dish).sum { |cart_item| cart_item.dish.price * cart_item.quantity }
-  end
+  # def calculate_total_amount
+  #   self.total_amounts = cart_items.includes(:dish).sum { |cart_item| cart_item.dish.price * cart_item.quantity }
+  # end 
 end

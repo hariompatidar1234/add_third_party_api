@@ -11,28 +11,44 @@ class CartsController < ApplicationController
         quantity: cart_item.quantity
       }
     end
-    render json: cart_items_data
+
+    total_amount = @cart_data.sum { |cart_item| cart_item.dish.price * cart_item.quantity }
+
+    if cart_items_data.any?
+      render json: { cart_items: cart_items_data, total_amount: total_amount }
+    else 
+      render json: { message: "Cart is Empty !!" }
+    end
   end
 
   def create
+    dish = Dish.find_by(id: cart_item_params[:dish_id])
+  
+    if dish.nil?
+      render json: { error: 'Dish not found' }, status: :not_found
+      return
+    end
+  
     cart_item = @current_user.cart.cart_items.new(cart_item_params)
+  
     if cart_item.save
-      render json: 'Item Added Successfully', status: 200
+      render json: 'Item Added Successfully', status: :ok
     else
       render json: cart_item.errors, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
-    cart_item = @current_user.cart.cart_items.find(params[:id])
+    cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
+  
     if cart_item
       cart_item.destroy
       render json: 'Cart Item Removed Successfully', status: :ok
     else
-      render json: 'Deletion Failed'
+      render json: 'Cart Item not found', status: :not_found
     end
   end
-
+  
   private
 
   def cart_item_params

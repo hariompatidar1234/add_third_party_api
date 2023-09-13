@@ -1,7 +1,7 @@
 class User < ApplicationRecord
-  has_many :restaurants
-  has_one :cart
-  has_many :orders
+  has_many :restaurants , dependent: :destroy
+  has_one :cart ,  dependent: :destroy
+  has_many :orders ,  dependent: :destroy
 
   after_create :create_cart
   validates :type, inclusion: { in: %w[Owner Customer] }

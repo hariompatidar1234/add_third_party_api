@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/users_login', to: 'users#login'
   get '/all_users', to: 'users#index'
 
-  resources :carts, param: :cart_item_id, only: %i[destroy show create] do
+  resources :carts, param: :id, only: %i[destroy show create] do
   end
-  delete 'carts_destroy/:id' => 'carts#destroy'
+  delete 'orders/:id' => 'orders#destroy'
 end
