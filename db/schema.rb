@@ -78,6 +78,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
     t.decimal "total_amount"
     t.integer "order_id"
     t.integer "dish_id"
+    t.integer "quantity", null: false
+    t.decimal "price", default: "0.0", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["dish_id"], name: "index_order_items_on_dish_id"

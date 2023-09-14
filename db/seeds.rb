@@ -1,7 +1,10 @@
 User.create(name: 'hariom patidar', email: 'hariompatidar32498@gmail.com', password: 'hariom@123', type: 'Owner')
+User.create(name: 'herry patidar', email: 'herrypatidar32498@gmail.com', password: 'herry@123', type: 'Owner')
+
 User.create(name: 'sachin paidar', email: 'sachin@123gmail.com', password: 'sachin@123', type: 'Customer')
 User.create(name: 'devendra patidar', email: 'devendra@123gmail.com', password: 'devendra@123gmail.com',
             type: 'Customer')
+            
 
 Category.create(name: 'Indian')
 Category.create(name: 'Chines')
@@ -9,7 +12,7 @@ Category.create(name: 'South Indian')
 
 Restaurant.create(name: 'gurukripa', address: 'sarwate', status: 'open', user_id: 1)
 Restaurant.create(name: 'apna sweet', address: 'vijay nagar', status: 'open', user_id: 1)
-Restaurant.create(name: 'lakshmi', address: 'bangali', status: 'closed', user_id: 1)
+Restaurant.create(name: 'lakshmi', address: 'bangali', status: 'closed', user_id: 2)
 
 Dish.create(name: 'paneer', price: 110, restaurant_id: 1, category_id: 1)
 Dish.create(name: 'dal', price: 100, restaurant_id: 1, category_id: 1)

@@ -12,7 +12,7 @@ class UsersController < ApplicationController
   def create
     user = User.new(user_param)
     if user.save
-      UserMailer.with(user: user).welcome_email.deliver_now
+      # UserMailer.with(user: user).welcome_email.deliver_now
       render json: { data: user, message: 'successfully created' }
     else
       render json: { error: 'User Registration failed' }

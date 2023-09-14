@@ -1,5 +1,8 @@
 # app/controllers/custom_application_controller.rb
 class ApplicationController < ActionController::API
+  rescue_from CanCan::AccessDenied do |exception|
+    render json: exception.message
+  end
   include JsonWebToken
   before_action :authenticate_request
 
