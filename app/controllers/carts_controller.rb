@@ -43,7 +43,7 @@ class CartsController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy_item
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
 
     if cart_item
@@ -54,9 +54,13 @@ class CartsController < ApplicationController
     end
   end
 
-  def destroy_all_items
-    @current_user.cart.cart_items.destroy_all
-    render json: 'All Cart Items Removed Successfully', status: :ok
+  def destroy
+    if @current_user.cart.cart_items.any?
+      @current_user.cart.cart_items.destroy_all
+      render json: 'All Cart Items Removed Successfully', status: :ok
+    else
+      render json: 'cart is empty'
+    end
   end
 
   private

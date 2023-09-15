@@ -1,9 +1,5 @@
 class User < ApplicationRecord
-  has_many :restaurants , dependent: :destroy
-  has_one :cart ,  dependent: :destroy
-  has_many :orders ,  dependent: :destroy
-
-  after_create :create_cart
+  
   validates :type, inclusion: { in: %w[Owner Customer] }
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: true,
@@ -15,7 +11,4 @@ class User < ApplicationRecord
     self.email = email.strip
   end
 
-  def self.create_cart
-    cart.create
-  end
 end

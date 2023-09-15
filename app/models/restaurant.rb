@@ -1,5 +1,5 @@
 class Restaurant < ApplicationRecord
-  belongs_to :user
+  belongs_to :owner , foreign_key: 'user_id'
   has_many :dishes ,  dependent: :destroy
 
   has_one_attached :picture

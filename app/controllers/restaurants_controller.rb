@@ -4,23 +4,15 @@ class RestaurantsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    page_number = params[:page]
-    if params[:status] == 'open'
-      restaurants = Restaurant.where(status: 'open')
-      render json: restaurants
-    else
-      restaurant = Restaurant.all.page(page_number).per(5)
-      render json: restaurant
-    end
-  end
-
-  def current_user_restaurants
-    restaurant = Restaurant.where(user: @current_user)
-    if restaurants.any?
-      render json: restaurants
-    else
-      render json: { message: "You haven't added any restaurants yet." }, status: :ok
-    end
+    restaurants = Restaurant.all
+    restaurants = if params[:name]
+                    restaurants.where('name LIKE ?', "%#{params[:name]}%")
+                  elsif params[:status]
+                    restaurants.where(status: params[:status])
+                  else 
+                    restaurants.page(params[:page]).per(5)
+                  end
+    render json: restaurants
   end
 
   def show
@@ -37,7 +29,7 @@ class RestaurantsController < ApplicationController
   end
 
   def update
-    if @restaurant.user == @current_user # Check if the current user owns the restaurant
+    if @restaurant.user == @current_user
       if @restaurant.update(restaurant_params)
         render json: { data: @restaurant, message: 'Updated successfully' }
       else
@@ -60,12 +52,7 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  def search_restaurant_by_name
-    name = params[:name]
-    restaurant = Restaurant.where('name LIKE ?', "%#{name}%")
-    render json: restaurant, status: :ok
-  end
-
+  
   private
 
   def restaurant_params

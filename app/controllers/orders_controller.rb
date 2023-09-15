@@ -19,15 +19,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def destroy
-    if @order
-      @order.destroy
-      render json: { message: 'Order successfully deleted' }, status: :ok
-    else
-      render json: { message: 'Order not found' }, status: :not_found
-    end
-  end
-
   def create
     @cart = current_user.cart
     if @cart.cart_items.empty?
