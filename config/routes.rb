@@ -1,23 +1,31 @@
 Rails.application.routes.draw do
   resources :categories, param: :category_name, only: %i[index show create update] do
   end
+
   resources :restaurants, param: :restaurant_name, only: %i[index show create update destroy] do
     collection do
-      get 'current_user_restaurants'
-      get 'search_restaurant_by_name'
+      get 'my_restaurants_list'
     end
   end
-  resources :dishes, only: %i[index show create update destroy] do
+  
+  resources :carts do
+    member do
+      delete 'destroy_all/', to: 'carts#destroy_all'
+    end
   end
 
-  resources :orders, only: %i[index show create destroy] do
+  resources :dishes do
+    collection do
+      get 'owner_dishes'
+    end
   end
 
-  resource :users
-  post '/users_login', to: 'users#login'
-  get '/all_users', to: 'users#index'
-
-  resource :carts do
-    delete '/cartitems/:id', to: 'carts#destroy_item'
+  resources :orders, only: %i[index show create] do
   end
+  resources :users, only: [:index, :create]
+  post 'users/login', to: 'users#login'
+  # Define a resource for the current user
+  resource :profile, controller: 'users', only: [:show, :update, :destroy], as: 'current_user_profile'
+
+ 
 end

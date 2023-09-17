@@ -1,23 +1,16 @@
 class OrdersController < ApplicationController
-  load_and_authorize_resource
-  before_action :set_order, only: %i[show destroy]
+  before_action :find_order, only: [:show]
 
   def index
     @orders = current_user.orders
-    if @orders.any?
-      render json: { orders: @orders }, status: :ok
-    else
-      render json: { message: 'No orders found' }, status: :not_found
-    end
+    render json: @orders, status: :ok
   end
 
   def show
-    if @order
-      render json: { order: @order, order_items: @order.order_items }, status: :ok
-    else
-      render json: { message: 'Order not found' }, status: :not_found
-    end
-  end
+    @orders = current_user.orders
+    render json: @orders, status: :ok
+  end 
+
 
   def create
     @cart = current_user.cart
@@ -28,8 +21,7 @@ class OrdersController < ApplicationController
       @order = current_user.orders.new
       if @order.save
         create_order_items(@order)
-        total_amount = @cart_items.sum { |cart_item| cart_item.dish.price * cart_item.quantity }
-        render json: { total_amount: total_amount, data: @order, message: 'Order created successfully!' },
+        render json: {data: @order, message: 'Order created successfully!' },
                status: :created
       else
         render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
@@ -40,9 +32,10 @@ class OrdersController < ApplicationController
   def create_order_items(order)
     cart_items = current_user.cart.cart_items.includes(:dish)
     cart_items.each do |cart_item|
-      order_item = order.order_items.build(
-        dish: cart_item.dish,
-        quantity: cart_item.quantity
+      order_item = order.order_items.new(
+        dish_id: cart_item.dish.id,
+        quantity: cart_item.quantity,
+        total_amount: cart_item.quantity*cart_item.dish.price
       )
       order_item.save
     end
@@ -51,7 +44,9 @@ class OrdersController < ApplicationController
 
   private
 
-  def set_order
-    @order = @current_user.orders.find(params[:id])
+  def find_order
+    @order = current_user.orders.find_by_id(params[:id])
+    render json: { error: 'Order not found' }, status: :not_found unless @order
   end
 end
+

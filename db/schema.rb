@@ -42,8 +42,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
   create_table "cart_items", force: :cascade do |t|
     t.decimal "total_amounts"
     t.integer "quantity"
-    t.integer "cart_id"
-    t.integer "dish_id"
+    t.integer "dish_id", null: false
+    t.integer "cart_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["cart_id"], name: "index_cart_items_on_cart_id"
@@ -51,7 +51,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
   end
 
   create_table "carts", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_carts_on_user_id"
@@ -76,8 +76,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
 
   create_table "order_items", force: :cascade do |t|
     t.decimal "total_amount"
-    t.integer "order_id"
-    t.integer "dish_id"
+    t.integer "order_id", null: false
+    t.integer "dish_id", null: false
     t.integer "quantity", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -86,7 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_orders_on_user_id"
@@ -96,7 +96,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_09_13_123121) do
     t.string "name"
     t.string "address"
     t.string "status"
-    t.integer "user_id"
+    t.integer "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_restaurants_on_user_id"

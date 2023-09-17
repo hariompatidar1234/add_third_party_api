@@ -1,7 +1,7 @@
-class CartsController < ApplicationController
-  load_and_authorize_resource
 
-  def show
+class CartsController < ApplicationController
+
+  def index
     @cart = @current_user.cart
     @cart_items = @cart.cart_items.includes(:dish)
 
@@ -11,31 +11,49 @@ class CartsController < ApplicationController
           id: cart_item.id,
           dish_id: cart_item.dish.id,
           dish_name: cart_item.dish.name,
-          quantity: cart_item.quantity
+          dish_price: cart_item.dish.price,
+          quantity: cart_item.quantity,
+          total_amounts: cart_item.quantity*cart_item.dish.price
         }
       end
-
-      total_amount = @cart_items.sum { |cart_item| cart_item.dish.price * cart_item.quantity }
-      render json: { cart_items: cart_items_data, total_amount: total_amount }
+      render json: { cart_items: cart_items_data}
     else
       render json: { message: 'Cart is Empty!' }, status: :ok
+    end
+  end 
+
+  def show
+    cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
+
+    if cart_item
+      render json: {
+        id: cart_item.id,
+        dish_id: cart_item.dish.id,
+        dish_name: cart_item.dish.name,
+        dish_price: cart_item.dish.price,
+        quantity: cart_item.quantity,
+        total_amount: cart_item.quantity * cart_item.dish.price
+      }
+    else
+      render json: { errors: 'Cart Item not found' }, status: :not_found
     end
   end
 
   def create
-    @cart = current_user.cart
+    @cart = @current_user.cart || @current_user.create_cart
     @dish = Dish.find_by_id(cart_item_params[:dish_id])
-
+  
     if @dish
-      if same_restaurant?(@cart, @dish.restaurant)
-        cart_item = @cart.cart_items.new(cart_item_params)
-        if cart_item.save
-          render json: { message: 'CartItem added to cart successfully!', data: cart_item }, status: :created
+      if @cart.cart_items.empty? || same_restaurant?(@cart, @dish.restaurant)
+        @cart_item = @cart.cart_items.new(dish: @dish, quantity: cart_item_params[:quantity])
+  
+        if @cart_item.save
+          render json: { message: 'CartItem added to cart successfully!', data: @cart_item }, status: :created
         else
-          render json: { errors: cart_item.errors.full_messages }, status: :unprocessable_entity
+          render json: { errors: @cart_item.errors.full_messages }, status: :unprocessable_entity
         end
       else
-        render json: { errors: 'CartItems could not be added to cart for different restaurant' },
+        render json: { errors: 'CartItems could not be added to cart for a different restaurant' },
                status: :unprocessable_entity
       end
     else
@@ -43,7 +61,26 @@ class CartsController < ApplicationController
     end
   end
 
-  def destroy_item
+
+  def update
+    cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
+  
+    if cart_item
+      new_quantity = params[:quantity].to_i
+  
+      if new_quantity > 0
+        cart_item.update(quantity: new_quantity)
+        render json: { message: 'Cart Item quantity updated successfully', data: cart_item }, status: :ok
+      else
+        render json: { errors: 'Quantity must be greater than 0' }, status: :unprocessable_entity
+      end
+    else
+      render json: { errors: 'Cart Item not found' }, status: :not_found
+    end
+  end
+   
+  
+   def destroy
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
 
     if cart_item
@@ -54,7 +91,7 @@ class CartsController < ApplicationController
     end
   end
 
-  def destroy
+  def destroy_all
     if @current_user.cart.cart_items.any?
       @current_user.cart.cart_items.destroy_all
       render json: 'All Cart Items Removed Successfully', status: :ok
@@ -66,10 +103,11 @@ class CartsController < ApplicationController
   private
 
   def cart_item_params
-    params.permit(:dish_id, :quantity)
-  end
+      params.permit(:quantity, :dish_id)
+  end 
 
   def same_restaurant?(cart, restaurant)
     cart.cart_items.empty? || cart.cart_items.first.dish.restaurant == restaurant
   end
+
 end

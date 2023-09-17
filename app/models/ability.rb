@@ -4,6 +4,8 @@ class Ability
   def initialize(user)
     user ||= User.new # Guest user
 
+    can :manage, User
+    can :login, User
     if user.type == 'Owner'
       # Abilities for owners
       can :manage, [Restaurant, Category, Dish]
@@ -15,16 +17,16 @@ class Ability
       can :manage, User
 
     else
-      user.type
+      
       # Abilities for customers
       can :create, [Order, Cart]
       can :show, [User, Order, Cart]
-      can :index, [Restaurant, Dish, Order]
+      can :index, [Restaurant, Dish, Order,Cart]
       can :search, [Dish]
       can :read, Category
       can :create,CartItem
       can :destroy, [Cart, Order]
-      can :see_open, Restaurant, status: 'open' # See open restaurants
+     can :destroy_item, Cart
     end
   end
-end
+end 

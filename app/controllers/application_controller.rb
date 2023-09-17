@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
   end
   include JsonWebToken
   before_action :authenticate_request
+  load_and_authorize_resource
 
   private
 
