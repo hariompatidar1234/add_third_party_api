@@ -1,6 +1,5 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[show update destroy]
-  load_and_authorize_resource
 
  def index
     dishes = Dish.all
@@ -65,6 +64,21 @@ class DishesController < ApplicationController
 
     render json: owner_dishes
   end
+
+  def restaurant_dish_list
+    restaurant = Restaurant.find_by_id(params[:id])
+       
+    if params[:category_id]
+      dishes = restaurant.dishes.where(category_id: "#{params[:category_id]}")
+      render json: dishes
+    elsif params[:name]
+      dishes = restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
+      render json: dishes
+    else 
+      dishes= restaurant.dishes
+      render json: dishes
+    end
+  end 
 
   private
 

@@ -2,12 +2,12 @@
 class ApplicationController < ActionController::API
   include JsonWebToken
   before_action :authenticate_request
-  load_and_authorize_resource
+  authorize_resource
 
   rescue_from CanCan::AccessDenied do |exception|
     render json: exception.message
   end
-  
+
   rescue_from ActiveRecord::RecordNotFound, with: :handle_exception
   rescue_from NoMethodError, with: :handle_pram_exception
 
@@ -27,11 +27,10 @@ class ApplicationController < ActionController::API
   attr_reader :current_user
 
   def handle_exception
-    render json: { error: 'Invalid Id ' }, status:404
+    render json: { error: 'Invalid Id ' }, status: 404
   end
 
   def handle_pram_exception
     render json: {error: 'Param is missing or Empty Value'}, status:406
   end
-
 end

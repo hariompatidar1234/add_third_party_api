@@ -6,27 +6,15 @@ class Ability
 
     can :manage, User
     can :login, User
+    can :read, [Dish, Category, Restaurant, Order]
     if user.type == 'Owner'
-      # Abilities for owners
       can :manage, [Restaurant, Category, Dish]
-      can :index, [Restaurant, Category, Dish, User, Order]
-      can :show, [Restaurant, Category, Dish]
-      can :search, [Dish] # Search for dishes
-      can :create, Restaurant
-      can :update, Category
-      can :manage, User
-
-    else
-      
-      # Abilities for customers
-      can :create, [Order, Cart]
-      can :show, [User, Order, Cart]
-      can :index, [Restaurant, Dish, Order,Cart]
-      can :search, [Dish]
-      can :read, Category
-      can :create,CartItem
-      can :destroy, [Cart, Order]
-     can :destroy_item, Cart
+    elsif user.type == 'Customer'
+      can :manage, Cart
+      can :manage, Order
+      can :manage, CartItem
+      can :manage, OrderItem
     end
+    nil unless user.type == 'Owner' or user.type == 'Customer'
   end
-end 
+end

@@ -81,6 +81,7 @@ class CartsController < ApplicationController
    
   
    def destroy
+    byebug
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
 
     if cart_item

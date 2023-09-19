@@ -1,6 +1,5 @@
 class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show update destroy]
-  load_and_authorize_resource
 
   def index
     restaurants = Restaurant.all
@@ -8,7 +7,7 @@ class RestaurantsController < ApplicationController
                     restaurants.where('name LIKE ?', "%#{params[:name]}%")
                   elsif params[:status]
                     restaurants.where(status: params[:status])
-                  else 
+                  else
                     restaurants.page(params[:page]).per(5)
                   end
     render json: restaurants
@@ -17,7 +16,7 @@ class RestaurantsController < ApplicationController
   def show
     render json: @restaurant
   end
-  
+
   def create
     restaurant = @current_user.restaurants.new(restaurant_params)
 
