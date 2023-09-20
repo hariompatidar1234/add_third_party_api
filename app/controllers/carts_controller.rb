@@ -13,7 +13,7 @@ class CartsController < ApplicationController
           dish_name: cart_item.dish.name,
           dish_price: cart_item.dish.price,
           quantity: cart_item.quantity,
-          total_amounts: cart_item.quantity*cart_item.dish.price
+          total_amounts: cart_item.total_amounts
         }
       end
       render json: { cart_items: cart_items_data}
@@ -32,7 +32,7 @@ class CartsController < ApplicationController
         dish_name: cart_item.dish.name,
         dish_price: cart_item.dish.price,
         quantity: cart_item.quantity,
-        total_amount: cart_item.quantity * cart_item.dish.price
+        total_amounts: cart_item.total_amounts
       }
     else
       render json: { errors: 'Cart Item not found' }, status: :not_found
@@ -46,7 +46,7 @@ class CartsController < ApplicationController
     if @dish
       if @cart.cart_items.empty? || same_restaurant?(@cart, @dish.restaurant)
         @cart_item = @cart.cart_items.new(dish: @dish, quantity: cart_item_params[:quantity])
-  
+       
         if @cart_item.save
           render json: { message: 'CartItem added to cart successfully!', data: @cart_item }, status: :created
         else
@@ -63,10 +63,11 @@ class CartsController < ApplicationController
 
 
   def update
+    # byebug
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
   
     if cart_item
-      new_quantity = params[:quantity].to_i
+      new_quantity = params[:quantity]
   
       if new_quantity > 0
         cart_item.update(quantity: new_quantity)
@@ -81,7 +82,6 @@ class CartsController < ApplicationController
    
   
    def destroy
-    byebug
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
 
     if cart_item

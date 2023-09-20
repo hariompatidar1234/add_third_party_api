@@ -5,7 +5,7 @@ class Dish < ApplicationRecord
   has_many :cart_items ,dependent: :destroy
   has_many :cart, through: :cart_items
 
-  has_many :order_items
+  has_many :order_items , dependent: :nullify
   has_many :orders, through: :order_items
 
   has_one_attached :picture
