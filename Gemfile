@@ -80,6 +80,6 @@ gem 'active_model_serializers'
 gem 'jwt'
 
 gem 'cancancan'
-gem "image_processing", ">= 1.2"
+gem 'image_processing', '>= 1.2'
 
 gem 'kaminari', '~> 1.2', '>= 1.2.2'

@@ -14,12 +14,18 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    render json: @restaurant
+    byebug
+    dishes = @restaurant.dishes
+    dishes = if params[:category_id]
+              dishes.where(category_id: "#{params[:category_id]}")
+            elsif params[:name]
+              @restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
+            end
+    render json: dishes.any? ? dishes : @restaurant
   end
 
   def create
     restaurant = @current_user.restaurants.new(restaurant_params)
-
     if restaurant.save
       render json: { data: restaurant, message: 'Restaurant added successfully' }, status: :created
     else
@@ -40,7 +46,7 @@ class RestaurantsController < ApplicationController
   end
 
   def destroy
-    if @restaurant.owner == @current_user # Check if the current user owns the restaurant
+    if @restaurant.owner == @current_user
       if @restaurant.destroy
         render json: { data: @restaurant, message: 'Restaurant deleted successfully' }
       else
@@ -53,7 +59,6 @@ class RestaurantsController < ApplicationController
 
   def my_restaurants_list
     restaurants = @current_user.restaurants
-
     if restaurants.any?
       render json: restaurants
     else
@@ -68,7 +73,7 @@ class RestaurantsController < ApplicationController
   end
 
   def set_restaurant
-    @restaurant = Restaurant.find_by_name(params[:restaurant_name])
+    @restaurant = Restaurant.find_by_id(params[:id])
     render json: { message: 'Restaurant not found' }, status: :not_found unless @restaurant
   end
 end

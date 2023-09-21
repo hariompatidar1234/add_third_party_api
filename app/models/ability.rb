@@ -16,6 +16,5 @@ class Ability
       can :manage, CartItem
       can :manage, OrderItem
     end
-    nil unless user.type == 'Owner' or user.type == 'Customer'
   end
 end

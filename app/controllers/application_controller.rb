@@ -9,7 +9,6 @@ class ApplicationController < ActionController::API
   end
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_exception
-  # rescue_from NoMethodError, with: :handle_pram_exception
 
   private
 
@@ -28,9 +27,5 @@ class ApplicationController < ActionController::API
 
   def handle_exception
     render json: { error: 'Invalid Id ' }, status: 404
-  end
-
-  def handle_pram_exception
-    render json: {error: 'Param is missing or Empty Value'}, status:406
   end
 end

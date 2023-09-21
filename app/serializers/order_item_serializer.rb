@@ -9,5 +9,5 @@ class OrderItemSerializer < ActiveModel::Serializer
 
   def dish_price
     object.dish.price
-  end 
+  end
 end

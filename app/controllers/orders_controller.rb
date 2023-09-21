@@ -9,7 +9,7 @@ class OrdersController < ApplicationController
   def show
     @orders = current_user.orders
     render json: @orders, status: :ok
-  end 
+  end
 
   def create
     @cart = current_user.cart
@@ -18,9 +18,9 @@ class OrdersController < ApplicationController
              status: :unprocessable_entity
     else
       @order = current_user.orders.new
-      if @order.save
+      if @order.saveW
         create_order_items(@order)
-        render json: {data: @order, message: 'Order created successfully!' },
+        render json: { data: @order, message: 'Order created successfully!' },
                status: :created
       else
         render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
@@ -34,7 +34,7 @@ class OrdersController < ApplicationController
       order_item = order.order_items.new(
         dish_id: cart_item.dish.id,
         quantity: cart_item.quantity,
-        total_amount: cart_item.quantity*cart_item.dish.price
+        total_amount: cart_item.quantity * cart_item.dish.price
       )
       order_item.save
     end
@@ -48,4 +48,3 @@ class OrdersController < ApplicationController
     render json: { error: 'Order not found' }, status: :not_found unless @order
   end
 end
-

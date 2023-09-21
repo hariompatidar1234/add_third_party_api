@@ -1,16 +1,16 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[show update destroy]
 
- def index
+  def index
     dishes = Dish.all
     dishes = if params[:name]
-              dishes.where('name LIKE ?', "%#{params[:name]}%")
-              else 
-                dishes.page(params[:page]).per(5)
-              end 
-    render json: dishes 
+               dishes.where('name LIKE ?', "%#{params[:name]}%")
+             else
+               dishes.page(params[:page]).per(5)
+             end
+    render json: dishes
   end
-  
+
   def show
     render json: @dish
   end
@@ -20,7 +20,6 @@ class DishesController < ApplicationController
 
     if restaurant && restaurant.owner == @current_user
       @dish = restaurant.dishes.new(dish_params)
-
       if @dish.save
         render json: { message: 'Dish added successfully!', data: @dish }, status: :created
       else
@@ -32,32 +31,30 @@ class DishesController < ApplicationController
   end
 
   def update
-    if dish_authorization_check
-      if @dish.update(dish_params)
-        render json: { data: @dish, message: 'Dish updated successfully!' }
-      else
-        render json: { errors: @dish.errors.full_messages }, status: :unprocessable_entity
-      end
+    return unless dish_authorization_check
+
+    if @dish.update(dish_params)
+      render json: { data: @dish, message: 'Dish updated successfully!' }
+    else
+      render json: { errors: @dish.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if dish_authorization_check
-      if @dish.destroy
-        render json: { data: @dish, message: 'Dish successfully deleted' }
-      else
-        render json: { errors: 'Dish deletion failed' }
-      end
+    return unless dish_authorization_check
+
+    if @dish.destroy
+      render json: { data: @dish, message: 'Dish successfully deleted' }
+    else
+      render json: { errors: 'Dish deletion failed' }
     end
   end
 
   def owner_dishes
     owner_dishes = @current_user.restaurants.map { |restaurant| restaurant.dishes }.flatten
-
     if params[:name].present?
       owner_dishes = owner_dishes.select { |dish| dish.name.downcase.include?(params[:name].downcase) }
     end
-
     if params[:category_id].present?
       owner_dishes = owner_dishes.select { |dish| dish.category_id == params[:category_id].to_i }
     end
@@ -67,18 +64,14 @@ class DishesController < ApplicationController
 
   def restaurant_dish_list
     restaurant = Restaurant.find_by_id(params[:id])
-       
-    if params[:category_id]
-      dishes = restaurant.dishes.where(category_id: "#{params[:category_id]}")
-      render json: dishes
-    elsif params[:name]
-      dishes = restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
-      render json: dishes
-    else 
-      dishes= restaurant.dishes
-      render json: dishes
-    end
-  end 
+    dishes = restaurant.dishes
+    dishes = if params[:category_id]
+               dishes.where(category_id: "#{params[:category_id]}")
+             elsif params[:name]
+               dishes.where('name LIKE ?', "%#{params[:name]}%")
+             end
+    render json: dishes
+  end
 
   private
 
@@ -98,3 +91,14 @@ class DishesController < ApplicationController
     false
   end
 end
+
+  # def show
+  #   dishes = @restaurant.dishes
+  #   dishes = if params[:category_id]
+  #             dishes.where(category_id: "#{params[:category_id]}")
+  #           elsif params[:name]
+  #             @restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
+  #           end
+
+  #   render json: dishes.any? ? dishes : @restaurant
+  # end

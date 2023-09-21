@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authenticate_request, except: %i[create login forgot reset]
+  before_action :authenticate_request, except: %i[create login forgot_password reset_password]
 
   def index
     render json: User.all, status: :ok
@@ -11,10 +11,9 @@ class UsersController < ApplicationController
 
   def create
     user = User.new(user_params)
-
     if user.save
       UserMailer.with(user: user).welcome_email.deliver_now
-      render json: user , status: :created
+      render json: user, status: :created
     else
       render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
     end
@@ -38,7 +37,6 @@ class UsersController < ApplicationController
 
   def login
     user = User.find_by(email: params[:email], password: params[:password])
-
     if user
       token = jwt_encode(user_id: user.id)
       render json: { message: 'Logged In Successfully', token: token }
@@ -47,34 +45,26 @@ class UsersController < ApplicationController
     end
   end
 
-  def forgot
-    return render json: 'mail n bmust be pass' unless params[:email]
-
-    user = User.find_by_email(params[:email])
-    if user.present?
-      user.generate_password_token! # generate pass token
+  def forgot_password
+    user = User.find_by(email: params[:email])
+    if user
+      reset_password_token = SecureRandom.hex(13)
+      reset_password_sent_at = Time.now
+      user.update(reset_password_token: reset_password_token, reset_password_sent_at: reset_password_sent_at)
       UserMailer.with(user: user).forgot_password_token.deliver_now
-      render json: 'Email Send Successfully'
+      render json: { message: 'Password reset instructions sent.' }, status: :ok
     else
-      render json: { error: ['Username not found. Please check and try again.'] }, status: :not_found
+      render json: { error: 'Correct mail must be require' }, status: :not_found
     end
   end
 
-  def reset
-    token = params[:token]
-
-    return render json: { error: 'Token not present' } unless token
-
-    user = User.find_by(reset_password_token: token)
-
-    if user.present? && user.password_token_valid?
-      if user.reset_password!(params[:password])
-        render json: 'Password Update Successfully'
-      else
-        render status: :unprocessable_entity, json: { error: user.errors.full_messages }
-      end
+  def reset_password
+    user = User.find_by(reset_password_token: params[:token])
+    if user && user.reset_password_sent_at > 2.hours.ago
+      user.update(password: params[:password], reset_password_token: nil, reset_password_sent_at: nil)
+      render json: { message: 'password reset Successfully' }, status: :ok
     else
-      render status: :not_found, json: { error: ['Link not valid or expired. Try generating a new link.'] }
+      render json: { errors: 'invalid and token expired' }
     end
   end
 

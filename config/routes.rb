@@ -2,16 +2,15 @@ Rails.application.routes.draw do
   resources :categories, param: :category_name, only: %i[index show create update destroy] do
   end
 
-  resources :restaurants, param: :restaurant_name, only: %i[index show create update destroy] do
+  resources :restaurants do
     collection do
       get 'my_restaurants_list'
     end
   end
 
-  resources :carts 
-  
-      delete 'destroy_all/', to: 'carts#destroy_all'
-  
+  resources :carts
+
+  delete 'destroy_all/', to: 'carts#destroy_all'
 
   resources :dishes do
     collection do
@@ -26,7 +25,7 @@ Rails.application.routes.draw do
 
   resource :profile, controller: 'users', only: %i[show update destroy], as: 'current_user_profile'
 
-  post 'users/forgot', to: 'users#forgot'
-  post 'users/reset', to: 'users#reset'
+  post 'users_forgot_password', to: 'users#forgot_password'
+  post 'users_reset_password', to: 'users#reset_password'
   get 'restaurant_dish_list/:id', to: 'dishes#restaurant_dish_list'
 end
