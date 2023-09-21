@@ -9,7 +9,7 @@ class ApplicationController < ActionController::API
   end
 
   rescue_from ActiveRecord::RecordNotFound, with: :handle_exception
-  rescue_from NoMethodError, with: :handle_pram_exception
+  # rescue_from NoMethodError, with: :handle_pram_exception
 
   private
 

@@ -11,7 +11,6 @@ class OrdersController < ApplicationController
     render json: @orders, status: :ok
   end 
 
-
   def create
     @cart = current_user.cart
     if @cart.cart_items.empty?

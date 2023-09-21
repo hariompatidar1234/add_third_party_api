@@ -1,25 +1,7 @@
-
 class CartsController < ApplicationController
 
   def index
-    @cart = @current_user.cart
-    @cart_items = @cart.cart_items.includes(:dish)
-
-    if @cart_items.any?
-      cart_items_data = @cart_items.map do |cart_item|
-        {
-          id: cart_item.id,
-          dish_id: cart_item.dish.id,
-          dish_name: cart_item.dish.name,
-          dish_price: cart_item.dish.price,
-          quantity: cart_item.quantity,
-          total_amounts: cart_item.total_amounts
-        }
-      end
-      render json: { cart_items: cart_items_data}
-    else
-      render json: { message: 'Cart is Empty!' }, status: :ok
-    end
+   render json: @current_user.cart
   end 
 
   def show
@@ -61,9 +43,7 @@ class CartsController < ApplicationController
     end
   end
 
-
   def update
-    # byebug
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
   
     if cart_item
@@ -80,8 +60,7 @@ class CartsController < ApplicationController
     end
   end
    
-  
-   def destroy
+  def destroy
     cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
 
     if cart_item
@@ -102,7 +81,7 @@ class CartsController < ApplicationController
   end
 
   private
-
+   
   def cart_item_params
       params.permit(:quantity, :dish_id)
   end 

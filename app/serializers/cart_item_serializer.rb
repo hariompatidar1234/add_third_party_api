@@ -1,5 +1,6 @@
 class CartItemSerializer < ActiveModel::Serializer
-  attributes :id, :total_amount
+  attributes :id, :total_amount,:dish_id,:quantity
 
-  has_many :dishes
+  belongs_to :dish
+  belongs_to :cart
 end

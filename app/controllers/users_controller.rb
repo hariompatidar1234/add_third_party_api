@@ -48,7 +48,7 @@ class UsersController < ApplicationController
   end
 
   def forgot
-    return render json: 'Username must be pass' unless params[:email]
+    return render json: 'mail n bmust be pass' unless params[:email]
 
     user = User.find_by_email(params[:email])
     if user.present?
