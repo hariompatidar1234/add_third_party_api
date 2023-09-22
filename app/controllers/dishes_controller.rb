@@ -11,6 +11,29 @@ class DishesController < ApplicationController
     render json: dishes
   end
 
+  def index
+    if params[:restaurant_id]
+      # If restaurant_id is provided, filter by restaurant
+      restaurant = Restaurant.find_by_id(params[:restaurant_id])
+      render json: filter_dishes(restaurant.dishes)
+    else
+      # No restaurant_id, filter based on name and category_id
+      dishes = Dish.all
+      render json: filter_dishes(dishes)
+    end
+  end
+
+  def restaurant_dish_list
+    restaurant = Restaurant.find_by_id(params[:id])
+    dishes = restaurant.dishes
+    dishes = if params[:category_id]
+               dishes.where(category_id: params[:category_id].to_s)
+             elsif params[:name]
+               dishes.where('name LIKE ?', "%#{params[:name]}%")
+             end
+    render json: dishes
+  end
+
   def show
     render json: @dish
   end
@@ -51,7 +74,7 @@ class DishesController < ApplicationController
   end
 
   def owner_dishes
-    owner_dishes = @current_user.restaurants.map { |restaurant| restaurant.dishes }.flatten
+    owner_dishes = @current_user.restaurants.map(&:dishes).flatten
     if params[:name].present?
       owner_dishes = owner_dishes.select { |dish| dish.name.downcase.include?(params[:name].downcase) }
     end
@@ -60,17 +83,6 @@ class DishesController < ApplicationController
     end
 
     render json: owner_dishes
-  end
-
-  def restaurant_dish_list
-    restaurant = Restaurant.find_by_id(params[:id])
-    dishes = restaurant.dishes
-    dishes = if params[:category_id]
-               dishes.where(category_id: "#{params[:category_id]}")
-             elsif params[:name]
-               dishes.where('name LIKE ?', "%#{params[:name]}%")
-             end
-    render json: dishes
   end
 
   private
@@ -90,15 +102,10 @@ class DishesController < ApplicationController
     render json: { error: 'You are not authorized to perform this action on this dish' }, status: :unauthorized
     false
   end
+
+  def filter_dishes(dishes)
+    dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
+    dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
+    dishes.page(params[:page]).per(5)
+  end
 end
-
-  # def show
-  #   dishes = @restaurant.dishes
-  #   dishes = if params[:category_id]
-  #             dishes.where(category_id: "#{params[:category_id]}")
-  #           elsif params[:name]
-  #             @restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
-  #           end
-
-  #   render json: dishes.any? ? dishes : @restaurant
-  # end

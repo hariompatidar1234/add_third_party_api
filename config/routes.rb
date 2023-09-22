@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :dishes do
     collection do
       get 'owner_dishes'
+      get 'index/:restaurant_id', action: :index, on: :collection, as: 'restaurant_dish_list'
     end
   end
 
@@ -27,5 +28,4 @@ Rails.application.routes.draw do
 
   post 'users_forgot_password', to: 'users#forgot_password'
   post 'users_reset_password', to: 'users#reset_password'
-  get 'restaurant_dish_list/:id', to: 'dishes#restaurant_dish_list'
 end

@@ -1,5 +1,4 @@
 class CartsController < ApplicationController
-  
   def index
     render json: @current_user.cart
   end
@@ -38,7 +37,7 @@ class CartsController < ApplicationController
 
     if cart_item
       new_quantity = params[:quantity]
-      if new_quantity > 0
+      if new_quantity.positive?
         cart_item.update(quantity: new_quantity)
         render json: { message: 'Cart Item quantity updated successfully', data: cart_item }, status: :ok
       else

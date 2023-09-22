@@ -1,4 +1,3 @@
-# app/controllers/custom_application_controller.rb
 class ApplicationController < ActionController::API
   include JsonWebToken
   before_action :authenticate_request
@@ -17,7 +16,7 @@ class ApplicationController < ActionController::API
     header = header.split(' ').last if header
     decoded = jwt_decode(header)
     @current_user = User.find(decoded[:user_id])
-  rescue JWT::DecodeError => e
+  rescue JWT::DecodeError
     render json: { error: 'Invalid token' }, status: :unprocessable_entity
   rescue ActiveRecord::RecordNotFound
     render json: 'No record found..'

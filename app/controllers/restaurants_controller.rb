@@ -14,14 +14,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    byebug
-    dishes = @restaurant.dishes
-    dishes = if params[:category_id]
-              dishes.where(category_id: "#{params[:category_id]}")
-            elsif params[:name]
-              @restaurant.dishes.where('name LIKE ?', "%#{params[:name]}%")
-            end
-    render json: dishes.any? ? dishes : @restaurant
+    render json: @restaurant
   end
 
   def create

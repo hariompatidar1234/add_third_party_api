@@ -18,7 +18,7 @@ class OrdersController < ApplicationController
              status: :unprocessable_entity
     else
       @order = current_user.orders.new
-      if @order.saveW
+      if @order.save
         create_order_items(@order)
         render json: { data: @order, message: 'Order created successfully!' },
                status: :created
