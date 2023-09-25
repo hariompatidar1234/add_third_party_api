@@ -7,6 +7,8 @@ class RestaurantsController < ApplicationController
                     restaurants.where('name LIKE ?', "%#{params[:name]}%")
                   elsif params[:status]
                     restaurants.where(status: params[:status])
+                  elsif params[:address]
+                    restaurants.where('address LIKE ?', "%#{params[:address]}%")
                   else
                     restaurants.page(params[:page]).per(5)
                   end

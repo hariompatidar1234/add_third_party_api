@@ -2,29 +2,14 @@ class DishesController < ApplicationController
   before_action :set_dish, only: %i[show update destroy]
   before_action :authorize_dish, only: %i[update destroy]
 
- 
-
   def index
     if params[:restaurant_id]
-      # If restaurant_id is provided, filter by restaurant
       restaurant = Restaurant.find_by_id(params[:restaurant_id])
       render json: filter_dishes(restaurant.dishes)
     else
-      # No restaurant_id, filter based on name and category_id
       dishes = Dish.all
       render json: filter_dishes(dishes)
     end
-  end
-
-  def restaurant_dish_list
-    restaurant = Restaurant.find_by_id(params[:id])
-    dishes = restaurant.dishes
-    dishes = if params[:category_id]
-               dishes.where(category_id: params[:category_id].to_s)
-             elsif params[:name]
-               dishes.where('name LIKE ?', "%#{params[:name]}%")
-             end
-    render json: dishes
   end
 
   def show
@@ -45,7 +30,7 @@ class DishesController < ApplicationController
       render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
     end
   end
-  
+
   def update
     if @dish.update(dish_params)
       render json: { data: @dish, message: 'Dish updated successfully!' }
@@ -61,8 +46,6 @@ class DishesController < ApplicationController
       render json: { errors: 'Dish deletion failed' }
     end
   end
-
-
 
   def owner_dishes
     owner_dishes = @current_user.restaurants.map(&:dishes).flatten
@@ -89,7 +72,6 @@ class DishesController < ApplicationController
 
     render json: { error: 'You are not authorized to perform this action on this dish' }, status: :unauthorized
   end
-
 
   def filter_dishes(dishes)
     dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
