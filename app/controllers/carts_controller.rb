@@ -1,5 +1,6 @@
 class CartsController < ApplicationController
   before_action :find_cart_item, only: %i[show update destroy]
+  before_action :cart_not_empty?, only: %i[index update show destroy]
 
   def index
     render json: @current_user.cart
@@ -81,5 +82,11 @@ class CartsController < ApplicationController
 
   def find_cart_item
     @cart_item = @current_user.cart.cart_items.find_by_id(params[:id])
+  end
+
+  def cart_not_empty?
+    if @current_user.cart.cart_items.empty?
+      render json: { errors: 'Cart is empty' }, status: :unprocessable_entity
+    end
   end
 end

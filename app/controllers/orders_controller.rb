@@ -17,7 +17,8 @@ class OrdersController < ApplicationController
       render json: { message: 'Cart is empty. Cannot create an order with an empty cart.' },
              status: :unprocessable_entity
     else
-      @order = current_user.orders.new
+      @order = current_user.orders.new(address: params[:address]) # Assign the address to the Order model
+  
       if @order.save
         create_order_items(@order)
         render json: { data: @order, message: 'Order created successfully!' },
@@ -27,7 +28,7 @@ class OrdersController < ApplicationController
       end
     end
   end
-
+  
   def create_order_items(order)
     cart_items = current_user.cart.cart_items.includes(:dish)
     cart_items.each do |cart_item|
@@ -40,6 +41,19 @@ class OrdersController < ApplicationController
     end
     current_user.cart.cart_items.destroy_all
   end
+  
+  # def create_order_items(order)
+  #   cart_items = current_user.cart.cart_items.includes(:dish)
+  #   cart_items.each do |cart_item|
+  #     order_item = order.order_items.new(
+  #       dish_id: cart_item.dish.id,
+  #       quantity: cart_item.quantity,
+  #       total_amount: cart_item.quantity * cart_item.dish.price
+  #     )
+  #     order_item.save
+  #   end
+  #   current_user.cart.cart_items.destroy_all
+  # end
 
   private
 
