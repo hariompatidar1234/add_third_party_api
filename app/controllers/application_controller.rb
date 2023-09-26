@@ -8,8 +8,6 @@ class ApplicationController < ActionController::API
   # Authorize resource access using CanCanCan gem
   authorize_resource
 
-  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
-
   private
 
   def authenticate_request
@@ -29,11 +27,7 @@ class ApplicationController < ActionController::API
   # Access current_user as a read-only attribute
   attr_reader :current_user
 
-  def handle_record_not_found
-    render json: { error: 'Record not found' }, status: :not_found
-  end
-
-  # Handle CanCanCan access denied 
+  # Handle CanCanCan access denied
   rescue_from CanCan::AccessDenied do |exception|
     render json: { error: exception.message }, status: :forbidden
   end
