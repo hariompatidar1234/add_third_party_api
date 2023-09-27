@@ -76,6 +76,7 @@ class DishesController < ApplicationController
   def filter_dishes(dishes)
     dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
     dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
-    dishes.page(params[:page]).per(5)
+    dishes = dishes.page(params[:page]).per(5) if params[:page]
+    dishes
   end
 end

@@ -18,7 +18,7 @@ Rails.application.routes.draw do
     delete 'destroy_all', on: :collection
   end
 
-  resources :dishes, only: [:index] do
+  resources :dishes, only: [:index, :create,:show,:update,:destroy] do
     collection do
       get 'owner_dishes'
       get 'filter', action: :index
@@ -30,6 +30,6 @@ end
 
 
 
- 
+
 
 

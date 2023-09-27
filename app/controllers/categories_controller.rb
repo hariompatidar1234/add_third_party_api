@@ -29,7 +29,7 @@ class CategoriesController < ApplicationController
 
   def destroy
     if @category.destroy
-      render json: { message: 'Category deleted' }, status: :no_content
+      render json: { message: 'Category deleted' }
     else
       render json: { errors: @category.errors.full_messages }, status: :unprocessable_entity
     end

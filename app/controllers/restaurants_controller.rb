@@ -10,7 +10,7 @@ class RestaurantsController < ApplicationController
                   elsif params[:address]
                     restaurants.where('address LIKE ?', "%#{params[:address]}%")
                   else
-                    restaurants.page(params[:page]).per(5)
+                    restaurants.page(params[:page]).per(2)
                   end
     render json: restaurants
   end
