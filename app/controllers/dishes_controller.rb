@@ -24,7 +24,7 @@ class DishesController < ApplicationController
       if @dish.save
         render json: { message: 'Dish added successfully!', data: @dish }, status: :created
       else
-        render json: { errors: @dish.errors.full_messages }, status: :unprocessable_entity
+        render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
       end
     else
       render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
@@ -35,7 +35,7 @@ class DishesController < ApplicationController
     if @dish.update(dish_params)
       render json: { data: @dish, message: 'Dish updated successfully!' }
     else
-      render json: { errors: @dish.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -43,7 +43,7 @@ class DishesController < ApplicationController
     if @dish.destroy
       render json: { data: @dish, message: 'Dish successfully deleted' }
     else
-      render json: { errors: 'Dish deletion failed' }
+      render json: { error: 'Dish deletion failed' }
     end
   end
 
@@ -64,7 +64,7 @@ class DishesController < ApplicationController
 
   def set_dish
     @dish = Dish.find_by_id(params[:id])
-    render json: { message: 'Dish not found' }, status: :not_found unless @dish
+    render json: { error: 'Dish not found' }, status: :not_found unless @dish
   end
 
   def authorize_dish

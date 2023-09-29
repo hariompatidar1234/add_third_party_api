@@ -24,7 +24,7 @@ class RestaurantsController < ApplicationController
     if restaurant.save
       render json: { data: restaurant, message: 'Restaurant added successfully' }, status: :created
     else
-      render json: { errors: restaurant.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: restaurant.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -33,7 +33,7 @@ class RestaurantsController < ApplicationController
       if @restaurant.update(restaurant_params)
         render json: { data: @restaurant, message: 'Updated successfully' }
       else
-        render json: { errors: @restaurant.errors.full_messages }, status: :unprocessable_entity
+        render json: { error: @restaurant.errors.full_messages }, status: :unprocessable_entity
       end
     else
       render json: { error: 'You are not authorized to update this restaurant' }, status: :unauthorized
@@ -45,7 +45,7 @@ class RestaurantsController < ApplicationController
       if @restaurant.destroy
         render json: { data: @restaurant, message: 'Restaurant deleted successfully' }
       else
-        render json: { errors: @restaurant.errors.full_messages }, status: :unprocessable_entity
+        render json: { error: @restaurant.errors.full_messages }, status: :unprocessable_entity
       end
     else
       render json: { error: 'You are not authorized to delete this restaurant' }, status: :unauthorized
@@ -57,7 +57,7 @@ class RestaurantsController < ApplicationController
     if restaurants.any?
       render json: restaurants
     else
-      render json: { message: "You haven't added any restaurants yet." }, status: :ok
+      render json: { error: "You haven't added any restaurants yet." }, status: :ok
     end
   end
 
@@ -69,6 +69,6 @@ class RestaurantsController < ApplicationController
 
   def set_restaurant
     @restaurant = Restaurant.find_by_id(params[:id])
-    render json: { message: 'Restaurant not found' }, status: :not_found unless @restaurant
+    render json: { error: 'Restaurant not found' }, status: :not_found unless @restaurant
   end
 end

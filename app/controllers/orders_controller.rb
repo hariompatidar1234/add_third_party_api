@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
   def create
     @cart = current_user.cart
     if @cart.cart_items.empty?
-      render json: { message: 'Cart is empty. Cannot create an order with an empty cart.' },status: :unprocessable_entity
+      render json: { error: 'Cart is empty. Cannot create an order with an empty cart.' },status: :unprocessable_entity
     else
       @order = current_user.orders.new(address: params[:address])
 
@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
         render json: { data: @order, message: 'Order created successfully!' },
                status: :created
       else
-        render json: { errors: @order.errors.full_messages }, status: :unprocessable_entity
+        render json: { error: @order.errors.full_messages }, status: :unprocessable_entity
       end
     end
   end
@@ -45,7 +45,7 @@ class OrdersController < ApplicationController
   private
 
   def find_order
-    @order = current_user.orders.find_by_id(params[:id])
+    @order = current_user&.orders&.find_by_id(params[:id])
     render json: { error: 'Order not found' }, status: :not_found unless @order
   end
 end

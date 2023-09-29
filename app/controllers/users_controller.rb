@@ -15,7 +15,7 @@ class UsersController < ApplicationController
       # UserMailer.with(user: user).welcome_email.deliver_now
       render json: user, status: :created
     else
-      render json: { errors: user.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     if @current_user.update(user_params)
       render json: { data: @current_user, message: 'User updated' }
     else
-      render json: { errors: @current_user.errors.full_messages }, status: :unprocessable_entity
+      render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -31,7 +31,7 @@ class UsersController < ApplicationController
     if @current_user.destroy
       render json: { data: @current_user,message: 'User deleted' }
     else
-      render json: { message: 'User deletion failed' }
+      render json: { error: 'User deletion failed' }
     end
   end
 
@@ -67,7 +67,7 @@ class UsersController < ApplicationController
       user.update(password: params[:password], reset_password_token: nil, reset_password_sent_at: nil)
       render json: { message: 'password reset Successfully' }, status: :ok
     else
-      render json: { errors: 'invalid and token expired' }
+      render json: { error: 'invalid and token expired' }
     end
   end
 
