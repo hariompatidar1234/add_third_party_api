@@ -1,14 +1,10 @@
 class UsersController < ApplicationController
   before_action :authenticate_request, except: %i[create login forgot_password reset_password]
-
+  
   def index
     render json: User.all, status: :ok
   end
-
-  def show
-    render json: @current_user
-  end
-
+  
   def create
     user = User.new(user_params)
     if user.save
@@ -18,7 +14,11 @@ class UsersController < ApplicationController
       render json: { error: user.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
+  
+  def show
+    render json: @current_user
+  end
+  
   def update
     if @current_user.update(user_params)
       render json: { data: @current_user, message: 'User updated' }
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
     end
   end
-
+  
   def destroy
     if @current_user.destroy
       render json: { data: @current_user,message: 'User deleted' }
@@ -34,7 +34,7 @@ class UsersController < ApplicationController
       render json: { error: 'User deletion failed' }
     end
   end
-
+  
   def login
     user = User.find_by(email: params[:email], password: params[:password])
     if user
@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       render json: { error: 'Please Check your Email and Password' }, status: :unauthorized
     end
   end
-
+  
   def forgot_password
     user = User.find_by(email: params[:email])
     if user
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
       render json: { error: 'Correct mail must be require' }, status: :not_found
     end
   end
-
+  
   def reset_password
     if params[:email].blank?
       return render json: {error: 'Token not present'}
@@ -70,9 +70,9 @@ class UsersController < ApplicationController
       render json: { error: 'invalid and token expired' }
     end
   end
-
+  
   private
-
+  
   def user_params
     params.permit(:name, :email, :password, :type,:picture)
   end

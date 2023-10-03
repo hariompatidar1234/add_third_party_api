@@ -15,10 +15,6 @@ class RestaurantsController < ApplicationController
     render json: restaurants
   end
 
-  def show
-    render json: @restaurant
-  end
-
   def create
     restaurant = @current_user.restaurants.new(restaurant_params)
     if restaurant.save
@@ -26,6 +22,10 @@ class RestaurantsController < ApplicationController
     else
       render json: { error: restaurant.errors.full_messages }, status: :unprocessable_entity
     end
+  end
+
+  def show
+    render json: @restaurant
   end
 
   def update
