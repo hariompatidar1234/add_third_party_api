@@ -3,7 +3,7 @@ class RestaurantsController < ApplicationController
 
   def index
     restaurants = Restaurant.all
-    restaurants = if params[:name]
+    @restaurants = if params[:name]
                     restaurants.where('name LIKE ?', "%#{params[:name]}%")
                   elsif params[:status]
                     restaurants.where(status: params[:status])
@@ -12,7 +12,7 @@ class RestaurantsController < ApplicationController
                   else
                     restaurants.page(params[:page]).per(2)
                   end
-    render json: restaurants
+    # render json: @restaurants
   end
 
   def create

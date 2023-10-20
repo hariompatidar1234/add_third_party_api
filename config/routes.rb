@@ -1,16 +1,30 @@
 Rails.application.routes.draw do
+  devise_for :users
+ root to: "restaurants#index"
 
-  resources :users, only: [:index, :create] do
-    post 'login', on: :collection
-    post 'forgot_password', on: :collection
-    post 'reset_password', on: :collection
+
+devise_scope :user do
+    get '/users/sign_out', to: 'devise/sessions#destroy'
   end
+
+
+
+
+
+
+
+
+  # resources :users do
+  #   post 'login', on: :collection
+  #   post 'forgot_password', on: :collection
+  #   post 'reset_password', on: :collection
+  # end
 
   resource :profile, controller: 'users', only: %i[show update destroy], as: 'current_user_profile'
 
   resources :categories, only: [:index, :show, :create, :update, :destroy]
 
-  resources :restaurants, only: [:index, :show, :create, :update, :destroy] do
+  resources :restaurants  do
     get 'my_restaurants_list', on: :collection
   end
 

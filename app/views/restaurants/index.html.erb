@@ -1,0 +1,29 @@
+<h1>Listing Books</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Address</th>
+      <th>Status</th>
+      <th>Owner_Id</th>
+
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @restaurants.each do |r| %>
+      <tr>
+        <td><%= r.name %></td>
+        <td><%= r.address %></td>
+        <td><%= r.status %></td>
+        <td><%= r.owner.id %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+<%- if user_signed_in? %>
+      <%= link_to "Sign out", destroy_user_session_path %> <br />
+<%end %>

@@ -1,34 +1,13 @@
-class ApplicationController < ActionController::API
-  # Include JsonWebToken module for JWT handling
-  include JsonWebToken
+class ApplicationController < ActionController::Base
+ before_action :authenticate_user!
+ before_action :configure_permitted_parameters, if: :devise_controller?
+  protected
 
-  # Before every action, authenticate the request using JWT
-  before_action :authenticate_request
-
-  # Authorize resource access using CanCanCan gem
-  authorize_resource
-
-  private
-
-  def authenticate_request
-    header = request.headers['Authorization']
-    header = header.split(' ').last if header
-
-    begin
-      decoded = jwt_decode(header)
-      @current_user = User.find(decoded[:user_id])
-    rescue JWT::DecodeError
-      render json: { error: 'Invalid token' }, status: :unprocessable_entity
-    rescue ActiveRecord::RecordNotFound
-      render json: { error: 'User not found' }, status: :not_found
-    end
+  def configure_permitted_parameters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name,:type])
   end
 
-  # Access current_user as a read-only attribute
-  attr_reader :current_user
-
-  # Handle CanCanCan access denied
-  rescue_from CanCan::AccessDenied do |exception|
-    render json: { error: exception.message }, status: :forbidden
-  end
+  def after_sign_out_path_for(resource_or_scope)
+     new_user_session_path
+   end
 end
