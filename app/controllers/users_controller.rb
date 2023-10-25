@@ -17,16 +17,25 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @current_user
+    @current_user
   end
 
+  # def update
+  #   if @current_user.update(user_params)
+  #     render json: { data: @current_user, message: 'User updated' }
+  #   else
+  #     render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
   def update
-    if @current_user.update(user_params)
-      render json: { data: @current_user, message: 'User updated' }
-    else
-      render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
-    end
+     if @current_user.update(user_params)
+       flash[:notice] = 'User updated successfully'  # Set a flash notice
+       redirect_to current_user_profile_path
+     else
+       render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
+     end
   end
+
 
   def destroy
     if @current_user.destroy
@@ -36,41 +45,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def login
-    user = User.find_by(email: params[:email], password: params[:password])
-    if user
-      token = jwt_encode(user_id: user.id)
-      render json: { message: 'Logged In Successfully', token: token }
-    else
-      render json: { error: 'Please Check your Email and Password' }, status: :unauthorized
-    end
-  end
-
-  def forgot_password
-    user = User.find_by(email: params[:email])
-    if user
-      reset_password_token = SecureRandom.hex(13)
-      reset_password_sent_at = Time.now
-      user.update(reset_password_token: reset_password_token, reset_password_sent_at: reset_password_sent_at)
-      UserMailer.with(user: user).forgot_password_token.deliver_now
-      render json: { message: 'Password reset instructions sent.' }, status: :ok
-    else
-      render json: { error: 'Correct mail must be require' }, status: :not_found
-    end
-  end
-
-  def reset_password
-    if params[:email].blank?
-      return render json: {error: 'Token not present'}
-    end
-    user = User.find_by(reset_password_token: params[:token])
-    if user && user.reset_password_sent_at > 2.hours.ago
-      user.update(password: params[:password], reset_password_token: nil, reset_password_sent_at: nil)
-      render json: { message: 'password reset Successfully' }, status: :ok
-    else
-      render json: { error: 'invalid and token expired' }
-    end
-  end
 
   private
 
@@ -78,3 +52,6 @@ class UsersController < ApplicationController
     params.require(:user).  permit(:name, :email, :password, :type,:picture)
   end
 end
+
+
+

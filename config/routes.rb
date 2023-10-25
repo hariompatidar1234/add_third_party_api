@@ -7,12 +7,7 @@ devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
-
-
-
-
-
-
+ resource :profile, controller: 'users', only: %i[show update destroy], as: 'current_user_profile'
 
   # resources :users do
   #   post 'login', on: :collection
@@ -20,7 +15,6 @@ devise_scope :user do
   #   post 'reset_password', on: :collection
   # end
 
-  resource :profile, controller: 'users', only: %i[show update destroy], as: 'current_user_profile'
 
   resources :categories, only: [:index, :show, :create, :update, :destroy]
 

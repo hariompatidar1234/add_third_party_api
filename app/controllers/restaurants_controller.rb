@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  before_action :set_restaurant, only: %i[show update destroy]
+  # before_action :set_restaurant, only: %i[show update destroy]
 
   def index
     restaurants = Restaurant.all
@@ -25,7 +25,7 @@ class RestaurantsController < ApplicationController
   end
 
   def show
-    render json: @restaurant
+    @restaurant = Restaurant.find_by_id(params[:id])
   end
 
   def update

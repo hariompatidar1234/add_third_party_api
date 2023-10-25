@@ -1,4 +1,4 @@
-<h1>Listing Books</h1>
+<h1>Listing Restaurants</h1>
 
 <table>
   <thead>
@@ -17,13 +17,13 @@
         <td><%= r.name %></td>
         <td><%= r.address %></td>
         <td><%= r.status %></td>
-        <td><%= r.owner.id %></td>
+        <td><%= User.find_by_id(r.owner.id).name %></td>
+        <td><%= link_to "Show", restaurant_path(r) %></td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
+<%= link_to "profile", current_user_profile_path %>
 
 <br>
-<%- if user_signed_in? %>
-      <%= link_to "Sign out", destroy_user_session_path %> <br />
-<%end %>
