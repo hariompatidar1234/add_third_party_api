@@ -1,0 +1,28 @@
+<%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Restaurant Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <br>
+  <div class="form-group">
+    <%= f.label :address, 'Address' %>
+    <%= f.text_field :address, class: 'form-control' %>
+  </div>
+  <br>
+
+  <div class="form-group">
+    <%= f.label :status, 'Status' %>
+    <%= f.select :status, Restaurant.statuses.keys, {}, class: 'form-control' %>
+  </div>
+  <br>
+
+
+  <div class="actions">
+    <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+<%= link_to "User_profile", current_user_profile_path %>
+<%= link_to "Back", restaurants_path %>
+<%- if user_signed_in? %>
+      <%= link_to "Sign out", destroy_user_session_path %> <br />
+<%end %>

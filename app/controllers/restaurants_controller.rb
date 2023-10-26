@@ -1,5 +1,5 @@
 class RestaurantsController < ApplicationController
-  # before_action :set_restaurant, only: %i[show update destroy]
+  before_action :set_restaurant, only: %i[show update destroy]
 
   def index
     restaurants = Restaurant.all
@@ -10,38 +10,53 @@ class RestaurantsController < ApplicationController
                   elsif params[:address]
                     restaurants.where('address LIKE ?', "%#{params[:address]}%")
                   else
-                    restaurants.page(params[:page]).per(2)
+                    restaurants.page(params[:page]).per(10)
                   end
     # render json: @restaurants
   end
 
+
+  def new
+    @restaurant = Restaurant.new
+  end
+
   def create
-    restaurant = @current_user.restaurants.new(restaurant_params)
+    restaurant = current_user.restaurants.new(restaurant_params)
     if restaurant.save
-      render json: { data: restaurant, message: 'Restaurant added successfully' }, status: :created
+     flash[:message] = "You Created Successfully!"
+      redirect_to root_path
     else
       render json: { error: restaurant.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
+
 
   def show
     @restaurant = Restaurant.find_by_id(params[:id])
   end
 
   def update
-    if @restaurant.owner == @current_user
+    if @restaurant.owner == current_user
       if @restaurant.update(restaurant_params)
-        render json: { data: @restaurant, message: 'Updated successfully' }
+       flash[:success] = 'Restaurant updated successfully'
+       redirect_to restaurant_path(@restaurant)
       else
-        render json: { error: @restaurant.errors.full_messages }, status: :unprocessable_entity
+        flash[:error] = @restaurant.errors.full_messages.join(', ')
+        render :edit
       end
     else
       render json: { error: 'You are not authorized to update this restaurant' }, status: :unauthorized
     end
   end
 
+  def edit
+    @restaurant = Restaurant.find_by_id(params[:id])
+  end
+
+
   def destroy
-    if @restaurant.owner == @current_user
+    if @restaurant.owner == current_user
       if @restaurant.destroy
         render json: { data: @restaurant, message: 'Restaurant deleted successfully' }
       else
@@ -64,7 +79,7 @@ class RestaurantsController < ApplicationController
   private
 
   def restaurant_params
-    params.permit(:name, :status, :address, :picture)
+    params.require(:restaurant).permit(:name, :status, :address, :picture)
   end
 
   def set_restaurant

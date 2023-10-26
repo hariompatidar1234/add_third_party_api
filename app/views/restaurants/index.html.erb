@@ -1,12 +1,12 @@
-<h1>Listing Restaurants</h1>
 
+
+<h1>Listing Restaurants</h1>
+<p> <%= flash[:message] %> </p>
 <table>
-  <thead>
+
     <tr>
       <th>Name</th>
-      <th>Address</th>
       <th>Status</th>
-      <th>Owner_Id</th>
 
     </tr>
   </thead>
@@ -15,15 +15,15 @@
     <% @restaurants.each do |r| %>
       <tr>
         <td><%= r.name %></td>
-        <td><%= r.address %></td>
         <td><%= r.status %></td>
-        <td><%= User.find_by_id(r.owner.id).name %></td>
         <td><%= link_to "Show", restaurant_path(r) %></td>
-
       </tr>
     <% end %>
   </tbody>
 </table>
 <%= link_to "profile", current_user_profile_path %>
-
+<%= link_to "create restaurants", '/restaurants/new' %>
 <br>
+<%- if user_signed_in? %>
+      <%= link_to "Sign out", destroy_user_session_path %> <br />
+<%end %>
