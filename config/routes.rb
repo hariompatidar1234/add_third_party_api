@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
- root to: "restaurants#index"
+  root to: "restaurants#index"
 
 
-devise_scope :user do
+  devise_scope :user do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
@@ -18,10 +18,11 @@ devise_scope :user do
 
   resources :categories, only: [:index, :show, :create, :update, :destroy]
 
-  resources :restaurants  do
-    get 'my_restaurants_list', on: :collection
-  end
+  # resources :restaurants  do
+  #   get 'my_restaurants_list', on: :collection
+  # end
 
+  resources :restaurants
    resources :carts, only: [:index, :show, :create, :update, :destroy] do
     delete 'destroy_all', on: :collection
   end

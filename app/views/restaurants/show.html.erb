@@ -3,5 +3,12 @@
 
 <p> Restaurants Name: <%=@restaurant.name %> </p>
 <p> Status: <%= @restaurant.status %></p>
-<p> Address:<%=  @restaurant.address %> </p>
+<p> Address: <%=  @restaurant.address %> </p>
+<p>Owner: <%= User.find_by_id(@restaurant.owner.id).name %></p>
+
 <%= link_to "Back", restaurants_path %>
+<%- if user_signed_in? %>
+      <%= link_to "Sign out", destroy_user_session_path %> <br />
+<%end %>
+<%= link_to "Edit restaurant" , edit_restaurant_path(@restaurant) %>
+<%= button_to 'Delete Restaurant', restaurant_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
