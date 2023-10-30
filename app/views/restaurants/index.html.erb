@@ -3,11 +3,11 @@
 <h1>Listing Restaurants</h1>
 <p> <%= flash[:message] %> </p>
 <table>
-
+  <thead style="color:red">
     <tr>
       <th>Name</th>
       <th>Status</th>
-
+      <th>Other details </th>
     </tr>
   </thead>
 
@@ -24,6 +24,8 @@
 <%= link_to "profile", current_user_profile_path %>
 <%= link_to "create restaurants", '/restaurants/new' %>
 <br>
+<%= link_to "create category", '/categories/new' %>
+
 <%- if user_signed_in? %>
       <%= link_to "Sign out", destroy_user_session_path %> <br />
 <%end %>

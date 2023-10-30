@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   # end
 
 
-  resources :categories, only: [:index, :show, :create, :update, :destroy]
+  resources :categories
 
   # resources :restaurants  do
   #   get 'my_restaurants_list', on: :collection
@@ -27,7 +27,7 @@ Rails.application.routes.draw do
     delete 'destroy_all', on: :collection
   end
 
-  resources :dishes, only: [:index, :create,:show,:update,:destroy] do
+  resources :dishes do
     collection do
       get 'owner_dishes'
       get 'filter', action: :index

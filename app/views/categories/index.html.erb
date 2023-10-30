@@ -1,0 +1,17 @@
+
+<table>
+  <thead>
+    <tr>
+      <th> Category name</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @categories.each do |r| %>
+      <tr>
+        <td><%= r.name %></td>
+         </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Back", restaurants_path %>
