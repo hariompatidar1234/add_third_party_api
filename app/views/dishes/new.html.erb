@@ -1,0 +1,24 @@
+<%= form_with model: @dish, url: dish_path, method: :post do |f| %>
+  <%= f.label :dish_name %>
+  <%= f.text_field :name %>
+  <% @dish.errors.full_messages_for(:dish_name).each do |message| %>
+    <h6><%= message %></h6>
+  <% end %>
+
+  <br>
+
+  <%= f.label :category_id, "category_id" %>
+  <%= f.text_field :category_id %>
+  <% @dish.errors.full_messages_for(:category).each do |message| %>
+    <h6><%= message %></h6>
+  <% end %>
+
+  <br>
+ <%= label :price, "Price" %>
+    <%= f.text_field :price %>
+    <% @restaurant_dish.errors.full_messages_for(:price).each do |message| %>
+      <h6><%= message %></h6>
+    <% end %>
+  <%= f.submit %>
+
+<% end %>

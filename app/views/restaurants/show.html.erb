@@ -11,4 +11,5 @@
       <%= link_to "Sign out", destroy_user_session_path %> <br />
 <%end %>
 <%= link_to "Edit restaurant" , edit_restaurant_path(@restaurant) %>
-<%= button_to 'Delete Restaurant', restaurant_path, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+<%= button_to 'Delete Restaurant', restaurant_path, method: :delete,class: 'btn btn-danger' %>
+<%= link_to "Add dish" , "/restaurants/#{@restaurant.id}/dishes/new" %>

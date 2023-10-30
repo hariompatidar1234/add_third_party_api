@@ -1,4 +1,6 @@
+<% if current_user.type == 'Owner' %>
 <%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
+
   <div class="form-group">
     <%= f.label :name, 'Restaurant Name' %>
     <%= f.text_field :name, class: 'form-control' %>
@@ -21,6 +23,9 @@
     <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
   </div>
 <% end %>
+<% else %>
+ <p> you can not create</p>
+ <% end %>
 <%= link_to "User_profile", current_user_profile_path %>
 <%= link_to "Back", restaurants_path %>
 <%- if user_signed_in? %>
