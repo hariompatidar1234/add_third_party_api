@@ -1,38 +1,84 @@
-
 <style>
-td {
-  border: 1px solid#000; padding: 8px;
-   background-color: #847e7e;
-}
+  /* General button styling */
+  .button {
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: #FF5733;
+    color: #FFF;
+    text-decoration: none;
+    margin: 5px;
+    border: 1px solid #000;
+    border-radius: 5px;
+  }
+
+  /* Sign out button styling */
+  .signout-button {
+    background-color: #FF0000;
+  }
+
+  /* Styling for the search form */
+  .search-form {
+    margin: 10px 0;
+  }
+
+  .search-input {
+    padding: 5px;
+    border: 1px solid #007bff;
+  }
+
+  .search-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #FFF;
+    border: 1px solid #007bff;
+    border-radius: 5px;
+  }
+
+  .search-button:hover {
+    background-color: #0056b3;
+  }
 </style>
 
 <h1>Listing Restaurants</h1>
-<p> <%= flash[:message] %> </p>
+<p><%= flash[:message] %></p>
+
+<div class="search-form">
+  <%= form_tag(restaurants_path, method: :get) do %>
+    <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
+    <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %>
+    <%= submit_tag 'Search', class: 'search-button' %>
+  <% end %>
+</div>
+
+<div>
+  <a class="button" href="<%= current_user_profile_path %>">User Profile</a>
+  <a class="button" href="/restaurants/new">Create Restaurants</a>
+  <a class="button" href="/categories/new">Create Category</a>
+  <a class="button" href="dishes">Dish List</a>
+  <a class="button" href="categories">Category List</a>
+  <% if user_signed_in? %>
+    <%= link_to "Sign out", destroy_user_session_path, class: "button signout-button" %><br>
+  <% end %>
+</div>
+
 <table style="background-color: pink; border: 1px solid #000; width: 100%;">
-  <thead style="color: red; background-color: black; ">
+  <thead style="color: red; background-color: black;">
     <tr>
+      <th>Restaurant_id</th>
       <th>Name</th>
       <th>Status</th>
-      <th>Other details </th>
+      <th>Other details</th>
     </tr>
   </thead>
 
   <tbody>
     <% @restaurants.each do |r| %>
       <tr>
+        <td><%= r.id %></td>
         <td><%= r.name %></td>
         <td><%= r.status %></td>
-        <td><%= link_to "Show", restaurant_path(r) %></td>
+        <td><%= link_to "Show", restaurant_path(r), class: "button" %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<%= link_to "profile", current_user_profile_path %>
-<%= link_to "create restaurants", '/restaurants/new' %>
-<br>
-<%= link_to "create category", '/categories/new' %>
-<%= link_to "Dish List" , 'dishes' %>
-<%= link_to "Category list" , 'categories' %>
-<%- if user_signed_in? %>
-      <%= link_to "Sign out", destroy_user_session_path %> <br />
-<%end %>

@@ -1,3 +1,28 @@
+<style>
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+
+  .error-message {
+    color: #dc3545;
+  }
+</style>
+
 <% if current_user.type == 'Owner' %>
   <%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
     <div class="form-group">
@@ -7,7 +32,6 @@
         <div><%= message %></div>
      <% end %>
     </div>
-    <br>
     <div class="form-group">
       <%= f.label :address, 'Address' %>
       <%= f.text_field :address, class: 'form-control' %>
@@ -15,12 +39,10 @@
          <div><%= message %></div>
       <% end %>
     </div>
-    <br>
     <div class="form-group">
       <%= f.label :status, 'Status' %>
       <%= f.select :status, Restaurant.statuses.keys, {}, class: 'form-control' %>
     </div>
-    <br>
     <div class="actions">
       <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
     </div>

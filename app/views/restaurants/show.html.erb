@@ -1,16 +1,42 @@
+<style>
+  h1 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
 
-<h1>Restaurant details</h1>
+  p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
 
-<p> Restaurant_id: <%= @restaurant.id %></p>
-<p> Restaurants Name: <%=@restaurant.name %> </p>
-<p> Status: <%= @restaurant.status %></p>
-<p> Address: <%=  @restaurant.address %> </p>
-<p>Owner: <%= User.find_by_id(@restaurant.owner.id).name %></p>
+  .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+  }
 
-<%= link_to "Back", restaurants_path %>
+  .btn-danger {
+    background-color: #dc3545;
+    color: #fff;
+  }
+</style>
+
+<h1>Restaurant Details</h1>
+
+<p><strong>Restaurant ID:</strong> <%= @restaurant.id %></p>
+<p><strong>Restaurant Name:</strong> <%= @restaurant.name %></p>
+<p><strong>Status:</strong> <%= @restaurant.status %></p>
+<p><strong>Address:</strong> <%= @restaurant.address %></p>
+<p><strong>Owner:</strong> <%= User.find_by_id(@restaurant.owner.id).name %></p>
+
+<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
+
 <%- if user_signed_in? %>
-      <%= link_to "Sign out", destroy_user_session_path %> <br />
-<%end %>
-<%= link_to "Edit restaurant" , edit_restaurant_path(@restaurant) %>
-<%= button_to 'Delete Restaurant', restaurant_path, method: :delete,class: 'btn btn-danger' %>
-<%= link_to "Add dish" , new_dish_path %>
+  <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-primary' %> <br />
+<% end %>
+
+<%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-primary' %>
+
+<%= button_to 'Delete Restaurant', restaurant_path(@restaurant), method: :delete, class: 'btn btn-danger' %>
+
+<%= link_to "Add Dish", new_dish_path, class: 'btn btn-primary' %>

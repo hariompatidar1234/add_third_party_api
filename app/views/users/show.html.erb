@@ -1,6 +1,25 @@
+<style>
+  h1 {
+    font-size: 24px;
+    color: #007bff;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+
+  .btn-secondary {
+    background-color: #6c757d;
+    color: #fff;
+  }
+</style>
+
 <h1>User Profile</h1>
-<p>Id: <%= current_user.id %></p>
-<p>Name: <%= current_user.name %></p>
-<p>Email: <%= current_user.email %></p>
-<p>User Type: <%= current_user.type %></p>
-<%= link_to "Back", restaurants_path %>
+<p><strong>ID:</strong> <%= current_user.id %></p>
+<p><strong>Name:</strong> <%= current_user.name %></p>
+<p><strong>Email:</strong> <%= current_user.email %></p>
+<p><strong>User Type:</strong> <%= current_user.type %></p>
+
+<%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>

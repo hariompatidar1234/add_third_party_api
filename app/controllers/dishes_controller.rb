@@ -5,38 +5,49 @@ class DishesController < ApplicationController
   def index
     if params[:restaurant_id]
       restaurant = Restaurant.find_by_id(params[:restaurant_id])
-      render json: filter_dishes(restaurant.dishes)
+      filter_dishes(restaurant.dishes)
     else
       @dishes = Dish.all
-      # render json: filter_dishes(dishes)
+      filter_dishes(@dishes)
     end
   end
 
   def new
-    # byebug
-    # @restaurant = Restaurant.find_by_id(params[:restaurant_id])
-
       @dish = Dish.new
   end
 
+  # def create
+  #   @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
+
+  #   if @restaurant && @restaurant.owner == current_user
+  #     @dish = @restaurant.dishes.new(dish_params)
+  #     if @dish.save
+  #       redirect_to root_path
+  #     else
+  #       # render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
+  #        render :new, status: :unprocessable_entity
+
+  #     end
+  #   else
+  #   #   render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
+  #   end
+  # end
   def create
     @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
-
+  
     if @restaurant && @restaurant.owner == current_user
       @dish = @restaurant.dishes.new(dish_params)
       if @dish.save
-        redirect_to root_path
+        redirect_to root_path, notice: 'Dish created successfully'
       else
-        # render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
-         render :new, status: :unprocessable_entity
-
+        render :new, status: :unprocessable_entity
       end
     else
-    #   render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
+      flash[:alert] = 'You are not authorized to add a dish to this restaurant.'
+      redirect_to root_path
     end
-
   end
-
+  
   def show
     render json: @dish
   end
@@ -84,9 +95,9 @@ class DishesController < ApplicationController
   end
 
   def filter_dishes(dishes)
-    dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
-    dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
-    dishes = dishes.page(params[:page]).per(5) if params[:page]
+    @dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
+    @dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
+    @dishes = dishes.page(params[:page]).per(5) if params[:page]
     @dishes
   end
 end
