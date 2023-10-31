@@ -1,6 +1,7 @@
 
 <h1>Restaurant details</h1>
 
+<p> Restaurant_id: <%= @restaurant.id %></p>
 <p> Restaurants Name: <%=@restaurant.name %> </p>
 <p> Status: <%= @restaurant.status %></p>
 <p> Address: <%=  @restaurant.address %> </p>
@@ -12,4 +13,4 @@
 <%end %>
 <%= link_to "Edit restaurant" , edit_restaurant_path(@restaurant) %>
 <%= button_to 'Delete Restaurant', restaurant_path, method: :delete,class: 'btn btn-danger' %>
-<%= link_to "Add dish" , "/restaurants/#{@restaurant.id}/dishes/new" %>
+<%= link_to "Add dish" , new_dish_path %>

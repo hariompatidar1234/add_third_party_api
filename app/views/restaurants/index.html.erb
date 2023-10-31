@@ -1,9 +1,15 @@
 
+<style>
+td {
+  border: 1px solid#000; padding: 8px;
+   background-color: #847e7e;
+}
+</style>
 
 <h1>Listing Restaurants</h1>
 <p> <%= flash[:message] %> </p>
-<table>
-  <thead style="color:red">
+<table style="background-color: pink; border: 1px solid #000; width: 100%;">
+  <thead style="color: red; background-color: black; ">
     <tr>
       <th>Name</th>
       <th>Status</th>
@@ -25,7 +31,8 @@
 <%= link_to "create restaurants", '/restaurants/new' %>
 <br>
 <%= link_to "create category", '/categories/new' %>
-
+<%= link_to "Dish List" , 'dishes' %>
+<%= link_to "Category list" , 'categories' %>
 <%- if user_signed_in? %>
       <%= link_to "Sign out", destroy_user_session_path %> <br />
 <%end %>

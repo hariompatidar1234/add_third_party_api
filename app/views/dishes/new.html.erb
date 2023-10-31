@@ -1,24 +1,32 @@
-<%= form_with model: @dish, url: dish_path, method: :post do |f| %>
-  <%= f.label :dish_name %>
-  <%= f.text_field :name %>
-  <% @dish.errors.full_messages_for(:dish_name).each do |message| %>
-    <h6><%= message %></h6>
-  <% end %>
-
-  <br>
-
-  <%= f.label :category_id, "category_id" %>
-  <%= f.text_field :category_id %>
-  <% @dish.errors.full_messages_for(:category).each do |message| %>
-    <h6><%= message %></h6>
-  <% end %>
-
-  <br>
- <%= label :price, "Price" %>
-    <%= f.text_field :price %>
-    <% @restaurant_dish.errors.full_messages_for(:price).each do |message| %>
-      <h6><%= message %></h6>
-    <% end %>
-  <%= f.submit %>
-
+<%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
+  <div class="form-group">
+      <%= f.label :name, 'Dish Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+       <% @dish.errors.full_messages_for(:name).each do |message| %>
+          <div><%= message %></div>
+       <% end %>
+  </div>
+    <br>
+  <div class="form-group">
+    <%= f.label :price, 'Price' %>
+    <%= f.text_field :price, class: 'form-control' %>
+    <% @dish.errors.full_messages_for(:price).each do |message| %>
+        <div><%= message %></div>
+     <% end %>
+  </div>
+    <br>
+   <div class="form-group">
+      <%= f.label :category_id, 'Category_id' %>
+      <%= f.text_field :category_id, class: 'form-control' %>
+    </div>
+    <br>
+     <div class="form-group">
+      <%= f.label :restaurant_id, 'Restaurant_id' %>
+      <%= f.text_field :restaurant_id, class: 'form-control' %>
+    </div>
+    <br>
+  <div class="actions">
+    <%= f.submit 'Create Dish', class: 'btn btn-primary' %>
+  </div>
 <% end %>
+<%= link_to "Back", restaurants_path %>

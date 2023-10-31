@@ -23,10 +23,10 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
     if @restaurant.save
-     flash[:message] = "You Created Successfully!"
+      flash[:message] = "You Created Successfully!"
       redirect_to root_path
     else
-      render json: { error: @restaurant.errors.full_messages }, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 

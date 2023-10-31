@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     user = User.new(user_params)
     if user.save
       # UserMailer.with(user: user).welcome_email.deliver_now
-       flash.notice = 'the account  successfully saved'
+       # flash.notice = 'the account  successfully saved'
       render json: user, status: :created
     else
       render json: { error: user.errors.full_messages }, status: :unprocessable_entity

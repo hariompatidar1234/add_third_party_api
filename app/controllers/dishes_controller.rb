@@ -13,22 +13,28 @@ class DishesController < ApplicationController
   end
 
   def new
-      @dish = @restaurant.dishes.new(dish_params)
+    # byebug
+    # @restaurant = Restaurant.find_by_id(params[:restaurant_id])
+
+      @dish = Dish.new
   end
 
   def create
-    @restaurant = Restaurant.find_by_id(params[:restaurant_id])
+    @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
 
-    if restaurant && restaurant.owner == @current_user
-      @dish = restaurant.dishes.new(dish_params)
+    if @restaurant && @restaurant.owner == current_user
+      @dish = @restaurant.dishes.new(dish_params)
       if @dish.save
-        render json: { message: 'Dish added successfully!', data: @dish }, status: :created
+        redirect_to root_path
       else
-        render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
+        # render json: { error: @dish.errors.full_messages }, status: :unprocessable_entity
+         render :new, status: :unprocessable_entity
+
       end
     else
-      render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
+    #   render json: { error: 'You are not authorized to add a dish to this restaurant' }, status: :unauthorized
     end
+
   end
 
   def show
@@ -81,6 +87,6 @@ class DishesController < ApplicationController
     dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
     dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
     dishes = dishes.page(params[:page]).per(5) if params[:page]
-    dishes
+    @dishes
   end
 end

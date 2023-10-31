@@ -1,0 +1,31 @@
+<style>
+td {
+  border: 1px solid#000; padding: 8px;
+   background-color: #847e7e;
+}
+</style>
+<h3> Dish list </h3>
+<table style="background-color: pink; ">
+  <thead style="color: green; background-color: black; ">
+    <tr>
+      <th>Dish_id</th>
+      <th>Name </th>
+      <th>Price </th>
+      <th>Restaurant</th>
+      <th>Category</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @dishes.each do |d| %>
+    <tr>
+      <td><%= d.id %></td>
+      <td><%= d.name %></td>
+      <td><%= d.price %></td>
+      <td><%= Restaurant.find_by_id(d.restaurant_id).name %></td>
+      <td><%= Category.find_by_id(d.category_id).name %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to "Back", restaurants_path %>
