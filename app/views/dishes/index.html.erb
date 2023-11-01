@@ -48,7 +48,7 @@
 
 <div class="search-form">
   <%= form_tag(dishes_path, method: :get) do %>
-    <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
+   <!--  <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %> -->
     <%= select_tag :category_id, options_for_select(Category.all.map { |c| [c.name, c.id] }, params[:category_id]), include_blank: 'Select Category', class: 'search-input' %>
     <%= submit_tag 'Search', class: 'search-button' %>
   <% end %>
@@ -60,8 +60,9 @@
       <th>Dish_id</th>
       <th>Name</th>
       <th>Price</th>
-      <th>Restaurant</th>
+      <!-- <th>Restaurant</th> -->
       <th>Category</th>
+      <th>Other details</th>
     </tr>
   </thead>
 
@@ -71,11 +72,13 @@
         <td><%= d.id %></td>
         <td><%= d.name %></td>
         <td><%= d.price %></td>
-        <td><%= Restaurant.find_by_id(d.restaurant_id).name %></td>
+        <!-- <td><%= Restaurant.find_by_id(d.restaurant_id).name %></td> -->
         <td><%= Category.find_by_id(d.category_id).name %></td>
+        <td><%= link_to "Show", dish_path(d), class: "button" %></td>
+
       </tr>
     <% end %>
   </tbody>
 </table>
 
-<%= button_to "Back", restaurants_path, class: 'btn btn-primary' %>
+<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>

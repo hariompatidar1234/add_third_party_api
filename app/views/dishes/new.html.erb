@@ -1,32 +1,45 @@
-<%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
-  <div class="form-group">
-      <%= f.label :name, 'Dish Name' %>
-      <%= f.text_field :name, class: 'form-control' %>
-       <% @dish.errors.full_messages_for(:name).each do |message| %>
+<% if current_user.type == 'Owner' %>
+  <% if flash.any? %>
+    <% flash.each do |type, msg| %>
+    <div>
+    <%= msg %>
+    </div>
+    <% end %>
+  <% end %>
+
+  <%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
+    <div class="form-group">
+        <%= f.label :name, 'Dish Name' %>
+        <%= f.text_field :name, class: 'form-control' %>
+         <% @dish.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+         <% end %>
+    </div>
+      <br>
+    <div class="form-group">
+      <%= f.label :price, 'Price' %>
+      <%= f.text_field :price, class: 'form-control' %>
+      <% @dish.errors.full_messages_for(:price).each do |message| %>
           <div><%= message %></div>
        <% end %>
-  </div>
-    <br>
-  <div class="form-group">
-    <%= f.label :price, 'Price' %>
-    <%= f.text_field :price, class: 'form-control' %>
-    <% @dish.errors.full_messages_for(:price).each do |message| %>
-        <div><%= message %></div>
-     <% end %>
-  </div>
-    <br>
-   <div class="form-group">
-      <%= f.label :category_id, 'Category_id' %>
-      <%= f.text_field :category_id, class: 'form-control' %>
     </div>
-    <br>
+      <br>
      <div class="form-group">
-      <%= f.label :restaurant_id, 'Restaurant_id' %>
-      <%= f.text_field :restaurant_id, class: 'form-control' %>
+        <%= f.label :category_id, 'Category_id' %>
+        <%= f.text_field :category_id, class: 'form-control' %>
+      </div>
+      <br>
+       <div class="form-group">
+        <%= f.label :restaurant_id, 'Restaurant_id' %>
+        <%= f.text_field :restaurant_id, class: 'form-control' %>
+      </div>
+      <br>
+    <div class="actions">
+      <%= f.submit 'Create Dish', class: 'btn btn-primary' %>
     </div>
-    <br>
-  <div class="actions">
-    <%= f.submit 'Create Dish', class: 'btn btn-primary' %>
-  </div>
+  <% end %>
+<% else %>
+  <p class="error-message">You cannot add dish.</p>
 <% end %>
-<%= link_to "Back", restaurants_path %>
+  <%= link_to "Back", restaurants_path %>
+

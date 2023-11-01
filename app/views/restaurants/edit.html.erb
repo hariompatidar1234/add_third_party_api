@@ -1,24 +1,33 @@
-<%- if user_signed_in? %>
+<% if user_signed_in? %>
       <%= link_to "Sign out", destroy_user_session_path %> <br />
 <%end %>
+
 <%= link_to "Back", restaurants_path %>
 <h1>Edit Restaurant</h1>
+
 <%= form_with(model: @restaurant, url: restaurant_path(@restaurant), method: :patch) do |f| %>
   <div class="form-group">
     <%= f.label :name, 'Restaurant Name' %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
+
   <div class="form-group">
     <%= f.label :status, 'Status' %>
-    <%= f.select :status, Restaurant.statuses.keys, {}, class: 'form-control' %>
+    <select type="choice">
+      <option value="closed">closed</option>
+      <option value="open" selected>open</option>
+    </select>
   </div>
+
   <div class="form-group">
     <%= f.label :address, 'Address' %>
     <%= f.text_field :address, class: 'form-control' %>
   </div>
+
   <div class="actions">
     <%= f.submit 'Update Restaurant', class: 'btn btn-primary' %>
   </div>
+
 <% end %>
 
 

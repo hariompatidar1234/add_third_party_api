@@ -8,10 +8,17 @@
     <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
   </div>
 
+  <br>
+
   <div class="field">
-    <%= f.label :type %><br />
+    <%= f.label :type %>
     <%= f.text_field :type, autofocus: true, autocomplete: "type" %>
+   <!--  <select type="choice">
+      <option value="Owner">Owner</option>
+      <option value="Customer" selected>customer</option>
+    </select> -->
   </div>
+  <br>
 
   <div class="field">
     <%= f.label :email %><br />

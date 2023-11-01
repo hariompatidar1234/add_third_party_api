@@ -1,4 +1,4 @@
-<%- if user_signed_in? %>
+<% if user_signed_in? %>
       <%= link_to "Sign out", destroy_user_session_path %> <br />
 <%end %>
 
@@ -19,10 +19,10 @@
         <td><%= r.name %></td>
         <td><%= r.type %></td>
         <td><%= r.email %></td>
-        <td><%= link_to "Show"%></td>
          </tr>
     <% end %>
   </tbody>
 </table>
 
 
+<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>

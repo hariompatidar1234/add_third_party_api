@@ -25,6 +25,7 @@
 
 <% if current_user.type == 'Owner' %>
   <%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
+   <%=flash[:message]%>
     <div class="form-group">
       <%= f.label :name, 'Restaurant Name' %>
       <%= f.text_field :name, class: 'form-control' %>
@@ -32,6 +33,7 @@
         <div><%= message %></div>
      <% end %>
     </div>
+
     <div class="form-group">
       <%= f.label :address, 'Address' %>
       <%= f.text_field :address, class: 'form-control' %>
@@ -39,18 +41,29 @@
          <div><%= message %></div>
       <% end %>
     </div>
+
     <div class="form-group">
       <%= f.label :status, 'Status' %>
-      <%= f.select :status, Restaurant.statuses.keys, {}, class: 'form-control' %>
+       <%= f.text_field :status, class: 'form-control' %>
+       <% @restaurant.errors.full_messages_for(:status).each do |message| %>
+         <div><%= message %></div>
+      <% end %>
+  <!--     <select type="choice">
+        <option value="closed">closed</option>
+        <option value="open">open</option>
+      </select> -->
     </div>
+
     <div class="actions">
       <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
     </div>
+
   <% end %>
+
 <% else %>
   <p class="error-message">You cannot create a restaurant.</p>
 <% end %>
-<%= link_to "User Profile", current_user_profile_path, class: 'btn btn-secondary' %>
+
 <%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
 <%- if user_signed_in? %>
   <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-danger' %> <br />

@@ -4,13 +4,13 @@ class RestaurantsController < ApplicationController
   def index
     restaurants = Restaurant.all
     @restaurants = if params[:name]
-                    restaurants.where('name LIKE ?', "%#{params[:name]}%")
+                    restaurants.where('name LIKE ?', "%#{params[:name]}%").page(params[:page]).per(3)
                   elsif params[:status]
-                    restaurants.where(status: params[:status])
+                    restaurants.where(status: params[:status]).page(params[:page]).per(3)
                   elsif params[:address]
                     restaurants.where('address LIKE ?', "%#{params[:address]}%")
                   else
-                    restaurants.page(params[:page]).per(10)
+                    restaurants.page(params[:page]).per(3)
                   end
     # render json: @restaurants
   end
@@ -23,8 +23,8 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = current_user.restaurants.new(restaurant_params)
     if @restaurant.save
-      flash[:message] = "You Created Successfully!"
       redirect_to root_path
+      flash[:message] = "You Created Successfully!"
     else
       render :new, status: :unprocessable_entity
     end
@@ -41,8 +41,7 @@ class RestaurantsController < ApplicationController
        flash[:success] = 'Restaurant updated successfully'
        redirect_to restaurant_path(@restaurant)
       else
-        flash[:error] = @restaurant.errors.full_messages.join(', ')
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     else
       render json: { error: 'You are not authorized to update this restaurant' }, status: :unauthorized

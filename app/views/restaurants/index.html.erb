@@ -2,10 +2,9 @@
   /* General button styling */
   .button {
     display: inline-block;
-    padding: 5px 10px;
-    background-color: #FF5733;
+    background-color: #d68910;
     color: #FFF;
-    text-decoration: none;
+    text-decoration: none; /* not underline  */
     margin: 5px;
     border: 1px solid #000;
     border-radius: 5px;
@@ -13,7 +12,7 @@
 
   /* Sign out button styling */
   .signout-button {
-    background-color: #FF0000;
+    background-color: #d68910;
   }
 
   /* Styling for the search form */
@@ -26,12 +25,17 @@
     border: 1px solid #007bff;
   }
 
+  /* .search-input 2{
+    padding: 5px;
+    border: 1px solid #007bff;
+  }*/
+
   .search-button {
     padding: 5px 10px;
     background-color: #007bff;
     color: #FFF;
     border: 1px solid #007bff;
-    border-radius: 5px;
+    /*border-radius: 5px;*/
   }
 
   .search-button:hover {
@@ -39,46 +43,50 @@
   }
 </style>
 
+
 <h1>Listing Restaurants</h1>
-<p><%= flash[:message] %></p>
+  <p><%= flash[:message] %></p>
 
-<div class="search-form">
-  <%= form_tag(restaurants_path, method: :get) do %>
-    <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
-    <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %>
-    <%= submit_tag 'Search', class: 'search-button' %>
-  <% end %>
-</div>
+    <div class="search-form">
+      <%= form_tag(restaurants_path, method: :get) do %>
+        <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
+    <!--  <%= text_field_tag :address, params[:address], placeholder: 'Search by address', class: 'search-input 2' %> -->
+        <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %>
+        <%= submit_tag 'Search', class: 'search-button' %>
+      <% end %>
+    </div>
 
-<div>
-  <a class="button" href="<%= current_user_profile_path %>">User Profile</a>
-  <a class="button" href="/restaurants/new">Create Restaurants</a>
-  <a class="button" href="/categories/new">Create Category</a>
-  <a class="button" href="dishes">Dish List</a>
-  <a class="button" href="categories">Category List</a>
-  <% if user_signed_in? %>
-    <%= link_to "Sign out", destroy_user_session_path, class: "button signout-button" %><br>
-  <% end %>
-</div>
+    <div>
+      <a class="button" href="<%= current_user_profile_path %>">User Profile</a>
+      <a class="button" href="<%= new_restaurant_path %>">Create Restaurants</a>
+      <a class="button" href="<%= new_category_path %>">Create Category</a>
+      <a class="button" href="dishes">Dish List</a>
+      <a class="button" href="categories">Category List</a>
+      <!-- <a class="button" href="/user/index">All users</a> -->
+      <% if user_signed_in? %>
+        <%= link_to "Sign out", destroy_user_session_path, class: "button signout-button" %><br>
+      <% end %>
+    </div>
 
-<table style="background-color: pink; border: 1px solid #000; width: 100%;">
-  <thead style="color: red; background-color: black;">
-    <tr>
-      <th>Restaurant_id</th>
-      <th>Name</th>
-      <th>Status</th>
-      <th>Other details</th>
-    </tr>
-  </thead>
+    <table style="background-color: #48c9b0; border: 1px solid #000; width: 100%;">
+      <thead style="color: red; background-color: black;">
+        <tr>
+          <th>Restaurant_id</th>
+          <th>Name</th>
+          <th>Status</th>
+          <th>Other details</th>
+        </tr>
+      </thead>
 
-  <tbody>
-    <% @restaurants.each do |r| %>
-      <tr>
-        <td><%= r.id %></td>
-        <td><%= r.name %></td>
-        <td><%= r.status %></td>
-        <td><%= link_to "Show", restaurant_path(r), class: "button" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+      <tbody>
+        <% @restaurants.each do |r| %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.name %></td>
+            <td><%= r.status %></td>
+            <td><%= link_to "Show", restaurant_path(r), class: "button" %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <%= paginate @restaurants %>
