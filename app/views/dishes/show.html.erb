@@ -19,15 +19,22 @@
 
 <h1>Dish Details</h1>
 
+<%= image_tag(@dish.picture,size: "250x250") if @dish.picture.attached? %>
 <p><strong>Dish ID:</strong> <%= @dish.id %></p>
 <p><strong>Dish Name:</strong> <%= @dish.name %></p>
 <p><strong>Price:</strong> <%= @dish.price %></p>
 <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(@dish.restaurant_id).name %></p>
 <p><strong>Category:</strong> <%=Category.find_by_id(@dish.category_id).name %></p>
 
+
 <%= link_to "Back", dishes_path, class: 'btn btn-primary' %>
 
 
-<!-- <%= link_to "Edit dish", edit_dish_path(@dish), class: 'btn btn-primary' %> -->
+<%= link_to "Edit dish", edit_dish_path(@dish), class: 'btn btn-primary' %>
 
+
+<%= link_to "delete dish", dish_path(@dish), data: {
+                    turbo_method: :delete,
+                    turbo_confirm: "Are you sure?"
+                  }, class: 'btn btn-primary'  %>
 

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     get '/users/sign_out', to: 'devise/sessions#destroy'
   end
 
-   resource :profile, controller: 'users', only: %i[show update destroy], as: 'current_user_profile'
+   resource :profile, controller: 'users', as: 'current_user_profile'
 
   # resources :users do
   #   post 'login', on: :collection

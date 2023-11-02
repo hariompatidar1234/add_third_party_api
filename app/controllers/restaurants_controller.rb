@@ -35,6 +35,10 @@ class RestaurantsController < ApplicationController
     @restaurant = Restaurant.find_by_id(params[:id])
   end
 
+  def edit
+    @restaurant = Restaurant.find_by_id(params[:id])
+  end
+
   def update
     if @restaurant.owner == current_user
       if @restaurant.update(restaurant_params)
@@ -44,24 +48,18 @@ class RestaurantsController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
-      render json: { error: 'You are not authorized to update this restaurant' }, status: :unauthorized
+      redirect_to restaurant_path(@restaurant)
+      flash[:message] = 'You are not authorized to update this restaurant.'
     end
   end
 
-  def edit
-    @restaurant = Restaurant.find_by_id(params[:id])
-  end
-
-
   def destroy
     if @restaurant.owner == current_user
-      if @restaurant.destroy
-        render json: { data: @restaurant, message: 'Restaurant deleted successfully' }
-      else
-        render json: { error: @restaurant.errors.full_messages }, status: :unprocessable_entity
-      end
-    else
-      render json: { error: 'You are not authorized to delete this restaurant' }, status: :unauthorized
+      @restaurant.destroy
+      redirect_to root_path, status: :see_other
+   else
+      redirect_to restaurant_path(@restaurant)
+      flash[:message] = 'You are not authorized to delete this restaurant.'
     end
   end
 

@@ -25,6 +25,10 @@ class CategoriesController < ApplicationController
     @category = Category.find_by_id(params[:id])
   end
 
+  def edit
+    @category = Category.find_by_name(params[:category_name])
+  end
+
   def update
     if @category.update(category_params)
       render json: { data: @category, message: 'Category updated' }

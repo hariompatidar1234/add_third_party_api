@@ -34,6 +34,10 @@
         <%= f.text_field :restaurant_id, class: 'form-control' %>
       </div>
       <br>
+      <div class="form-group">
+      <%= f.label :dish_images, "dish_images" %>
+      <%= f.file_field :picture %>
+      </div>
     <div class="actions">
       <%= f.submit 'Create Dish', class: 'btn btn-primary' %>
     </div>

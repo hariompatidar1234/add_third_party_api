@@ -20,20 +20,12 @@ class UsersController < ApplicationController
     @current_user
   end
 
-  # def update
-  #   if @current_user.update(user_params)
-  #     render json: { data: @current_user, message: 'User updated' }
-  #   else
-  #     render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
   def update
-     if @current_user.update(user_params)
-       flash[:notice] = 'User updated successfully'  # Set a flash notice
-       redirect_to current_user_profile_path
-     else
-       render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
-     end
+    if @current_user.update(user_params)
+      render json: { data: @current_user, message: 'User updated' }
+    else
+      render json: { error: @current_user.errors.full_messages }, status: :unprocessable_entity
+    end
   end
 
 

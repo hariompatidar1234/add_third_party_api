@@ -1,0 +1,44 @@
+
+<%= link_to "Back", dishes_path %>
+<h1>Edit dish</h1>
+<% if flash.any? %>
+    <% flash.each do |type, msg| %>
+    <div>
+    <%= msg %>
+    </div>
+    <% end %>
+  <% end %>
+
+<%= form_with(model: @dish, url: dish_path(@dish), method: :patch) do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Dish Name' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :price, 'price' %>
+      <%= f.text_field :price , class: 'form-group' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category_id, 'Category_id' %>
+    <%= f.text_field :category_id, class: 'form-control' %>
+  </div><br>
+
+  <div class="form-group">
+      <%= f.label :restaurant_id, 'Restaurant_id' %>
+      <%= f.text_field :restaurant_id, class: 'form-control' %>
+  </div><br>
+
+  <div class="form-group">
+    <%= f.label :dish_images, "dish_images" %>
+    <%= f.file_field :picture %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update Dish', class: 'btn btn-primary' %>
+  </div>
+
+<% end %>
+
+

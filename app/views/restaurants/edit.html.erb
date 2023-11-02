@@ -4,6 +4,13 @@
 
 <%= link_to "Back", restaurants_path %>
 <h1>Edit Restaurant</h1>
+<% if flash.any? %>
+    <% flash.each do |type, msg| %>
+    <div>
+    <%= msg %>
+    </div>
+    <% end %>
+  <% end %>
 
 <%= form_with(model: @restaurant, url: restaurant_path(@restaurant), method: :patch) do |f| %>
   <div class="form-group">
@@ -13,16 +20,18 @@
 
   <div class="form-group">
     <%= f.label :status, 'Status' %>
-    <select type="choice">
-      <option value="closed">closed</option>
-      <option value="open" selected>open</option>
-    </select>
+      <%= select_tag "status", options_for_select(["open", "close"], @restaurant.status) %>
   </div>
 
   <div class="form-group">
     <%= f.label :address, 'Address' %>
     <%= f.text_field :address, class: 'form-control' %>
   </div>
+
+  <div class="form-group">
+  <%= f.label :restaurant_image, "picture" %>
+  <%= f.file_field :picture%>
+  </div
 
   <div class="actions">
     <%= f.submit 'Update Restaurant', class: 'btn btn-primary' %>
