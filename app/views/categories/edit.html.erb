@@ -1,0 +1,35 @@
+<style>
+ .btn-primary{
+  background: pink;
+  color: black;
+ }
+</style>
+<%= link_to "Back", categories_path %>
+<h1>Edit Category</h1>
+<% if flash.any? %>
+    <% flash.each do |type, msg| %>
+    <div>
+    <%= msg %>
+    </div>
+    <% end %>
+  <% end %>
+
+<% if current_user.type == 'Owner' %>
+  <%= form_with(model: @category, url: category_path(@category), method: :put) do |f| %>
+    <div class="form-group">
+      <%= f.label :name, 'Category Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit 'Update Category ', class: 'btn btn-primary' %>
+    </div>
+
+  <% end %>
+
+<% else %>
+  <p class="error-message">You cannot update a category</p>
+<% end %>
+
+
+

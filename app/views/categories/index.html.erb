@@ -10,6 +10,7 @@ td {
     <tr>
       <th> Id </th>
       <th> Category name</th>
+      <th> show </th>
     </tr>
   </thead>
 
@@ -18,6 +19,8 @@ td {
       <tr>
         <td><%= r.id %></td>
         <td><%= r.name %></td>
+        <td><%= link_to "show", category_path(r), class: 'btn btn-primary'%></td>
+
       </tr>
     <% end %>
   </tbody>

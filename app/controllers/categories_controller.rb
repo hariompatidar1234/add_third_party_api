@@ -17,7 +17,8 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
       # render json: { data: @category, message: 'Category created' }, status: :created
     else
-      render json: { error: @category.errors.full_messages }, status: :unprocessable_entity
+      # render json: { error: @category.errors.full_messages }, status: :unprocessable_entity
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -26,23 +27,24 @@ class CategoriesController < ApplicationController
   end
 
   def edit
-    @category = Category.find_by_name(params[:category_name])
+    @category = Category.find_by_id(params[:id])
   end
 
   def update
+    byebug
     if @category.update(category_params)
-      render json: { data: @category, message: 'Category updated' }
+      # render json: { data: @category, message: 'Category updated' }
+      redirect_to categories_path, notice: "update category"
     else
-      render json: { error: @category.errors.full_messages }, status: :unprocessable_entity
+      # render json: { error: @category.errors.full_messages }, status: :unprocessable_entity
+        render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if @category.destroy
-      render json: { message: 'Category deleted' }
-    else
-      render json: { error: @category.errors.full_messages }, status: :unprocessable_entity
-    end
+     @category.destroy
+      # render json: { message: 'Category deleted' }
+      redirect_to categories_path, notice: "update category"
   end
 
   private
@@ -52,7 +54,7 @@ class CategoriesController < ApplicationController
   end
 
   def set_category
-    @category = Category.find_by_name(params[:category_name])
+    @category = Category.find_by_id(params[:id])
     render json: { error: 'Category not found by name' }, status: :not_found unless @category
   end
 end
