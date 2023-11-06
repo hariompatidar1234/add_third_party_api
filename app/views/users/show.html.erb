@@ -25,3 +25,6 @@
 <%= link_to "Back", restaurants_path, class: 'btn btn-secondary' %>
   <%= button_to "EDIT PROFILE", edit_user_registration_path, method: :get, class: "button-shape" %>
 
+<% if current_user.type == "Owner" %>
+  <%= link_to "Show My Restaurants", my_restaurants_list_restaurants_path, class: 'btn btn-primary' %>
+<% end %>

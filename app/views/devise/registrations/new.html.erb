@@ -1,46 +1,104 @@
-<h2>Sign up</h2>
+<style>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+*{
+  margin: 0;
+  padding: 0;
+  outline: none;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
 
-  <div class="field">
-    <%= f.label :name %><br />
-    <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+
+h2{
+  margin: 50px;
+}
+
+.body-container{
+  display: flex;
+  align-items: center;
+  /*justify-content: center;*/
+  min-height: 100vh;
+  padding: 10px;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(115deg, #56d8e4 10%, #9f01ea 90%);
+}
+.container{
+  width: 800px;
+  max-width: 400px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 25px 40px 10px 40px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+.field{
+  width: 100%;
+  height: 40px;
+  margin: 10px 50px 13px ;
+  position: relative;
+
+}
+
+.actions{
+  padding: 10px 32px 40px 30px;
+  text-align: center;
+  text-decoration: none;
+  background-color: #08d;
+  border-radius: 10px;
+  font-size: 18px;
+  height: 50px;
+  margin: 20px 60px 30px 30px;
+  border: 2px solid #000;
+  font-size: 1.2em;
+
+}
+
+.actions:active {
+  background-color: #06b;
+}
+
+</style>
+
+<div class="body-container">
+  <div class="container">
+   <h2>Sign up</h2>
+
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :type %><br>
+        <%= f.text_field :type, autofocus: true, autocomplete: "type" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+        <%= render "devise/shared/links" %>
+    <% end %>
   </div>
+</div>
 
-  <br>
-
-  <div class="field">
-    <%= f.label :type %>
-    <%= f.text_field :type, autofocus: true, autocomplete: "type" %>
-   <!--  <select type="choice">
-      <option value="Owner">Owner</option>
-      <option value="Customer" selected>customer</option>
-    </select> -->
-  </div>
-  <br>
-
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
