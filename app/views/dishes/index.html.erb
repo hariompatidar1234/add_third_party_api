@@ -82,3 +82,28 @@
 </table>
 
 <%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
+<!--
+  <tbody>
+    <% @dishes.each do |d| %>
+      <tr>
+        <td>
+          <% if d.picture.attached? %>
+          <a href="<%= dish_path(d) %>">
+            <%= image_tag(d.picture, size: "200x160") %>
+          </a>
+          <% else %>
+          <%=image_tag("test_image.png", size: "220x180") %>
+          <% end %>
+        </td>
+        <td class="dish-details">
+          <div>
+            <p>Dish_id: <%= d.id %></p>
+            <p>Name: <%= d.name %></p>
+            <p>Price: <%= d.price %></p>
+            <p>Category: <%= Category.find_by_id(d.category_id).name%></p>
+          </div>
+        </td>
+
+      </tr>
+    <% end %>
+  </tbody> -->

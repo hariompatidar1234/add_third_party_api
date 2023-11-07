@@ -2,7 +2,7 @@
   /* General button styling */
   .button {
     display: inline-block;
-    background-color: #d68910;
+    /*background-color: #d68910;*/
     color: #FFF;
     text-decoration: none; /* not underline  */
     margin: 5px;
@@ -17,7 +17,9 @@
 
   /* Styling for the search form */
   .search-form {
-    margin: 10px 0;
+    text-align: center;
+    margin: 10px 0px 10px 5px;
+    /*padding: 0px 10px 10px 110px;*/
   }
 
   .search-input {
@@ -25,21 +27,29 @@
     border: 1px solid #007bff;
   }
 
-  /* .search-input 2{
-    padding: 5px;
-    border: 1px solid #007bff;
-  }*/
-
   .search-button {
     padding: 5px 10px;
     background-color: #007bff;
     color: #FFF;
     border: 1px solid #007bff;
-    /*border-radius: 5px;*/
+    border-radius: 5px;
   }
 
   .search-button:hover {
     background-color: #0056b3;
+  }
+
+  .navbar{
+    margin: 10px 10px 10px 110px
+      position: absolute;
+      background-color: #333;
+      color: white;
+      display: block;
+      text-align: left;
+      display: block;
+      text-align: center;
+      padding: 14px 16px;
+
   }
 </style>
 
@@ -50,17 +60,17 @@
     <%= form_tag(restaurants_path, method: :get) do %>
       <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
   <!--  <%= text_field_tag :address, params[:address], placeholder: 'Search by address', class: 'search-input 2' %> -->
-      <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %>
+ <!--      <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %> -->
       <%= submit_tag 'Search', class: 'search-button' %>
     <% end %>
   </div>
 
-  <div>
-    <a class="button" href="<%= current_user_profile_path %>">User Profile</a>
+  <div class= "navbar">
     <a class="button" href="<%= new_restaurant_path %>">Create Restaurants</a>
     <a class="button" href="<%= new_category_path %>">Create Category</a>
     <a class="button" href="dishes ">Dish List</a>
     <a class="button" href="categories">Category List</a>
+     <a class="button" href="<%= current_user_profile_path %>">User Profile</a>
     <!-- <a class="button" href="/user/index">All users</a> -->
     <% if user_signed_in? %>
       <%= link_to "Sign out", destroy_user_session_path, class: "button signout-button" %><br>
@@ -72,9 +82,6 @@
       <tr>
         <th>Picture</th>
         <th>Restaurant Details</th>
-        <!-- <th>Name</th>
-        <th>Status</th>
-        <th>Address</th> -->
       </tr>
     </thead>
 
@@ -82,9 +89,13 @@
       <% @restaurants.each do |r| %>
       <tr>
         <td>
+          <% if r.picture.attached? %>
           <a href="<%= restaurant_path(r) %>">
-            <%= image_tag(r.picture, size: "200x160") if r.picture.attached? %>
+            <%= image_tag(r.picture, size: "200x160") %>
           </a>
+          <% else %>
+          <%=image_tag("test_image.png", size: "220x180") %>
+          <% end %>
         </td>
         <td class="restaurant-details">
           <div>
