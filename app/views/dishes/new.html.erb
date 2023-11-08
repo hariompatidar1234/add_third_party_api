@@ -1,4 +1,6 @@
+
 <% if current_user.type == 'Owner' %>
+<div class="form-container">
   <% if flash.any? %>
     <% flash.each do |type, msg| %>
     <div>
@@ -24,15 +26,20 @@
        <% end %>
     </div>
       <br>
-     <div class="form-group">
-        <%= f.label :category_id, 'Category_id' %>
-        <%= f.text_field :category_id, class: 'form-control' %>
-      </div>
-      <br>
-       <div class="form-group">
-        <%= f.label :restaurant_id, 'Restaurant_id' %>
-        <%= f.text_field :restaurant_id, class: 'form-control' %>
-      </div>
+    <div class="form-group">
+      <%= f.label :category_id, 'Category', class: 'form-label' %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
+      <% @dish.errors.full_messages_for(:category_id).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
+      <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
+      <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
       <br>
       <div class="form-group">
       <%= f.label :dish_images, "dish_images" %>
@@ -46,12 +53,15 @@
   <p class="error-message">You cannot add dish.</p>
 <% end %>
   <%= link_to "Back", restaurants_path %>
-
-
-
-
-
+</div>
 <!--
+<style>
+
+</style> -->
+
+
+
+
 
 <style>
   /* Add these CSS styles to your project's CSS file */
@@ -157,6 +167,8 @@
 }
 
 </style>
+
+<!--
 <% if current_user.type == 'Owner' %>
   <div class="form-container">
     <% if flash.any? %>
