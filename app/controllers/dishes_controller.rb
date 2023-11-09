@@ -20,8 +20,8 @@ class DishesController < ApplicationController
     if @restaurant && @restaurant.owner == current_user
       @dish = @restaurant.dishes.new(dish_params)
       if @dish.save
-        redirect_to root_path
         flash[:message] = "You added dish Successfully!"
+        redirect_to dish_path(@dish)
       else
         render :new, status: :unprocessable_entity
       end
@@ -48,8 +48,9 @@ class DishesController < ApplicationController
         render :edit, status: :unprocessable_entity
       end
     else
+      flash[:message] = 'You are not authorized to update a dish to this restaurant.'
       redirect_to dish_path
-      flash[:message] = 'You are not authorized to add a dish to this restaurant.'
+      # render  :edit , notice: "You are not authorized to add a dish to this restaurant"
     end
   end
 

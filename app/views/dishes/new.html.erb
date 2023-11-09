@@ -11,11 +11,11 @@
 
   <%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
     <div class="form-group">
-        <%= f.label :name, 'Dish Name' %>
-        <%= f.text_field :name, class: 'form-control' %>
-         <% @dish.errors.full_messages_for(:name).each do |message| %>
-            <div><%= message %></div>
-         <% end %>
+      <%= f.label :name, 'Dish Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+      <% @dish.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
     </div>
       <br>
     <div class="form-group">
@@ -54,13 +54,6 @@
 <% end %>
   <%= link_to "Back", restaurants_path %>
 </div>
-<!--
-<style>
-
-</style> -->
-
-
-
 
 
 <style>
@@ -167,62 +160,3 @@
 }
 
 </style>
-
-<!--
-<% if current_user.type == 'Owner' %>
-  <div class="form-container">
-    <% if flash.any? %>
-      <% flash.each do |type, msg| %>
-        <div class="alert alert-<%= type %>">
-          <%= msg %>
-        </div>
-      <% end %>
-    <% end %>
-
-    <%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
-      <div class="form-group">
-        <%= f.label :name, 'Dish Name', class: 'form-label' %>
-        <%= f.text_field :name, class: 'form-control form-control-full-width' %>
-        <% @dish.errors.full_messages_for(:name).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :price, 'Price', class: 'form-label' %>
-        <%= f.text_field :price, class: 'form-control form-control-full-width' %>
-        <% @dish.errors.full_messages_for(:price).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :category_id, 'Category', class: 'form-label' %>
-        <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
-        <% @dish.errors.full_messages_for(:category_id).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
-        <%= f.collection_select :restaurant_id, Restaurant.all, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
-        <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
-      </div>
-      <div class="form-group">
-        <%= f.label :picture, 'Dish Image', class: 'form-label' %>
-        <%= f.file_field :picture, class: 'form-control-file' %>
-        <% @dish.errors.full_messages_for(:picture).each do |message| %>
-          <div class="text-danger"><%= message %></div>
-        <% end %>
-      </div>
-      <div class="actions">
-        <%= f.submit 'Create Dish', class: 'btn btn-primary' %>
-      </div>
-    <% end %>
-  </div>
-<% else %>
-  <p class="error-message">You cannot add a dish.</p>
-<% end %>
-
-<%= link_to "Back", restaurants_path, class: 'btn btn-back' %>
- -->

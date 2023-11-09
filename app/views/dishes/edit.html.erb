@@ -17,17 +17,23 @@
 
   <div class="form-group">
     <%= f.label :price, 'price' %>
-      <%= f.text_field :price , class: 'form-group' %>
+    <%= f.text_field :price , class: 'form-group' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :category_id, 'Category_id' %>
-    <%= f.text_field :category_id, class: 'form-control' %>
+   <%= f.label :category_id, 'Category', class: 'form-label' %>
+   <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
+   <% @dish.errors.full_messages_for(:category_id).each do |message| %>
+     <div class="text-danger"><%= message %></div>
+   <% end %>
   </div><br>
 
   <div class="form-group">
-      <%= f.label :restaurant_id, 'Restaurant_id' %>
-      <%= f.text_field :restaurant_id, class: 'form-control' %>
+   <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
+   <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
+   <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
+     <div class="text-danger"><%= message %></div>
+     <% end %>
   </div><br>
 
   <div class="form-group">
@@ -42,3 +48,91 @@
 <% end %>
 
 
+<style>
+  /* Add these CSS styles to your project's CSS file */
+
+/* Style for the alert messages */
+.alert {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Form container */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Form input fields */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control-file {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+
+/* Button styling */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Back button styling */
+/*.btn-back {
+  background-color: #ccc;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}*/
+
+/* Center the button */
+.actions {
+  text-align: center;
+}
+
+/* Style for labels */
+.form-label {
+  font-weight: bold;
+}
+*/
+/* Styling for dropdowns */
+.form-control-select {
+  /*width: 100%;*/
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+</style>
