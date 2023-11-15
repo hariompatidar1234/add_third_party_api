@@ -4,31 +4,63 @@ class CartsController < ApplicationController
   before_action :create_cart ,only: :create
   
   def index
-    # @current_user.cart = Cart.all
-    @cart_item = CartItem.all
+  #   # @current_user.cart = Cart.all
+  #   # @cart_item = CartItem.all
+    @cart_item = current_user.cart.cart_items
   end
   
-  def create
-    @dish = Dish.find_by_id(cart_item_params[:dish_id])
+  # def create
+  #   @dish = Dish.find_by_id(cart_item_params[:dish_id])
     
-    unless @dish
-      return render json: { error: 'Dish not found' }, status: :not_found
-    end
+  #   unless @dish
+  #     return render json: { error: 'Dish not found' }, status: :not_found
+  #   end
     
-    if @cart.cart_items.empty? || same_restaurant?(@cart, @dish.restaurant)
-      @cart_item = @cart.cart_items.new(dish: @dish, quantity: cart_item_params[:quantity])
+  #   if @cart.cart_items.empty? || same_restaurant?(@cart, @dish.restaurant)
+  #     @cart_item = @cart.cart_items.new(dish: @dish, quantity: cart_item_params[:quantity])
       
-      if @cart_item.save
-        render json: { message: 'CartItem added to cart successfully!', data: @cart_item }, status: :created
-      else
-        render json: { error: @cart_item.errors.full_messages }, status: :unprocessable_entity
+  #     if @cart_item.save
+  #       render json: { message: 'CartItem added to cart successfully!', data: @cart_item }, status: :created
+  #     else
+  #       render json: { error: @cart_item.errors.full_messages }, status: :unprocessable_entity
+  #     end
+  #   else
+  #     render json: { errors: 'CartItems could not be added to cart for a different restaurant' },
+  #     status: :unprocessable_entity
+  #   end
+  # end
+  
+  # app/controllers/carts_controller.rb
+def create
+  @dish = Dish.find_by_id(cart_item_params[:dish_id])
+
+  unless @dish
+    return render json: { error: 'Dish not found' }, status: :not_found
+  end
+
+  if @cart.cart_items.empty? || same_restaurant?(@cart, @dish.restaurant)
+    @cart_item = @cart.cart_items.new(dish: @dish, quantity: cart_item_params[:quantity])
+
+    if @cart_item.save
+      respond_to do |format|
+        format.html { redirect_to new_cart_path, notice: 'CartItem added to cart successfully!' }
+        format.json { render partial: 'cart_item_partial', locals: { cart_item: @cart_item } }
       end
     else
-      render json: { errors: 'CartItems could not be added to cart for a different restaurant' },
-      status: :unprocessable_entity
+      respond_to do |format|
+        format.html { render :new }
+        format.json { render json: { error: @cart_item.errors.full_messages }, status: :unprocessable_entity }
+      end
+    end
+  else
+    respond_to do |format|
+      format.html { redirect_to new_cart_path, alert: 'CartItems could not be added to cart for a different restaurant' }
+      format.json { render json: { errors: 'CartItems could not be added to cart for a different restaurant' }, status: :unprocessable_entity }
     end
   end
-  
+end
+
+
   def show
     if @cart_item
       render json: @cart_item
@@ -82,11 +114,11 @@ class CartsController < ApplicationController
   end
   
   def find_cart_item
-    @cart_item = @current_user&.cart&.cart_items&.find_by_id(params[:id])
+    @cart_item = current_user&.cart&.cart_items&.find_by_id(params[:id])
   end
   
   def cart_not_empty?
-    if @current_user&.cart&.cart_items&.empty?
+    if current_user&.cart&.cart_items&.empty?
       render json: { error: 'Cart is empty' }, status: :unprocessable_entity
     end
   end

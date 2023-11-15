@@ -1,138 +1,114 @@
+<%= link_to "Back", dishes_path, class: 'btn btn-back' %>
+<h1 class="form-title">Edit Dish</h1>
 
-<%= link_to "Back", dishes_path %>
-<h1>Edit dish</h1>
 <% if flash.any? %>
-    <% flash.each do |type, msg| %>
-    <div>
-    <%= msg %>
+  <% flash.each do |type, msg| %>
+    <div class="alert <%= type %>">
+      <%= msg %>
     </div>
-    <% end %>
   <% end %>
+<% end %>
 
-<%= form_with(model: @dish, url: dish_path(@dish), method: :patch) do |f| %>
+<%= form_with(model: @dish, url: dish_path(@dish), method: :patch, class: 'form-container') do |f| %>
   <div class="form-group">
-    <%= f.label :name, 'Dish Name' %>
+    <%= f.label :name, 'Dish Name', class: 'form-label' %>
     <%= f.text_field :name, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-    <%= f.label :price, 'price' %>
-    <%= f.text_field :price , class: 'form-group' %>
+    <%= f.label :price, 'Price', class: 'form-label' %>
+    <%= f.text_field :price, class: 'form-control' %>
   </div>
 
   <div class="form-group">
-   <%= f.label :category_id, 'Category', class: 'form-label' %>
-   <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
-   <% @dish.errors.full_messages_for(:category_id).each do |message| %>
-     <div class="text-danger"><%= message %></div>
-   <% end %>
-  </div><br>
+    <%= f.label :category_id, 'Category', class: 'form-label' %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
+    <% @dish.errors.full_messages_for(:category_id).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
 
   <div class="form-group">
-   <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
-   <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
-   <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
-     <div class="text-danger"><%= message %></div>
-     <% end %>
-  </div><br>
+    <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
+    <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
+    <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
 
   <div class="form-group">
-    <%= f.label :dish_images, "dish_images" %>
-    <%= f.file_field :picture %>
+    <%= f.label :dish_images, "Dish Images", class: 'form-label' %>
+    <%= f.file_field :picture, class: 'form-control-file' %>
   </div>
 
   <div class="actions">
     <%= f.submit 'Update Dish', class: 'btn btn-primary' %>
   </div>
-
 <% end %>
 
-
 <style>
-  /* Add these CSS styles to your project's CSS file */
+  /* ... Your existing styles ... */
 
-/* Style for the alert messages */
-.alert {
-  padding: 10px;
-  margin-bottom: 10px;
-  border: 1px solid transparent;
-  border-radius: 4px;
-}
+  body {
+    background-image: url('your-background-image-url.jpg'); /* Replace 'your-background-image-url.jpg' with the actual URL or path to your background image */
+    background-size: cover;
+    background-position: center;
+  }
 
-.alert-success {
-  background-color: #d4edda;
-  border-color: #c3e6cb;
-  color: #155724;
-}
+  .form-title {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+  }
 
+  .form-container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 400px;
+  }
 
-.alert-danger {
-  background-color: #f8d7da;
-  border-color: #f5c6cb;
-  color: #721c24;
-}
+  .form-group {
+    margin-bottom: 20px;
+  }
 
-/* Form container */
-.form-container {
-  max-width: 400px;
-  margin: 0 auto;
-}
+  .form-label {
+    color: #007bff;
+    font-size: 16px;
+  }
 
-/* Form input fields */
-.form-group {
-  margin-bottom: 15px;
-}
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
 
-.form-control {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+  .form-control-select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
 
-.form-control-file {
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+  .form-control-file {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
 
-
-/* Button styling */
-.btn-primary {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-/* Back button styling */
-/*.btn-back {
-  background-color: #ccc;
-  color: #000;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
-  cursor: pointer;
-}*/
-
-/* Center the button */
-.actions {
-  text-align: center;
-}
-
-/* Style for labels */
-.form-label {
-  font-weight: bold;
-}
-*/
-/* Styling for dropdowns */
-.form-control-select {
-  /*width: 100%;*/
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
+  .btn-back {
+    background-color: #ccc;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
 </style>

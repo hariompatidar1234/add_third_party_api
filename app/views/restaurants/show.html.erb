@@ -1,4 +1,21 @@
 <style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
   h1 {
     font-size: 24px;
     color: #007bff;
@@ -10,47 +27,105 @@
     margin-bottom: 10px;
   }
 
-  .btn-primary {
+  .btn-primary,
+  .btn-danger {
     display: inline-block;
-    text-decoration: none; /* not underline  */
+    text-decoration: none;
     margin: 5px;
-    border: 1px solid #000;
+    padding: 12px 24px;
     border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+  }
 
-    background-color:  #2c3e50;
+  .btn-primary {
+    border: 2px solid #007bff;
+    background-color: #007bff;
     color: #fff;
   }
 
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .btn-danger {
+    border: 2px solid #d9534f;
+    background-color: #d9534f;
+    color: #fff;
+  }
+
+  .btn-danger:hover {
+    background-color: #c9302c;
+  }
+
+  .back-btn {
+    display: inline-block;
+    text-decoration: none;
+    margin: 10px 0;
+    padding: 10px 20px;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    font-size: 16px;
+    color: #007bff;
+    transition: background-color 0.3s;
+  }
+
+  .back-btn:hover {
+    background-color: #0056b3;
+  }
+
+  .image-container {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .user-actions {
+    margin-top: 20px;
+  }
 </style>
-<% if flash.any? %>
+
+<div class="container">
+  <% if flash.any? %>
     <% flash.each do |type, msg| %>
-    <div>
-    <%= msg %>
-    </div>
+      <div>
+        <%= msg %>
+      </div>
     <% end %>
   <% end %>
 
-<h1>Restaurant Details</h1>
+  <h1>Restaurant Details</h1>
 
-<%= image_tag(@restaurant.picture,size: "250x250") if @restaurant.picture.attached? %>
-<p><strong>Restaurant ID:</strong> <%= @restaurant.id %></p>
-<p><strong>Restaurant Name:</strong> <%= @restaurant.name %></p>
-<p><strong>Status:</strong> <%= @restaurant.status %></p>
-<p><strong>Address:</strong> <%= @restaurant.address %></p>
-<p><strong>Owner:</strong> <%= User.find_by_id(@restaurant.owner.id).name %></p>
+  <div class="image-container">
+    <%= image_tag(@restaurant.picture, size: "250x250", alt: "Restaurant Image") if @restaurant.picture.attached? %>
+  </div>
 
-<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
+  <p><strong>Restaurant ID:</strong> <%= @restaurant.id %></p>
+  <p><strong>Restaurant Name:</strong> <%= @restaurant.name %></p>
+  <p><strong>Status:</strong> <%= @restaurant.status %></p>
+  <p><strong>Address:</strong> <%= @restaurant.address %></p>
+  <p><strong>Owner:</strong> <%= User.find_by_id(@restaurant.owner.id).name %></p>
 
-<%- if user_signed_in? %>
-  <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-primary' %> <br />
-<% end %>
+  <%= link_to "Back", restaurants_path, class: 'back-btn' %>
 
-<%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-primary' %>
+  <div class="user-actions">
+    <% if user_signed_in? %>
+      <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-primary' %> <br />
+    <% end %>
 
-<%= link_to "Add Dish", new_dish_path, class: 'btn btn-primary' %>
+    <%= link_to "Edit Restaurant", edit_restaurant_path(@restaurant), class: 'btn btn-primary' %>
 
-<%= link_to "delete restaurant", restaurant_path(@restaurant), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  }, class: 'btn btn-primary'  %>
+    <%= link_to "Add Dish", new_dish_path, class: 'btn btn-primary' %>
 
+    <%= link_to "Delete Restaurant", restaurant_path(@restaurant), data: {
+          turbo_method: :delete,
+          turbo_confirm: "Are you sure?"
+        }, class: 'btn btn-danger'  %>
+  </div>
+</div>

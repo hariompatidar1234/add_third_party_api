@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   # resources :restaurants
-   resources :carts, only: [:index, :show, :create, :update, :destroy] do
+   resources :carts  do
     delete 'destroy_all', on: :collection
   end
 
@@ -34,11 +34,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :orders, only: [:index, :show, :create]
+  resources :orders 
 end
-
-
-
-
-
-

@@ -1,3 +1,5 @@
+<!-- app/views/dishes/show.html.erb -->
+
 <style>
   body {
     font-family: 'Arial', sans-serif;
@@ -28,20 +30,69 @@
   .btn-primary {
     background-color: #007bff;
     color: #fff;
-<<<<<<< HEAD
     text-decoration: none;
     padding: 10px 20px;
     margin: 10px;
     border-radius: 5px;
     display: inline-block;
-=======
     border-radius: 5px;
     text-decoration: none;
->>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
   }
 
   .btn-primary:hover {
     background-color: #0056b3;
+  }
+
+  .btn-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+  }
+
+  .btn-danger:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
+  .btn-edit {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  .btn-edit:hover {
+    background-color: #117a8b;
+    border-color: #10707f;
+  }
+
+  .btn-delete {
+    background-color: #d9534f;
+    border-color: #d9534f;
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
+  }
+
+  .btn-delete:hover {
+    background-color: #c9302c;
+    border-color: #ac2925;
   }
 
   .quantity-input {
@@ -59,11 +110,16 @@
 <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(@dish.restaurant_id).name %></p>
 <p><strong>Category:</strong> <%= Category.find_by_id(@dish.category_id).name %></p>
 
-
-<%= link_to "Back", dishes_path, class: 'btn btn-primary' %>
-<%= link_to "Edit dish", edit_dish_path(@dish), class: 'btn btn-primary' %>
-<%= link_to "Delete dish", dish_path(@dish), data: {
-  turbo_method: :delete,
-  turbo_confirm: "Are you sure?"
-}, class: 'btn btn-primary' %>
-<%= link_to "cart", carts_path,class: 'btn btn-primary' %>
+<% if current_user.type == 'Owner' %>
+  <%= link_to "Back", dishes_path, class: 'btn btn-primary' %>
+  <% if @dish.restaurant.owner == current_user %>
+    <%= link_to "Edit dish", edit_dish_path(@dish), class: 'btn btn-edit' %>
+    <%= link_to "Delete dish", dish_path(@dish), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    }, class: 'btn btn-delete' %>
+  <% end %>
+<% elsif current_user.type == 'Customer' %>
+  <%= link_to "Back", dishes_path, class: 'btn btn-primary' %>
+  <%= link_to "Add to cart", new_cart_path, class: 'btn btn-primary' %>
+<% end %>

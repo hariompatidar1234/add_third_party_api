@@ -1,19 +1,18 @@
-<!-- app/views/carts/new.html.erb -->
 
-<h1>Add Dish to Cart</h1>
-    
-<%= form_with(model: [@cart,@cart_item],url: carts_path, method: :post) do |form| %>
-  <div class="form-group">
-    <%= form.label :dish_id, 'Dish:' %>
-    <%= form.collection_select :dish_id, Dish.all, :id, :name, prompt: 'Select a dish', class: 'form-control' %>
-  </div>
+<body>
+  <h1>Add to Cart</h1>
 
-  <div class="form-group">
-    <%= form.label :quantity, 'Quantity:' %>
-    <%= form.number_field :quantity, class: 'form-control', min: 1, value: 1 %>
-  </div>
+  <%# <%= render 'cart_item_partial' %> 
 
-  <%= form.submit 'Add to Cart', class: 'btn btn-primary' %>
-<% end %>
+  <%= form_with url: carts_path, method: :post, local: true do |form| %>
+    <label for="dish_id">Dish ID:</label>
+    <%= form.number_field :dish_id, required: true %>
 
-<%= link_to 'Back to Cart', carts_path, class: 'btn btn-secondary' %>
+    <label for="quantity">Quantity:</label>
+    <%= form.number_field :quantity, required: true %>
+
+    <%= form.submit 'Add to Cart' %>
+  <% end %>
+
+  <%= link_to 'View Cart', carts_path %>
+</body>

@@ -71,10 +71,7 @@ class RestaurantsController < ApplicationController
   #     render json: { error: "You haven't added any restaurants yet." }, status: :ok
   #   end
   # end
-<<<<<<< HEAD
-=======
 
->>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
   def my_restaurants_list
     @restaurants = current_user.restaurants
     if @restaurants.any?
