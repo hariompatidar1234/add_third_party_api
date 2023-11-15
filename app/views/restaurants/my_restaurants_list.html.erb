@@ -1,0 +1,18 @@
+<!-- my_restaurants_list.html.erb -->
+
+<% if @restaurants.any? %>
+  <h1>My Restaurants</h1>
+  <ul>
+    <% @restaurants.each do |restaurant| %>
+      <li>
+        <h2><%= restaurant.name %></h2>
+        <p>Address: <%= restaurant.address %></p>
+        <p>Status: <%= restaurant.status %></p>
+      </li>
+    <% end %>
+  </ul>
+  <%= link_to "Add New Restaurant", new_restaurant_path, class: 'btn btn-primary' %>
+<% else %>
+  <p>You haven't added any restaurants yet.</p>
+  <%= link_to "Add Your First Restaurant", new_restaurant_path, class: 'btn btn-primary' %>
+<% end %>

@@ -4,7 +4,8 @@ class CartsController < ApplicationController
   before_action :create_cart ,only: :create
   
   def index
-    render json: @current_user.cart
+    # @current_user.cart = Cart.all
+    @cart_item = CartItem.all
   end
   
   def create
@@ -91,6 +92,6 @@ class CartsController < ApplicationController
   end
   
   def create_cart
-    @cart = @current_user.cart || @current_user.create_cart
+    @cart = current_user.cart || current_user.create_cart
   end
 end

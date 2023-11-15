@@ -18,11 +18,11 @@ Rails.application.routes.draw do
 
   resources :categories
 
-  # resources :restaurants  do
-  #   get 'my_restaurants_list', on: :collection
-  # end
+  resources :restaurants  do
+    get 'my_restaurants_list', on: :collection
+  end
 
-  resources :restaurants
+  # resources :restaurants
    resources :carts, only: [:index, :show, :create, :update, :destroy] do
     delete 'destroy_all', on: :collection
   end

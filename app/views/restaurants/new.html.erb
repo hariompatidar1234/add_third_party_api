@@ -1,76 +1,98 @@
-<style>
-  .form-group {
-    margin-bottom: 20px;
-  }
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    .form-group {
+      margin-bottom: 20px;
+    }
 
-  .btn-primary {
-    background-color: #007bff;
-    color: #fff;
-    border-width: 2px;
-    display: inline;
-    margin: 5px;
-    display: inline-block;
-    text-decoration: none; /* not underline  */
-    id #000;
-    border-radius: 5px
+    .btn-primary {
+      background-color: #007bff;
+      color: #fff;
+      border: 2px solid #007bff;
+      display: inline;
+      margin: 5px;
+      display: inline-block;
+      text-decoration: none;
+      border-radius: 5px;
+    }
 
-  }
+    .error-message {
+      color: #dc3545;
+    }
 
+    .container {
+      max-width: 400px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #f8f9fa;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
 
-  .error-message {
-    color: #dc3545;
-  }
+    .form-control {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
 
-</style>
+    label {
+      font-weight: bold;
+    }
 
-<% if current_user.type == 'Owner' %>
-  <%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
-   <%=flash[:message]%>
-    <div class="form-group">
-      <%= f.label :name, 'Restaurant Name' %>
-      <%= f.text_field :name, class: 'form-control' %>
-      <% @restaurant.errors.full_messages_for(:name).each do |message| %>
-        <div><%= message %></div>
-     <% end %>
-    </div>
+    .actions {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <% if current_user.type == 'Owner' %>
+      <%= form_with model: @restaurant, url: restaurants_path, method: :post do |f| %>
+        <%= flash[:message] %>
+        <div class="form-group">
+          <%= f.label :name, 'Restaurant Name' %>
+          <%= f.text_field :name, class: 'form-control' %>
+          <% @restaurant.errors.full_messages_for(:name).each do |message| %>
+            <div class="error-message"><%= message %></div>
+          <% end %>
+        </div>
 
-    <div class="form-group">
-      <%= f.label :address, 'Address' %>
-      <%= f.text_field :address, class: 'form-control' %>
-       <% @restaurant.errors.full_messages_for(:address).each do |message| %>
-         <div><%= message %></div>
+        <div class="form-group">
+          <%= f.label :address, 'Address' %>
+          <%= f.text_field :address, class: 'form-control' %>
+          <% @restaurant.errors.full_messages_for(:address).each do |message| %>
+            <div class="error-message"><%= message %></div>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :status, 'Status' %>
+          <%= f.text_field :status, class: 'form-control' %>
+          <% @restaurant.errors.full_messages_for(:status).each do |message| %>
+            <div class="error-message"><%= message %></div>
+          <% end %>
+        </div>
+
+        <div class="form-group">
+          <%= f.label :restaurant_image, "Picture" %>
+          <%= f.file_field :picture %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
+        </div>
       <% end %>
-    </div>
+    <% else %>
+      <p class="error-message">You cannot create a restaurant.</p>
+    <% end %>
 
-    <div class="form-group">
-      <%= f.label :status, 'Status' %>
-       <%= f.text_field :status, class: 'form-control' %>
-       <% @restaurant.errors.full_messages_for(:status).each do |message| %>
-         <div><%= message %></div>
-      <% end %>
-  <!--     <select type="choice">
-        <option value="closed">closed</option>
-        <option value="open">open</option>
-      </select> -->
-    </div>
-
-
-    <div class="form-group">
-    <%= f.label :restaurant_image, "picture" %>
-    <%= f.file_field :picture%>
-    </div>
-
-    <div class="actions">
-      <%= f.submit 'Create Restaurant', class: 'btn btn-primary' %>
-    </div>
-
-  <% end %>
-
-<% else %>
-  <p class="error-message">You cannot create a restaurant.</p>
-<% end %>
-
-<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
-<%- if user_signed_in? %>
-  <%= link_to "Sign Out", destroy_user_session_path, class: 'btn  btn-primary' %> <br />
-<% end %>
+    <%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
+    <% if user_signed_in? %>
+      <%= link_to "Sign Out", destroy_user_session_path, class: 'btn btn-primary' %> <br />
+    <% end %>
+  </div>
+</body>
+</html>

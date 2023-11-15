@@ -1,0 +1,33 @@
+<!-- app/views/carts/index.html.erb -->
+
+<h1>Your Cart</h1>
+
+<% if current_user.cart.cart_items.any? %>
+  <table> 
+    <thead>
+      <tr>
+        <th>Dish</th>
+        <th>Quantity</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% current_user.cart.cart_items.each do |cart_item| %>
+        <tr>
+          <td><%= cart_item.dish.name %></td>
+          <td><%= cart_item.quantity %></td>
+          <td>
+            <%= link_to 'Show', cart_path(cart_item) %>
+            <%= link_to 'Edit', edit_cart_path(cart_item) %>
+            <%= link_to 'Remove', cart_path(cart_item), method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <%= link_to 'Remove All Items', destroy_all_cart_path, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% else %>
+  <p>Your cart is empty.</p>
+<% end %>
+
+<%= link_to 'Back to Dish List', dishes_path %>

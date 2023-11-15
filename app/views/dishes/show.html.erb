@@ -1,4 +1,11 @@
 <style>
+  body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f9fa;
+    padding: 20px;
+    text-align: center;
+  }
+
   h1 {
     font-size: 24px;
     color: #007bff;
@@ -10,31 +17,48 @@
     margin-bottom: 10px;
   }
 
+  img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+
   .btn-primary {
     background-color: #007bff;
     color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    display: inline-block;
   }
 
+  .btn-primary:hover {
+    background-color: #0056b3;
+  }
+
+  .quantity-input {
+    width: 50px;
+    text-align: center;
+  }
 </style>
 
 <h1>Dish Details</h1>
 
-<%= image_tag(@dish.picture,size: "250x250") if @dish.picture.attached? %>
+<%= image_tag(@dish.picture, size: "250x250") if @dish.picture.attached? %>
 <p><strong>Dish ID:</strong> <%= @dish.id %></p>
 <p><strong>Dish Name:</strong> <%= @dish.name %></p>
 <p><strong>Price:</strong> <%= @dish.price %></p>
 <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(@dish.restaurant_id).name %></p>
-<p><strong>Category:</strong> <%=Category.find_by_id(@dish.category_id).name %></p>
+<p><strong>Category:</strong> <%= Category.find_by_id(@dish.category_id).name %></p>
 
 
 <%= link_to "Back", dishes_path, class: 'btn btn-primary' %>
-
-
 <%= link_to "Edit dish", edit_dish_path(@dish), class: 'btn btn-primary' %>
-
-
-<%= link_to "delete dish", dish_path(@dish), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  }, class: 'btn btn-primary'  %>
-
+<%= link_to "Delete dish", dish_path(@dish), data: {
+  turbo_method: :delete,
+  turbo_confirm: "Are you sure?"
+}, class: 'btn btn-primary' %>
+<%= link_to "cart", carts_path,class: 'btn btn-primary' %>

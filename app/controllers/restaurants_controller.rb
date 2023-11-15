@@ -63,14 +63,23 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  # def my_restaurants_list
+  #   restaurants = @current_user.restaurants
+  #   if restaurants.any?
+  #     render json: restaurants
+  #   else
+  #     render json: { error: "You haven't added any restaurants yet." }, status: :ok
+  #   end
+  # end
   def my_restaurants_list
-    restaurants = @current_user.restaurants
-    if restaurants.any?
-      render json: restaurants
+    @restaurants = current_user.restaurants
+    if @restaurants.any?
+      render 'my_restaurants_list'
     else
-      render json: { error: "You haven't added any restaurants yet." }, status: :ok
+      render plain: "You haven't added any restaurants yet.", status: :ok
     end
   end
+  
 
   private
 
