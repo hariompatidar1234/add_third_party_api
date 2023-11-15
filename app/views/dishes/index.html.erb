@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
   <style>
     /* General button styling */
@@ -48,6 +49,57 @@
       text-decoration: none;
     }
 
+=======
+  <style>
+    /* General button styling */
+    .button {
+      display: inline-block;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      margin: 5px;
+      border: 1px solid #000;
+      border-radius: 5px;
+    }
+
+    /* Styling for the search form */
+    .search-form {
+      margin: 10px 0;
+    }
+
+    .search-input {
+      padding: 5px;
+      border: 1px solid #007bff;
+    }
+
+    .search-button {
+      padding: 5px 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: 1px solid #007bff;
+      border-radius: 5px;
+    }
+
+    .search-button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Navbar styling */
+    .navbar {
+      background-color: #333;
+      overflow: hidden;
+    }
+
+    .navbar a {
+      float: left;
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
     .navbar .dropdown {
       float: right;
       overflow: hidden;
@@ -173,7 +225,11 @@
 <div class="search-form">
   <%= form_tag(dishes_path, method: :get) do %>
     <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
+<<<<<<< HEAD
     <%= select_tag :category_id, options_for_select(Category.all.map { |c| [c.name, c.id] }, params[:category_id]), include_blank: 'Select Category', class: 'search-input' %>
+=======
+
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
     <%= submit_tag 'Search', class: 'search-button' %>
   <% end %>
 </div>
@@ -182,9 +238,19 @@
   <% @dishes.each do |d| %>
     <div class="dish-container">
       <div class="dish-image">
+<<<<<<< HEAD
         <a href="<%= dish_path(d) %>">
           <%= image_tag(d.picture, size: "200x160") if d.picture.attached? %>
         </a>
+=======
+        <% if d.picture.attached? %>
+          <a href="<%= dish_path(d) %>">
+            <%= image_tag(d.picture, size: "200x160") %>
+          </a>
+        <% else %>
+            <%=image_tag("test_image.png", size: "220x180") %>
+        <% end %>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
       </div>
       <div class="dish-details">
         <h2>
@@ -203,4 +269,7 @@
 </div>
 
 </body>
+<<<<<<< HEAD
 </html>
+=======
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69

@@ -28,6 +28,7 @@
       border: 1px solid #007bff;
     }
 
+<<<<<<< HEAD
     .search-button {
       padding: 5px 10px;
       background-color: #007bff;
@@ -114,6 +115,92 @@
 <body>
 
 <!-- Navigation Bar -->
+=======
+  .search-button {
+    padding: 5px 10px;
+    background-color: #007bff;
+    color: #FFF;
+    border: 1px solid #007bff;
+  }
+
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+
+  /* Navbar styling */
+  .navbar {
+    background-color: #333;
+    overflow: hidden;
+  }
+
+  .navbar a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+  }
+
+  .navbar .dropdown {
+    float: right;
+    overflow: hidden;
+  }
+
+  .navbar .dropdown .dropbtn {
+    font-size: 16px;
+    border: none;
+    outline: none;
+    color: white;
+    background-color: inherit;
+  }
+
+  .navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 160px;
+    z-index: 1;
+  }
+
+  .navbar .dropdown-content a {
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+
+  .navbar .dropdown-content a:hover {
+    background-color: #ddd;
+    color: black;
+  }
+
+  .navbar .dropdown:hover .dropdown-content {
+    display: block;
+  }
+
+  /* Three lines button styling (Hamburger menu) */
+  .menu-button {
+    float: right;
+    padding: 14px 16px;
+    cursor: pointer;
+  }
+
+  /* Add more styles for the hamburger icon as needed */
+  .restaurant-details {
+    display: flex;
+    align-items: center;
+  }
+
+  .restaurant-details > * {
+    margin: 5px;
+  }
+</style>
+<body>
+
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
 <div class="navbar">
   <a href="<%= new_restaurant_path %>">Create Restaurants</a>
   <a href="<%= new_category_path %>">Create Category</a>
@@ -129,6 +216,7 @@
       <% end %>
     </div>
   </div>
+<<<<<<< HEAD
   <!-- Hamburger menu icon -->
   <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
 </div>
@@ -188,6 +276,61 @@ function toggleMenu() {
   }
 }
 </script>
+=======
+  <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
+</div>
+
+<p><%= flash[:message] %></p>
+
+<div class="search-form">
+  <%= form_tag(restaurants_path, method: :get) do %>
+    <%= text_field_tag :name, params[:name], placeholder: 'Search by Name', class: 'search-input' %>
+ <!--    <%= select_tag :status, options_for_select(Restaurant.statuses, params[:status]), include_blank: 'Select Status', class: 'search-input' %> -->
+    <%= submit_tag 'Search', class: 'search-button' %>
+  <% end %>
+</div>
+
+<table style="background-color: #48c9b0; border: 1px solid #000; width: 100%;">
+  <thead style="color: red; background-color: black;">
+    <tr>
+      <th>Picture</th>
+      <th>Restaurant Details</th>
+    </tr>
+  </thead>
+
+<tbody>
+  <% @restaurants.each do |r| %>
+    <tr>
+      <td>
+        <% if r.picture.attached? %>
+          <a href="<%= restaurant_path(r) %>">
+            <%= image_tag(r.picture, size: "200x160") %>
+          </a>
+        <% else %>
+          <%=image_tag("test_image.png", size: "220x180") %>
+        <% end %>
+      </td>
+      <td class="restaurant-details">
+        <div>
+          <h2>
+            <a href="<%= restaurant_path(r) %>">
+              <%= r.name %>
+            </a>
+          </h2>
+          <p>Rest_id: <%= r.id %></p>
+          <p>Status: <%= r.status %></p>
+          <p>Address: <%= r.address %></p>
+        </div>
+      </td>
+    </tr>
+  <% end %>
+</tbody>
+</table>
+<%= paginate @restaurants %>
+</body>
+
+
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
 
 </body>
 </html>

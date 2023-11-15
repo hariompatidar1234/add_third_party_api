@@ -1,5 +1,8 @@
+<<<<<<< HEAD
 <!-- my_restaurants_list.html.erb -->
 
+=======
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
 <% if @restaurants.any? %>
   <h1>My Restaurants</h1>
   <ul>
@@ -11,8 +14,16 @@
       </li>
     <% end %>
   </ul>
+<<<<<<< HEAD
   <%= link_to "Add New Restaurant", new_restaurant_path, class: 'btn btn-primary' %>
+=======
+    <%= link_to "Add New Restaurant", new_restaurant_path, class: 'btn btn-primary' %>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
 <% else %>
   <p>You haven't added any restaurants yet.</p>
   <%= link_to "Add Your First Restaurant", new_restaurant_path, class: 'btn btn-primary' %>
 <% end %>
+<<<<<<< HEAD
+=======
+<%= link_to "Back", restaurants_path, class: 'btn btn-primary' %>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69

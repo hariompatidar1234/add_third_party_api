@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <style>
   /* Add these CSS styles to your project's CSS file */
 
@@ -109,9 +110,54 @@
           <%= msg %>
         </div>
       <% end %>
+=======
+
+<% if current_user.type == 'Owner' %>
+<div class="form-container">
+  <% if flash.any? %>
+    <% flash.each do |type, msg| %>
+    <div>
+    <%= msg %>
+    </div>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
     <% end %>
 
+<<<<<<< HEAD
     <%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
+=======
+  <%= form_with model: @dish, url: dishes_path, method: :post do |f| %>
+    <div class="form-group">
+      <%= f.label :name, 'Dish Name' %>
+      <%= f.text_field :name, class: 'form-control' %>
+      <% @dish.errors.full_messages_for(:name).each do |message| %>
+        <div><%= message %></div>
+      <% end %>
+    </div>
+      <br>
+    <div class="form-group">
+      <%= f.label :price, 'Price' %>
+      <%= f.text_field :price, class: 'form-control' %>
+      <% @dish.errors.full_messages_for(:price).each do |message| %>
+          <div><%= message %></div>
+       <% end %>
+    </div>
+      <br>
+    <div class="form-group">
+      <%= f.label :category_id, 'Category', class: 'form-label' %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
+      <% @dish.errors.full_messages_for(:category_id).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+    <div class="form-group">
+      <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
+      <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
+      <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
+        <div class="text-danger"><%= message %></div>
+      <% end %>
+    </div>
+      <br>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
       <div class="form-group">
         <%= f.label :name, 'Dish Name', class: 'form-label' %>
         <%= f.text_field :name, class: 'form-control form-control-full-width' %>
@@ -155,5 +201,116 @@
 <% else %>
   <p class="error-message">You cannot add a dish.</p>
 <% end %>
+<<<<<<< HEAD
 
 <%= link_to "Back", restaurants_path, class: 'btn btn-back' %>
+=======
+  <%= link_to "Back", restaurants_path %>
+</div>
+
+
+<style>
+  /* Add these CSS styles to your project's CSS file */
+
+/* Style for the alert messages */
+.alert {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid transparent;
+  border-radius: 4px;
+}
+
+.alert-success {
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+  color: #155724;
+}
+
+
+.alert-danger {
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  color: #721c24;
+}
+
+/* Form container */
+.form-container {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+/* Form input fields */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.form-control-file {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Error message styling */
+.text-danger {
+  color: #721c24;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* Button styling */
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Back button styling */
+.btn-back {
+  background-color: #ccc;
+  color: #000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Center the button */
+.actions {
+  text-align: center;
+}
+
+/* Full-width input fields */
+.form-control-full-width {
+  width: 100%;
+}
+
+/* Center the error message */
+.error-message {
+  text-align: center;
+}
+
+/* Style for labels */
+.form-label {
+  font-weight: bold;
+}
+
+/* Styling for dropdowns */
+.form-control-select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+</style>
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69

@@ -1,16 +1,49 @@
-<% if current_user.type == 'Owner' %>
-  <%= form_with model: @category, url: categories_path, method: :post do |f| %>
-    <div class="form-group">
-      <%= f.label :name, 'Category Name' %>
-      <%= f.text_field :name, class: 'form-control' %>
-      <% @category.errors.full_messages_for(:name).each do |message| %>
-          <div><%= message %></div>
-       <% end %>
-    </div>
-    <br>
-      <%= f.submit 'Create category', class: 'btn btn-primary' %>
+<div class="container">
+  <% if current_user.type == 'Owner' %>
+    <%= form_with model: @category, url: categories_path, method: :post do |f| %>
+      <div class="form-group">
+        <%= f.label :name, 'Category Name' %><br>
+        <%= f.text_field :name, class: 'form-control' %>
+        <% @category.errors.full_messages_for(:name).each do |message| %>
+            <div><%= message %></div>
+         <% end %>
+      </div>
+      <br>
+        <%= f.submit 'Create category', class: 'btn btn-primary' %>
+    <% end %>
+  <% else %>
+    <p class="error-message">You cannot create Category </p>
   <% end %>
-<% else %>
-  <p class="error-message">You cannot create Category </p>
-<% end %>
-<%= link_to "Back", restaurants_path %>
+  <%= link_to "Back", restaurants_path %>
+</div>
+<style>
+
+    .container{
+    width: 800px;
+    max-width: 400px;
+    margin: 110px 0px 0px 110px;
+    background-color: #fff;
+    padding: 25px 40px 10px 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-top: 100px;
+  }
+
+.form-control {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+/* Back button styling */
+/**/
+</style>

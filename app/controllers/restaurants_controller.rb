@@ -10,7 +10,7 @@ class RestaurantsController < ApplicationController
                   elsif params[:address]
                     restaurants.where('address LIKE ?', "%#{params[:address]}%")
                   else
-                    restaurants.page(params[:page]).per(3)
+                    restaurants.page(params[:page]).per(5)
                   end
     # render json: @restaurants
   end
@@ -71,6 +71,10 @@ class RestaurantsController < ApplicationController
   #     render json: { error: "You haven't added any restaurants yet." }, status: :ok
   #   end
   # end
+<<<<<<< HEAD
+=======
+
+>>>>>>> 83d6577c2d8ba6a1dfcf0cbfcf76db911220fc69
   def my_restaurants_list
     @restaurants = current_user.restaurants
     if @restaurants.any?
@@ -80,6 +84,16 @@ class RestaurantsController < ApplicationController
     end
   end
   
+
+  # def restaurant_dish
+  #   @restaurant = Restaurant.find_by_id(params[:id])
+  #   @dishes = @restaurant.dishes
+  #   if @dishes.any?
+  #     render @dishes
+  #   else
+  #     render plain: "dishes not availables "
+  #   end
+  # end
 
   private
 
