@@ -1,0 +1,25 @@
+
+
+<body>
+  <h1>Cart Item Details</h1>
+
+  <% if flash[:alert] %>
+    <div class="flash-alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <p><strong>Cart Item ID:</strong> <%= @cart_item.id %></p>
+  <p><strong>Dish ID:</strong> <%= @cart_item.dish_id %></p>
+  <p><strong>Quantity:</strong> <%= @cart_item.quantity %></p>
+  <!-- Add more details as needed -->
+
+  <%= link_to 'Back to Cart', carts_path %>
+
+  <!-- Add Delete button and form -->
+   <%# <%= link_to "Delete cart_item", cart_item_path(@cart_item), data: {
+      turbo_method: :delete,
+      turbo_confirm: "Are you sure?"
+    }, class: 'btn btn-delete' %> 
+</body>
+

@@ -1,38 +1,78 @@
-<%# <!-- app/views/carts/index.html.erb -->
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Your Cart</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
 
-<% if current_user.type == 'Customer' && current_user.cart.cart_items.any? %>
-  <%# <table> 
-    <thead>
-      <tr>
-        <th>Dish</th>
-        <th>Quantity</th>
-        <th>Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% cart_items.each do |cart_item| %>
-        <tr>
-          <td><%= cart_item.dish.name %></td>
-          <td><%= cart_item.quantity %></td>
-          <td>
-            <%= link_to 'Show', cart_path(cart_item) %>
-            <%= link_to 'Edit', edit_cart_path(cart_item) %>
-            <%= link_to 'Remove', cart_path(cart_item), method: :delete, data: { confirm: 'Are you sure?' } %>
-          </td>
-        </tr>
-      <% end %>
-    </tbody>
-  <%# </table> %> 
-  <%# <%= link_to 'Remove All Items', destroy_all_cart_path, method: :delete, data: { confirm: 'Are you sure?' } %>
-<%# <% elsif current_user.type == 'Owner' %>   
-  <%# <p>As an owner, you don't have a cart.</p> %>
-<%# <% else %> 
-  <%# <p>Your cart is empty.</p> %>
-<%# <% end %>
+    h1 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
 
-<%# <%= link_to 'Back to Dish List', dishes_path %> 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    td.actions {
+      display: flex;
+      gap: 5px;
+    }
+
+    .btn-show, .btn-edit, .btn-remove {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-show {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-edit {
+      background-color: #ffc107;
+      color: #000;
+    }
+
+    .btn-remove {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-show:hover, .btn-edit:hover, .btn-remove:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
 
 <body>
   <h1>Your Cart</h1>
@@ -53,10 +93,10 @@
             <td><%= cart_item.dish.name %></td>
             <td><%= cart_item.quantity %></td>
             <!-- Add more columns as needed -->
-            <td>
-              <%= link_to 'Show', cart_path(cart_item), method: :get %>
-              <%= link_to 'Edit', edit_cart_path(cart_item), method: :get %>
-              <%= link_to 'Remove', cart_path(cart_item), method: :delete, data: { confirm: 'Are you sure?' } %>
+            <td class="actions">
+              <%= link_to 'Show', cart_path(cart_item), class: 'btn-show', method: :get %>
+              <%= link_to 'Edit', edit_cart_path(cart_item), class: 'btn-edit', method: :get %>
+              <%= link_to 'Remove', cart_path(cart_item), class: 'btn-remove', method: :delete, data: { confirm: 'Are you sure?' } %>
             </td>
           </tr>
         <% end %>
@@ -67,4 +107,5 @@
   <% end %>
   <%= link_to 'Continue Shopping', root_path %>
 </body>
+
 </html>

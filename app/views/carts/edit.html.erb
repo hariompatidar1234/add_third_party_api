@@ -1,0 +1,20 @@
+
+
+<body>
+  <h1>Update Cart Item</h1>
+
+  <% if flash[:alert] %>
+    <div class="flash-alert">
+      <%= flash[:alert] %>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @cart_item, url: cart_path(@cart_item), method: :put, local: true) do |form| %>
+    <label for="quantity">New Quantity:</label>
+    <%= form.number_field :quantity, required: true %>
+
+    <%= form.submit 'Update Quantity' %>
+  <% end %>
+
+  <%= link_to 'Back to Cart', carts_path %>
+</body>
