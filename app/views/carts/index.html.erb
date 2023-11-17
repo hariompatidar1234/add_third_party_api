@@ -2,8 +2,7 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Your existing head content -->
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -71,6 +70,20 @@
     .btn-show:hover, .btn-edit:hover, .btn-remove:hover {
       background-color: #0056b3;
     }
+
+    p {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -83,29 +96,41 @@
         <tr>
           <th>Dish</th>
           <th>Quantity</th>
-          <!-- Add more columns as needed -->
+          <th>Price</th>
+          <th>Total</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody>
+        <% total_amount = 0 %>
         <% @cart_items.each do |cart_item| %>
           <tr>
             <td><%= cart_item.dish.name %></td>
             <td><%= cart_item.quantity %></td>
-            <!-- Add more columns as needed -->
+            <td><%= cart_item.dish.price %></td>
+            <% total_item_amount = cart_item.quantity * cart_item.dish.price %>
+            <td><%= total_item_amount %></td>
             <td class="actions">
               <%= link_to 'Show', cart_path(cart_item), class: 'btn-show', method: :get %>
               <%= link_to 'Edit', edit_cart_path(cart_item), class: 'btn-edit', method: :get %>
               <%= link_to 'Remove', cart_path(cart_item), class: 'btn-remove', method: :delete, data: { confirm: 'Are you sure?' } %>
             </td>
           </tr>
+          <% total_amount += total_item_amount %>
         <% end %>
       </tbody>
     </table>
+    <p>Total Amount: <%= total_amount %></p>
+
+    <%= link_to 'Continue Shopping', root_path %>
+
+    <!-- Add Place Order button with confirmation -->
+    <%= button_to 'Place Order', new_order_path, method: :post, data: { confirm: 'Are you sure you want to place this order for all items in your cart?' }, class: 'btn-place-order' %>
+
   <% else %>
     <p>Your cart is empty.</p>
+    <%= link_to 'Continue Shopping', root_path %>
   <% end %>
-  <%= link_to 'Continue Shopping', root_path %>
 </body>
 
 </html>

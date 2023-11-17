@@ -6,40 +6,63 @@ class OrdersController < ApplicationController
     render json: @orders, status: :ok
   end
 
+  # def create
+  #   @cart = current_user.cart
+  #   if @cart.cart_items.empty?
+  #     render json: { error: 'Cart is empty. Cannot create an order with an empty cart.' },status: :unprocessable_entity
+  #   else
+  #     @order = current_user.orders.new(address: params[:address])
+
+  #     if @order.save
+  #       OrderMailer.order_confirm(@current_user).deliver_now
+  #       create_order_items(@order)
+  #       render json: { data: @order, message: 'Order created successfully!' },
+  #       status: :created
+  #     else
+  #       render json: { error: @order.errors.full_messages }, status: :unprocessable_entity
+  #     end
+  #   end
+  # end
+
+  
+
+  # def create_order_items(order)
+  #   cart_items = current_user.cart.cart_items.includes(:dish)
+  #   cart_items.each do |cart_item|
+  #     order_item = order.order_items.new(
+  #       dish_id: cart_item.dish.id,
+  #       quantity: cart_item.quantity,
+  #       total_amount: cart_item.quantity * cart_item.dish.price
+  #     )
+  #     order_item.save
+  #   end
+  #   current_user.cart.cart_items.destroy_all
+  # end
+
   def create
     @cart = current_user.cart
     if @cart.cart_items.empty?
-      render json: { error: 'Cart is empty. Cannot create an order with an empty cart.' },status: :unprocessable_entity
+      flash[:alert] = 'Cart is empty. Cannot create an order with an empty cart.'
+      redirect_to root_path
     else
       @order = current_user.orders.new(address: params[:address])
-
+  
       if @order.save
-        OrderMailer.order_confirm(@current_user).deliver_now
+        OrderMailer.order_confirm(current_user).deliver_now
         create_order_items(@order)
-        render json: { data: @order, message: 'Order created successfully!' },
-        status: :created
+        flash[:notice] = 'Order created successfully!'
+        redirect_to @order
       else
-        render json: { error: @order.errors.full_messages }, status: :unprocessable_entity
+        flash[:error] = @order.errors.full_messages.join(', ')
+        render 'new' # Render the new order form again
       end
     end
   end
+  
 
   def show
     @orders = current_user.orders
     render json: @orders, status: :ok
-  end
-
-  def create_order_items(order)
-    cart_items = current_user.cart.cart_items.includes(:dish)
-    cart_items.each do |cart_item|
-      order_item = order.order_items.new(
-        dish_id: cart_item.dish.id,
-        quantity: cart_item.quantity,
-        total_amount: cart_item.quantity * cart_item.dish.price
-      )
-      order_item.save
-    end
-    current_user.cart.cart_items.destroy_all
   end
 
   private

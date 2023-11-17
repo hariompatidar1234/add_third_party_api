@@ -162,6 +162,11 @@
   </div>
   <!-- Hamburger menu icon -->
   <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
+
+  <!-- View Cart Button -->
+  <% if current_user.cart.cart_items.any? %>
+    <%= link_to 'View Cart', carts_path, class: 'btn btn-view-cart' %>
+  <% end %>
 </div>
 
 <!-- Back Button at the Top -->
