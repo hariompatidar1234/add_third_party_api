@@ -13,9 +13,10 @@
   .btn-primary {
     background-color: #007bff;
     color: #fff;
-       border-radius: 5px;
+    border-radius: 5px;
     text-decoration: none;
   }
+
 
 </style>
 
@@ -23,6 +24,7 @@
 
 <p><strong>Category ID:</strong> <%= @category.id %></p>
 <p><strong>Category Name:</strong> <%= @category.name %></p>
+
 <%= link_to "Back", categories_path, class: 'btn btn-primary' %>
 
 

@@ -1,9 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant Index</title>
+
   <style>
     /* General styling */
     body {
@@ -138,7 +133,6 @@
       }
     }
   </style>
-</head>
 <body>
 
 <!-- Navigation Bar -->
@@ -185,11 +179,10 @@
         <p>Price: <%= d.price %></p>
         <p>Category: <%= Category.find_by_id(d.category_id).name %></p>
         <%# <p>Other Details: <!-- Add other details here --></p> %>
-        <p><%= link_to "Show", dish_path(d), class: "button" %></p>
+        <!-- <p><%= link_to "Show", dish_path(d), class: "button" %></p> -->
       </div>
     </div>
   <% end %>
 </div>
 
 </body>
-</html>

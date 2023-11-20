@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>New Order</title>
   <style>
     body {
       font-family: 'Poppins', sans-serif;
@@ -65,26 +59,20 @@
       text-decoration: underline;
     }
   </style>
-</head>
+
 
 <body>
   <h1>New Order</h1>
 
-  <%= form_for @order do |f| %>
+  <%= form_with url: orders_path, method: :post, local: true do |f| %>
     <div>
       <%= f.label :address %>
       <%= f.text_field :address %>
     </div>
 
-    <!-- Add more fields as needed for the order details -->
-
     <div>
       <%= f.submit 'Place Order' %>
     </div>
   <% end %>
-
-  <%# <%= link_to 'Back to Cart', cart_path %> 
-
 </body>
 
-</html>

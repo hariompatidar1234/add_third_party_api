@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
   #   end
   # end
 
-  
+
 
   # def create_order_items(order)
   #   cart_items = current_user.cart.cart_items.includes(:dish)
@@ -38,17 +38,22 @@ class OrdersController < ApplicationController
   #   end
   #   current_user.cart.cart_items.destroy_all
   # end
+  def new
+    byebug
+    @order = Order.new
+  end
 
   def create
+    byebug
     @cart = current_user.cart
     if @cart.cart_items.empty?
       flash[:alert] = 'Cart is empty. Cannot create an order with an empty cart.'
       redirect_to root_path
     else
       @order = current_user.orders.new(address: params[:address])
-  
+
       if @order.save
-        OrderMailer.order_confirm(current_user).deliver_now
+        # OrderMailer.order_confirm(current_user).deliver_now
         create_order_items(@order)
         flash[:notice] = 'Order created successfully!'
         redirect_to @order
@@ -58,7 +63,7 @@ class OrdersController < ApplicationController
       end
     end
   end
-  
+
 
   def show
     @orders = current_user.orders

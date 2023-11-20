@@ -4,3 +4,5 @@
 //= link_tree ../../../vendor/javascript .js
 
 //= link test_image.png
+//= link r.jpg
+

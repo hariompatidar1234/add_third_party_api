@@ -1,5 +1,3 @@
-
-
 <body>
   <h1>Update Cart Item</h1>
 
@@ -8,7 +6,7 @@
       <%= flash[:alert] %>
     </div>
   <% end %>
-
+<% byebug %>
   <%= form_with(model: @cart_item, url: cart_path(@cart_item), method: :put, local: true) do |form| %>
     <label for="quantity">New Quantity:</label>
     <%= form.number_field :quantity, required: true %>

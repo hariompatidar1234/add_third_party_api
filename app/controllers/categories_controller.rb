@@ -44,7 +44,13 @@ class CategoriesController < ApplicationController
   def destroy
      @category.destroy
       # render json: { message: 'Category deleted' }
-      redirect_to categories_path, notice: "update category"
+      redirect_to categories_path
+  end
+
+  def category_dish
+    @categoy = Category.find_by_id(params[:id])
+    dishes = @category.dishes
+    redirect_to
   end
 
   private

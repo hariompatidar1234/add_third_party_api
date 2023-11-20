@@ -1,147 +1,143 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Restaurant Index</title>
-  <style>
-    /* General styling */
-    body {
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f9fa;
-    }
 
-    /* Navbar styling */
-    .navbar {
-      background-color: #333;
-      color: white;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-    }
+<style>
+  /* General styling */
+  body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    background-image: url(test-image.png);
+  }
 
-    .navbar a {
-      color: white;
-      text-decoration: none;
-      margin: 0 15px;
-      font-size: 16px;
-    }
+  /* Navbar styling */
+  .navbar {
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+  }
 
-    .navbar .dropdown {
-      position: relative;
-      display: inline-block;
-    }
+  .navbar a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-size: 16px;
+  }
 
-    .navbar .dropdown-content {
-      display: none;
-      position: absolute;
-      background-color: #f9f9f9;
-      box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-      z-index: 1;
-    }
+  .navbar .dropdown {
+    position: relative;
+    display: inline-block;
+  }
 
-    .navbar .dropdown-content a {
-      color: black;
-      padding: 12px 16px;
-      text-decoration: none;
-      display: block;
-    }
+  .navbar .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
 
-    .navbar .dropdown:hover .dropdown-content {
-      display: block;
-    }
+  .navbar .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
 
-    /* ... (Rest of the styles) */
+  .navbar .dropdown:hover .dropdown-content {
+    display: block;
+  }
 
-    /* Main container */
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-around;
-      padding: 20px;
-    }
+  /* ... (Rest of the styles) */
 
-    /* Restaurant container */
-    .restaurant-container {
-      width: calc(33.33% - 20px);
-      padding: 20px;
-      text-align: center;
-      background: white;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin: 20px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-      transition: transform 0.3s;
-    }
+  /* Main container */
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+  }
 
-    .restaurant-container:hover {
-      transform: translateY(-5px);
-    }
+  /* Restaurant container */
+  .restaurant-container {
+    width: calc(33.33% - 20px);
+    padding: 20px;
+    text-align: center;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
+  }
 
-    /* Restaurant image styling */
-    .restaurant-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 8px;
-      margin-bottom: 15px;
-    }
+  .restaurant-container:hover {
+    transform: translateY(-5px);
+  }
 
-    /* Restaurant details styling */
-    .restaurant-details {
-      padding: 10px;
-    }
+  /* Restaurant image styling */
+  .restaurant-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 15px;
+  }
 
-    /* Back button styling */
-    .back-button {
-      text-align: left;
-      margin: 20px;
-    }
+  /* Restaurant details styling */
+  .restaurant-details {
+    padding: 10px;
+  }
 
-    .btn-back {
-      background-color: #343a40;
-      color: white;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 5px;
-      cursor: pointer;
-      text-decoration: none;
-      font-size: 16px;
-    }
+  /* Back button styling */
+  .back-button {
+    text-align: left;
+    margin: 20px;
+  }
 
-    .btn-back:hover {
-      background-color: #1d2124;
-    }
+  .btn-back {
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 16px;
+  }
 
-    /* Responsive adjustments */
-    /* ... (Rest of the responsive styles) */
+  .btn-back:hover {
+    background-color: #1d2124;
+  }
 
-    /* Pagination button styling */
-    .pagination {
-      display: flex;
-      justify-content: center;
-      margin-top: 20px;
-    }
+  /* Responsive adjustments */
+  /* ... (Rest of the responsive styles) */
 
-    .pagination a {
-      color: #333;
-      padding: 8px 16px;
-      text-decoration: none;
-      transition: background-color 0.3s;
-    }
+  /* Pagination button styling */
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
 
-    .pagination a:hover {
-      background-color: #ddd;
-    }
+  .pagination a {
+    color: #333;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
 
-    .pagination .current {
-      background-color: #007bff;
-      color: white;
-    }
-  </style>
-</head>
+  .pagination a:hover {
+    background-color: #ddd;
+  }
+
+  .pagination .current {
+    background-color: #007bff;
+    color: white;
+  }
+</style>
+
 <body>
 
 <!-- Navigation Bar -->
@@ -158,23 +154,18 @@
       <% if user_signed_in? %>
         <a href="<%= destroy_user_session_path %>" class="signout-button">Sign Out</a>
       <% end %>
+        <%= link_to 'View Cart', carts_path, class: 'btn-primary' %>
     </div>
   </div>
-  <!-- Hamburger menu icon -->
   <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
 
-  <!-- View Cart Button -->
-  <% if current_user.cart.cart_items.any? %>
-    <%= link_to 'View Cart', carts_path, class: 'btn btn-view-cart' %>
-  <% end %>
+
 </div>
 
-<!-- Back Button at the Top -->
 <div class="back-button">
   <%= link_to "Back", restaurants_path, class: 'btn btn-back' %>
 </div>
 
-<h1>Listing Restaurants</h1>
 <p><%= flash[:message] %></p>
 
 <div class="container">
@@ -191,15 +182,15 @@
             <%= r.name %>
           </a>
         </h2>
-        <p>Rest_id: <%= r.id %></p>
+        <!-- <p>Rest_id: <%= r.id %></p> -->
         <p>Status: <%= r.status %></p>
         <p>Address: <%= r.address %></p>
         <!-- Add other details as needed -->
-        <p><%= link_to "Show", restaurant_path(r), class: "button" %></p>
+        <!-- <p><%= link_to "Show", restaurant_path(r), class: "button" %></p> -->
       </div>
     </div>
   <% end %>
 </div>
 <%= paginate @restaurants %>
 </body>
-</html>
+

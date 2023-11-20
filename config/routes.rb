@@ -9,14 +9,9 @@ Rails.application.routes.draw do
 
    resource :profile, controller: 'users', as: 'current_user_profile'
 
-  # resources :users do
-  #   post 'login', on: :collection
-  #   post 'forgot_password', on: :collection
-  #   post 'reset_password', on: :collection
-  # end
-
-
-  resources :categories
+  resources :categories do
+    get 'category_dish', on: :collection
+  end
 
   resources :restaurants  do
     get 'my_restaurants_list', on: :collection
@@ -34,5 +29,5 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :orders 
+  resources :orders
 end

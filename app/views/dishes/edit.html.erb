@@ -1,51 +1,3 @@
-<%= link_to "Back", dishes_path, class: 'btn btn-back' %>
-<h1 class="form-title">Edit Dish</h1>
-
-<% if flash.any? %>
-  <% flash.each do |type, msg| %>
-    <div class="alert <%= type %>">
-      <%= msg %>
-    </div>
-  <% end %>
-<% end %>
-
-<%= form_with(model: @dish, url: dish_path(@dish), method: :patch, class: 'form-container') do |f| %>
-  <div class="form-group">
-    <%= f.label :name, 'Dish Name', class: 'form-label' %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :price, 'Price', class: 'form-label' %>
-    <%= f.text_field :price, class: 'form-control' %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :category_id, 'Category', class: 'form-label' %>
-    <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
-    <% @dish.errors.full_messages_for(:category_id).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
-    <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
-    <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
-      <div class="text-danger"><%= message %></div>
-    <% end %>
-  </div>
-
-  <div class="form-group">
-    <%= f.label :dish_images, "Dish Images", class: 'form-label' %>
-    <%= f.file_field :picture, class: 'form-control-file' %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit 'Update Dish', class: 'btn btn-primary' %>
-  </div>
-<% end %>
-
 <style>
   /* ... Your existing styles ... */
 
@@ -112,3 +64,53 @@
     cursor: pointer;
   }
 </style>
+
+
+<%= link_to "Back", dishes_path, class: 'btn btn-back' %>
+<h1 class="form-title">Edit Dish</h1>
+
+<% if flash.any? %>
+  <% flash.each do |type, msg| %>
+    <div class="alert <%= type %>">
+      <%= msg %>
+    </div>
+  <% end %>
+<% end %>
+
+<%= form_with(model: @dish, url: dish_path(@dish), method: :patch, class: 'form-container') do |f| %>
+  <div class="form-group">
+    <%= f.label :name, 'Dish Name', class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :price, 'Price', class: 'form-label' %>
+    <%= f.text_field :price, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :category_id, 'Category', class: 'form-label' %>
+    <%= f.collection_select :category_id, Category.all, :id, :name, { prompt: 'Select Category' }, class: 'form-control-select' %>
+    <% @dish.errors.full_messages_for(:category_id).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :restaurant_id, 'Restaurant', class: 'form-label' %>
+    <%= f.collection_select :restaurant_id, current_user.restaurants, :id, :name, { prompt: 'Select Restaurant' }, class: 'form-control-select' %>
+    <% @dish.errors.full_messages_for(:restaurant_id).each do |message| %>
+      <div class="text-danger"><%= message %></div>
+    <% end %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :dish_images, "Dish Images", class: 'form-label' %>
+    <%= f.file_field :picture, class: 'form-control-file' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit 'Update Dish', class: 'btn btn-primary' %>
+  </div>
+<% end %>
+
