@@ -1,12 +1,82 @@
-<h1>Your order</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Order</title>
+
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    .btn-show {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      background-color: #007bff;
+      color: #fff;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn-show:hover {
+      background-color: #0056b3;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1>Your Order</h1>
+
   <% if @order.any? %>
     <table>
       <thead>
         <tr>
-          <th>Order_id</th>
-          <th>Adress</th>
-          <!-- <th>Price</th> -->
-          <!-- <th>Total</th> -->
+          <th>Order ID</th>
+          <th>Address</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -14,11 +84,10 @@
         <% total_amount = 0 %>
         <% @order.each do |order| %>
           <tr>
-            <td> <%= order.id%></td>
-            <td> <%= order.address %></td>
-
-               <td><%= link_to 'Show', order_path(order), class: 'btn-show', method: :get %>
-
+            <td><%= order.id %></td>
+            <td><%= order.address %></td>
+            <td>
+              <%= link_to 'Show', order_path(order), class: 'btn-show', method: :get %>
             </td>
           </tr>
         <% end %>
@@ -26,6 +95,7 @@
     </table>
 
     <%= link_to 'Continue Shopping', dishes_path %>
+  <% end %>
+</body>
 
-
- <% end %>
+</html>

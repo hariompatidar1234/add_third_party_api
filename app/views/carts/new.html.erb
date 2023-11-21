@@ -90,8 +90,8 @@
   <% end %>
 
   <%= form_with url: carts_path, method: :post, local: true do |form| %>
-    <label for="dish_id">Dish ID:</label>
-    <%= form.number_field :dish_id, required: true %>
+    <label for="dish_id">Select Dish:</label>
+    <%= form.grouped_collection_select :dish_id, Restaurant.all.order(:name), :dishes, :name, :id, :name, { prompt: "Choose a Dish" }, required: true %>
 
     <label for="quantity">Quantity:</label>
     <%= form.number_field :quantity, required: true %>
@@ -101,3 +101,5 @@
 
   <%= link_to 'View Cart', carts_path, class: 'btn-primary' %>
 </body>
+
+

@@ -1,14 +1,82 @@
-<h1>Order</h1>
+<!DOCTYPE html>
+<html lang="en">
 
-<p><strong> ID:</strong> <%= @order.id %></p>
-<p><strong>Address:</strong> <%= @order.address %></p> <br>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Details</title>
 
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
 
+    h1 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
 
-<div>
-  <p><strong>Dish Name:</strong> <%= @order_items.dish.name %></p>
-  <p><strong>Price:</strong> <%= @order_items.dish.price %></p>
-  <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(dish.restaurant_id).name %></p>
-  <br>
-</div>
+    p {
+      font-size: 16px;
+      margin-top: 10px;
+    }
 
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    td {
+      background-color: #fff;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1>Order Details</h1>
+
+  <p><strong>Order ID:</strong> <%= @order.id %></p>
+  <p><strong>Address:</strong> <%= @order.address %></p>
+
+  <% if @order.order_items.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Dish</th>
+          <th>Quantity</th>
+          <th>Total Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_items.each do |order_item| %>
+          <tr>
+            <td><%= order_item.dish.name %></td>
+            <td><%= order_item.quantity %></td>
+            <td><%= order_item.total_amount %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No items in this order.</p>
+  <% end %>
+</body>
+
+</html>
+  

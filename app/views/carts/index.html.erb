@@ -1,117 +1,150 @@
-<style>
-  body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f4f4f4;
-    margin: 0;
-    padding: 0;
-  }
+<!DOCTYPE html>
+<html lang="en">
 
-  h1 {
-    font-size: 24px;
-    color: #007bff;
-    margin-bottom: 20px;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Cart</title>
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-  }
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
 
-  th, td {
-    padding: 10px;
-    border: 1px solid #ddd;
-    text-align: left;
-  }
+    h1 {
+      font-size: 24px;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
 
-  th {
-    background-color: #f2f2f2;
-  }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
 
-  td {
-    background-color: #fff;
-  }
+    th, td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
 
-  td.actions {
-    display: flex;
-    gap: 5px;
-  }
+    th {
+      background-color: #f2f2f2;
+    }
 
-  .btn-show, .btn-edit, .btn-remove {
-    display: inline-block;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
+    td {
+      background-color: #fff;
+    }
 
-  .btn-show {
-    background-color: #007bff;
-    color: #fff;
-  }
+    td.actions {
+      display: flex;
+      gap: 5px;
+    }
 
+    .btn-show, .btn-edit, .btn-remove, .btn-continue, .btn-order, .btn-back {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
-  .btn-show:hover{
-    background-color: #0056b3;
-  }
+    .btn-show {
+      background-color: #007bff;
+      color: #fff;
+    }
 
-  p {
-    margin-top: 20px;
-    font-size: 16px;
-  }
+    .btn-show:hover {
+      background-color: #0056b3;
+    }
 
-  a {
-    text-decoration: none;
-    color: #007bff;
-  }
+    .btn-continue {
+      background-color: #28a745;
+      color: #fff;
+    }
 
-  a:hover {
-    text-decoration: underline;
-  }
-</style>
+    .btn-continue:hover {
+      background-color: #218838;
+    }
+
+    .btn-order {
+      background-color: #007bff;
+      color: #fff;
+    }
+
+    .btn-order:hover {
+      background-color: #0056b3;
+    }
+
+    .btn-back {
+      background-color: #6c757d;
+      color: #fff;
+    }
+
+    .btn-back:hover {
+      background-color: #5a6268;
+    }
+
+    p {
+      margin-top: 20px;
+      font-size: 16px;
+    }
+
+    a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+
+</head>
 
 <body>
   <h1>Your Cart</h1>
   <% if @cart_items.any? %>
-    <table>
-      <thead>
-        <tr>
-          <th>Dish</th>
-          <th>Quantity</th>
-          <th>Price</th>
-          <th>Total</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% total_amount = 0 %>
-        <% @cart_items.each do |cart_item| %>
-          <tr>
-            <td><%= cart_item.dish.name %></td>
-            <td><%= cart_item.quantity %></td>
-            <td><%= cart_item.dish.price %></td>
-            <% total_item_amount = cart_item.quantity * cart_item.dish.price %>
-            <td><%= total_item_amount %></td>
-            <td class="actions">
-              <%= link_to 'Show', cart_path(cart_item), class: 'btn-show', method: :get %>
+  <table>
+    <thead>
+      <tr>
+        <th>Dish</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Total</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% total_amount = 0 %>
+      <% @cart_items.each do |cart_item| %>
+      <tr>
+        <td><%= cart_item.dish.name %></td>
+        <td><%= cart_item.quantity %></td>
+        <td><%= cart_item.dish.price %></td>
+        <% total_item_amount = cart_item.quantity * cart_item.dish.price %>
+        <td><%= total_item_amount %></td>
+        <td class="actions">
+          <%= link_to 'Show', cart_path(cart_item), class: 'btn-show', method: :get %>
+        </td>
+      </tr>
+      <% total_amount += total_item_amount %>
+      <% end %>
+    </tbody>
+  </table>
+  <p>Total Amount: <%= total_amount %></p>
 
-            </td>
-          </tr>
-          <% total_amount += total_item_amount %>
-        <% end %>
-      </tbody>
-    </table>
-    <p>Total Amount: <%= total_amount %></p>
-
-    <%= link_to 'Continue Shopping', dishes_path %>
- <!--    <%= button_to 'Place Order', new_order_path, method: :post, data: { confirm: 'Are you sure you want to place this order for all items in your cart?' }, class: 'btn-place-order' %> -->
-
- <%= link_to 'Order', new_order_path%>
+  <%= link_to 'Continue Shopping', dishes_path, class: 'btn-continue' %>
+  <%= link_to 'Order', new_order_path, class: 'btn-order' %>
   <% else %>
-    <p>Your cart is empty.</p>
-    <%= link_to 'Continue Shopping', dishes_path %>
+  <p>Your cart is empty.</p>
+  <%= link_to 'Continue Shopping', dishes_path, class: 'btn-continue' %>
   <% end %>
   <div class="back-button">
     <%= link_to "Back", restaurants_path, class: 'btn btn-back' %>
@@ -119,3 +152,4 @@
 
 </body>
 
+</html>

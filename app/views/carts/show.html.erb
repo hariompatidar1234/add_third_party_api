@@ -1,34 +1,44 @@
-<style>
-  .actions {
-    display: flex;
-    gap: 5px;
-  }
+<!DOCTYPE html>
+<html lang="en">
 
- .btn-edit, .btn-delete {
-    display: inline-block;
-    text-decoration: none;
-    padding: 8px 16px;
-    border-radius: 5px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: background-color 0.3s;
- }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart Item Details</title>
 
+  <style>
+    .actions {
+      display: flex;
+      gap: 5px;
+    }
 
- .btn-edit {
-   background-color: #ffc107;
-   color: #000;
- }
+    .btn-edit, .btn-delete {
+      display: inline-block;
+      text-decoration: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
 
- .btn-delete {
-   background-color: #dc3545;
-   color: #fff;
- }
+    .btn-edit {
+      background-color: #ffc107;
+      color: #000;
+    }
 
- .btn-edit:hover, .btn-delete:hover {
-   background-color: #0056b3;
- }
-</style>
+    .btn-delete {
+      background-color: #dc3545;
+      color: #fff;
+    }
+
+    .btn-edit:hover, .btn-delete:hover {
+      background-color: #0056b3;
+    }
+  </style>
+
+</head>
+
 <body>
   <h1>Cart Item Details</h1>
 
@@ -40,10 +50,13 @@
 
   <p><strong>Cart Item ID:</strong> <%= @cart_item.id %></p>
   <p><strong>Dish ID:</strong> <%= @cart_item.dish_id %></p>
+  <p><strong>Dish Name:</strong> <%= @cart_item.dish.name %></p>
+  <p><strong>Category:</strong> <%= @cart_item.dish.category %></p>
+  <p><strong>Restaurant:</strong> <%= @cart_item.dish.restaurant.name %></p>
+  <p><strong>Dish Price:</strong> <%= @cart_item.dish.price %></p>
   <p><strong>Quantity:</strong> <%= @cart_item.quantity %></p>
 
   <div class="actions">
-
     <%= link_to 'Back to Cart', carts_path %>
     <%= link_to "Remove", cart_path(@cart_item), data: {
         turbo_method: :delete,
@@ -53,3 +66,4 @@
   </div>
 </body>
 
+</html>
