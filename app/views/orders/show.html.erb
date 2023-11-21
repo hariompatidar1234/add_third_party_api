@@ -1,0 +1,14 @@
+<h1>Order</h1>
+
+<p><strong> ID:</strong> <%= @order.id %></p>
+<p><strong>Address:</strong> <%= @order.address %></p> <br>
+
+
+
+<div>
+  <p><strong>Dish Name:</strong> <%= @order_items.dish.name %></p>
+  <p><strong>Price:</strong> <%= @order_items.dish.price %></p>
+  <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(dish.restaurant_id).name %></p>
+  <br>
+</div>
+

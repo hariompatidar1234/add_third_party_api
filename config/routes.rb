@@ -9,18 +9,14 @@ Rails.application.routes.draw do
 
    resource :profile, controller: 'users', as: 'current_user_profile'
 
-  resources :categories do
-    get 'category_dish', on: :collection
-  end
+  resources :categories
 
   resources :restaurants  do
     get 'my_restaurants_list', on: :collection
   end
 
   # resources :restaurants
-   resources :carts  do
-    delete 'destroy_all', on: :collection
-  end
+   resources :carts
 
   resources :dishes do
     collection do

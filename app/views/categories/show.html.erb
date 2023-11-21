@@ -20,19 +20,33 @@
 
 </style>
 
-<h1>Dish Details</h1>
+<h1>category</h1>
 
 <p><strong>Category ID:</strong> <%= @category.id %></p>
-<p><strong>Category Name:</strong> <%= @category.name %></p>
+<p><strong>Category Name:</strong> <%= @category.name %></p> <br>
+
+
+
+<h1>Dish Details</h1>
+<div class="dish-container">
+  <% @dishes.each do |dish| %>
+    <div class="dish-details">
+      <div>
+        <p><strong>Dish Name:</strong> <%= dish.name %></p>
+        <p><strong>Price:</strong> <%= dish.price %></p>
+        <p><strong>Restaurant:</strong> <%= Restaurant.find_by_id(dish.restaurant_id).name %></p>
+        <br>
+      </div>
+    </div>
+  <% end %>
+</div>
 
 <%= link_to "Back", categories_path, class: 'btn btn-primary' %>
-
-
-<%= link_to "Edit", edit_category_path(@category), class: 'btn btn-primary' %>
-
-
-<%= link_to "delete", category_path(@category), data: {
-                    turbo_method: :delete,
+<% if current_user.type == 'Owner' %>
+  <%= link_to "Edit", edit_category_path(@category), class: 'btn btn-primary' %>
+  <%= link_to "delete", category_path(@category), data: {
+                      turbo_method: :delete,
                     turbo_confirm: "Are you sure?"
                   }, class: 'btn btn-primary'  %>
 
+<% end %>

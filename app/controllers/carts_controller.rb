@@ -1,7 +1,8 @@
 class CartsController < ApplicationController
   # before_action :find_cart_item, only: %i[show update destroy]
   before_action :cart_not_empty?, only: :index
-  before_action :create_cart ,only: :create
+  before_action :create_cart ,only: %i[show, index]
+
 
   def index
     @cart_items = current_user.cart.cart_items
@@ -10,6 +11,7 @@ class CartsController < ApplicationController
 
   def create
     @dish = Dish.find_by_id(cart_item_params[:dish_id])
+    @cart = current_user.cart || current_user.create_cart
 
     unless @dish
       flash[:alert] = 'Error: Dish not found'
@@ -82,18 +84,6 @@ class CartsController < ApplicationController
     end
   end
 
-
-  def destroy_all
-    cart_items = current_user.cart.cart_items
-
-    if cart_items.any?
-      cart_items.destroy_all
-      render json: 'All Cart Items Removed Successfully', status: :ok
-    else
-      render json: 'Cart is empty'
-    end
-  end
-
   private
 
   def cart_item_params
@@ -110,7 +100,9 @@ class CartsController < ApplicationController
 
   def cart_not_empty?
     if current_user&.cart&.cart_items&.empty?
-      render json: { error: 'Cart is empty' }, status: :unprocessable_entity
+      # render json: { error: 'Cart is empty' }, status: :unprocessable_entity
+      return redirect_to new_cart_path, notice: 'Cart is Empty'
+
     end
   end
 

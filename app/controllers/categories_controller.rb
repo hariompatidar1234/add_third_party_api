@@ -24,6 +24,7 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find_by_id(params[:id])
+    @dishes = @category.dishes
   end
 
   def edit
@@ -47,11 +48,10 @@ class CategoriesController < ApplicationController
       redirect_to categories_path
   end
 
-  def category_dish
-    @categoy = Category.find_by_id(params[:id])
-    dishes = @category.dishes
-    redirect_to
-  end
+  # def category_dish
+  #   @categoy = Category.find_by_id(params[:id])
+  #   redirect_to
+  # end
 
   private
 

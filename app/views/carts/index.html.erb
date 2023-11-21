@@ -106,7 +106,9 @@
     <p>Total Amount: <%= total_amount %></p>
 
     <%= link_to 'Continue Shopping', dishes_path %>
-    <%= button_to 'Place Order', new_order_path, method: :post, data: { confirm: 'Are you sure you want to place this order for all items in your cart?' }, class: 'btn-place-order' %>
+ <!--    <%= button_to 'Place Order', new_order_path, method: :post, data: { confirm: 'Are you sure you want to place this order for all items in your cart?' }, class: 'btn-place-order' %> -->
+
+ <%= link_to 'Order', new_order_path%>
   <% else %>
     <p>Your cart is empty.</p>
     <%= link_to 'Continue Shopping', dishes_path %>

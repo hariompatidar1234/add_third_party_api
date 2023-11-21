@@ -15,7 +15,7 @@ td {
     flex-wrap: wrap;
     justify-content: space-around;
     padding: 20px;
-  }
+  /*}*/
 
     /* Dish container */
 .category-container {
@@ -29,6 +29,8 @@ td {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
+
+
 
 
 </style>
@@ -50,7 +52,6 @@ td {
             <td><%= r.id %></td>
             <td><%= r.name %></td>
             <td><%= link_to "show", category_path(r), class: 'btn btn-primary'%></td>
-
           </tr>
         <% end %>
       </tbody>

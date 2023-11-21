@@ -59,7 +59,10 @@
     justify-content: space-around;
     padding: 20px;
   }
-
+/*
+  .container1{
+     background-image: url("https://media.istockphoto.com/id/1428737062/photo/empty-wooden-table-top-with-lights-bokeh-on-blur-restaurant-background.webp?b=1&s=170667a&w=0&k=20&c=bmQyPVwhLAB_FN9glJrREyPxzmIQPv5TOFcqcXHy2pw=");
+  }*/
   /* Restaurant container */
   .restaurant-container {
     width: calc(33.33% - 20px);
@@ -136,6 +139,8 @@
     background-color: #007bff;
     color: white;
   }
+
+
 </style>
 
 <body>
@@ -154,7 +159,9 @@
       <% if user_signed_in? %>
         <a href="<%= destroy_user_session_path %>" class="signout-button">Sign Out</a>
       <% end %>
+
         <%= link_to 'View Cart', carts_path, class: 'btn-primary' %>
+        <%= link_to 'View Order', orders_path, class: 'btn-primary' %>
     </div>
   </div>
   <div class="menu-button" onclick="toggleMenu()">&#9776;</div>
@@ -167,29 +174,30 @@
 </div>
 
 <p><%= flash[:message] %></p>
-
-<div class="container">
-  <% @restaurants.each do |r| %>
-    <div class="restaurant-container">
-      <div class="restaurant-image">
-        <a href="<%= restaurant_path(r) %>">
-          <%= image_tag(r.picture, size: "200x160") if r.picture.attached? %>
-        </a>
-      </div>
-      <div class="restaurant-details">
-        <h2>
+<div class="container1">
+  <div class="container">
+    <% @restaurants.each do |r| %>
+      <div class="restaurant-container">
+        <div class="restaurant-image">
           <a href="<%= restaurant_path(r) %>">
-            <%= r.name %>
+            <%= image_tag(r.picture, size: "200x160") if r.picture.attached? %>
           </a>
-        </h2>
-        <!-- <p>Rest_id: <%= r.id %></p> -->
-        <p>Status: <%= r.status %></p>
-        <p>Address: <%= r.address %></p>
-        <!-- Add other details as needed -->
-        <!-- <p><%= link_to "Show", restaurant_path(r), class: "button" %></p> -->
+        </div>
+        <div class="restaurant-details">
+          <h2>
+            <a href="<%= restaurant_path(r) %>">
+              <%= r.name %>
+            </a>
+          </h2>
+          <!-- <p>Rest_id: <%= r.id %></p> -->
+          <p>Status: <%= r.status %></p>
+          <p>Address: <%= r.address %></p>
+          <!-- Add other details as needed -->
+          <!-- <p><%= link_to "Show", restaurant_path(r), class: "button" %></p> -->
+        </div>
       </div>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>
 <%= paginate @restaurants %>
 </body>
