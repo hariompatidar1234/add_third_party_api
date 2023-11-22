@@ -63,14 +63,6 @@ class RestaurantsController < ApplicationController
     end
   end
 
-  # def my_restaurants_list
-  #   restaurants = @current_user.restaurants
-  #   if restaurants.any?
-  #     render json: restaurants
-  #   else
-  #     render json: { error: "You haven't added any restaurants yet." }, status: :ok
-  #   end
-  # end
 
   def my_restaurants_list
     @restaurants = current_user.restaurants
@@ -80,7 +72,7 @@ class RestaurantsController < ApplicationController
       render plain: "You haven't added any restaurants yet.", status: :ok
     end
   end
-  
+
 
   # def restaurant_dish
   #   @restaurant = Restaurant.find_by_id(params[:id])
