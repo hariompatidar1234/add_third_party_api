@@ -11,14 +11,11 @@ class User < ApplicationRecord
 
   has_one_attached :picture
 
-  def self.ransackable_attributes(auth_object = nil)
-     ["created_at", "email", "encrypted_password", "id", "name", "password", "remember_created_at", "reset_password_sent_at", "reset_password_token", "type", "updated_at"]
-   end
+  # def self.ransackable_attributes(auth_object = nil)
+  #   ["created_at", "email", "encrypted_password", "id", "name", "password", "remember_created_at", "reset_password_sent_at", "reset_password_token", "type", "updated_at"]
+  # end
 
-   def self.ransackable_associations(auth_object = nil)
-      ["picture_attachment", "picture_blob"]
-    end
-
-
-
+  # def self.ransackable_associations(auth_object = nil)
+  #   ["picture_attachment", "picture_blob"]
+  # end
 end

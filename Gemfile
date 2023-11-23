@@ -89,3 +89,20 @@ gem 'kaminari', '~> 1.2', '>= 1.2.2'
 gem "devise", "~> 4.9"
 gem 'activeadmin'
 gem 'sass-rails', '>= 5'
+
+
+group :development, :test do
+  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  # gem 'pry'
+  gem 'rspec-rails'
+  gem 'shoulda-matchers'
+  gem 'factory_bot'
+  gem 'factory_bot_rails', '6.2.0'
+  gem 'shoulda-callback-matchers'
+  # gem 'rails-controller-testing'
+  gem 'faker'
+  # gem 'rspec-sidekiq'
+  gem 'simplecov', '0.17'
+  # gem 'rspec-sonarqube-formatter'
+  # gem 'rspec-retry'
+end
