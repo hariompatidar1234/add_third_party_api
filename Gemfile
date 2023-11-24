@@ -99,7 +99,7 @@ group :development, :test do
   gem 'factory_bot'
   gem 'factory_bot_rails', '6.2.0'
   gem 'shoulda-callback-matchers'
-  # gem 'rails-controller-testing'
+  gem 'rails-controller-testing'
   gem 'faker'
   # gem 'rspec-sidekiq'
   gem 'simplecov', '0.17'

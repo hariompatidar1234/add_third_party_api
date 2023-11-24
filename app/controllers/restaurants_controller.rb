@@ -12,7 +12,7 @@ class RestaurantsController < ApplicationController
                   else
                     restaurants.page(params[:page]).per(5)
                   end
-    # render json: @restaurants
+    render json: @restaurants
   end
 
 
@@ -21,6 +21,7 @@ class RestaurantsController < ApplicationController
   end
 
   def create
+    byebug
     @restaurant = current_user.restaurants.new(restaurant_params)
     if @restaurant.save
       redirect_to root_path
