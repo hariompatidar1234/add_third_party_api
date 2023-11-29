@@ -8,11 +8,11 @@ class RestaurantsController < ApplicationController
                   elsif params[:status]
                     restaurants.where(status: params[:status]).page(params[:page]).per(3)
                   elsif params[:address]
-                    restaurants.where('address LIKE ?', "%#{params[:address]}%")
+                    restaurants.where('address LIKE ?', "%#{params[:address]}%").page(params[:page]).per(3)
                   else
                     restaurants.page(params[:page]).per(5)
                   end
-    render json: @restaurants
+    # render json: @restaurants
   end
 
 
@@ -21,8 +21,8 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    byebug
-    @restaurant = current_user.restaurants.new(restaurant_params)
+    # @restaurant = current_user.restaurants.new(restaurant_params)
+    @restaurant = Owner.find(current_user.id).restaurants.new(restaurant_params)
     if @restaurant.save
       redirect_to root_path
       flash[:message] = "You Created Successfully!"
@@ -30,7 +30,6 @@ class RestaurantsController < ApplicationController
       render :new, status: :unprocessable_entity
     end
   end
-
 
   def show
     @restaurant = Restaurant.find_by_id(params[:id])
