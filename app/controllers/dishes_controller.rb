@@ -91,6 +91,6 @@ class DishesController < ApplicationController
     @dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
     @dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
     @dishes = dishes.page(params[:page]).per(5) if params[:page]
-    @dishes
+    @dishes = dishes
   end
 end

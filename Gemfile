@@ -74,7 +74,7 @@ gem 'byebug'
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
-  gem 'capybara'
+  # gem 'capybara'
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
@@ -102,6 +102,7 @@ group :development, :test do
   gem 'rails-controller-testing'
   gem 'faker'
   # gem 'rspec-sidekiq'
+  gem "capybara"
   gem 'simplecov', '0.17'
   # gem 'rspec-sonarqube-formatter'
   # gem 'rspec-retry'

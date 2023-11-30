@@ -67,22 +67,11 @@ class RestaurantsController < ApplicationController
   def my_restaurants_list
     @restaurants = current_user.restaurants
     if @restaurants.any?
-      render 'my_restaurants_list'
+      render "my_restaurants_list"
     else
-      render plain: "You haven't added any restaurants yet.", status: :ok
+      render plain: "You haven't added any restaurants yet."
     end
   end
-
-
-  # def restaurant_dish
-  #   @restaurant = Restaurant.find_by_id(params[:id])
-  #   @dishes = @restaurant.dishes
-  #   if @dishes.any?
-  #     render @dishes
-  #   else
-  #     render plain: "dishes not availables "
-  #   end
-  # end
 
   private
 
