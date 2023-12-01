@@ -107,3 +107,5 @@ group :development, :test do
   # gem 'rspec-sonarqube-formatter'
   # gem 'rspec-retry'
 end
+
+gem 'razorpay'

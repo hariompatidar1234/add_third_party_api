@@ -13,6 +13,55 @@ class OrdersController < ApplicationController
     @order = Order.new
   end
 
+  # def create
+  #   @cart = current_user.cart
+  #   if @cart.cart_items.empty?
+  #     flash[:alert] = 'Cart is empty. Cannot create an order with an empty cart.'
+  #     redirect_to root_path
+  #   else
+  #     @order = current_user.orders.new(address: params[:address])
+
+  #     if @order.save
+  #       # OrderMailer.order_confirm(current_user).deliver_now
+  #        # OrderMailer.notify_owner(order.id, owner_email).deliver_later
+  #       create_order_items(@order)
+  #       flash[:notice] = 'Order created successfully!'
+  #       redirect_to orders_path
+  #     else
+  #       flash[:error] = @order.errors.full_messages.join(', ')
+  #       render 'new' # Render the new order form again
+  #     end
+  #   end
+  # end
+
+
+  # def create
+  #   @cart = current_user.cart
+
+  #   if @cart.cart_items.empty?
+  #     flash[:alert] = 'Cart is empty. Cannot create an order with an empty cart.'
+  #     redirect_to root_path
+  #   else
+  #     # amount = @cart.total_amount * 100 # Razorpay amount is in paise
+  #     razorpay_order = Razorpay::Order.create(amount: @order.
+
+  #     @order1 = current_user.orders.new(
+  #       address: params[:address],
+  #       razorpay_payment_id: razorpay_order.id
+  #     )
+
+  #     if @order1.save
+  #       create_order_items(@order)
+  #       flash[:notice] = 'Order created successfully!'
+  #       redirect_to razorpay_payment_path(@order) # Redirect to a new route for Razorpay processing
+  #     else
+  #       flash[:error] = @order1.errors.full_messages.join(', ')
+  #       render 'new' # Render the new order form again
+  #     end
+  #   end
+  # end
+
+
   def create
     @cart = current_user.cart
     if @cart.cart_items.empty?
@@ -21,14 +70,23 @@ class OrdersController < ApplicationController
     else
       @order = current_user.orders.new(address: params[:address])
 
-      if @order.save
-        # OrderMailer.order_confirm(current_user).deliver_now
-         # OrderMailer.notify_owner(order.id, owner_email).deliver_later
-        create_order_items(@order)
-        flash[:notice] = 'Order created successfully!'
-        redirect_to orders_path
+      # Create an order using Razorpay Orders API
+      razorpay_order = Razorpay::Order.create(amount: @order.total_amount, currency: 'INR')
+
+      if razorpay_order.present? && razorpay_order['id'].present?
+        # @order.order_id = razorpay_order['id'] # Assign the Razorpay order_id to the order
+        razorpay_payment_id: razorpay_order.id
+
+        if @order.save
+          create_order_items(@order)
+          flash[:notice] = 'Order created successfully!'
+          redirect_to orders_path
+        else
+          flash[:error] = @order.errors.full_messages.join(', ')
+          render 'new' # Render the new order form again
+        end
       else
-        flash[:error] = @order.errors.full_messages.join(', ')
+        flash[:error] = 'Failed to create order. Please try again.'
         render 'new' # Render the new order form again
       end
     end

@@ -28,5 +28,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :orders
+  resources :orders do
+    post 'razorpay_callback', on: :member
+  end
 end
