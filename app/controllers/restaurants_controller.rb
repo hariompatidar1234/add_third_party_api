@@ -21,8 +21,8 @@ class RestaurantsController < ApplicationController
   end
 
   def create
-    # @restaurant = current_user.restaurants.new(restaurant_params)
-    @restaurant = Owner.find(current_user.id).restaurants.new(restaurant_params)
+    @restaurant = current_user.restaurants.new(restaurant_params)
+    # @restaurant = Owner.find(current_user.id).restaurants.new(restaurant_params)
     if @restaurant.save
       redirect_to root_path
       flash[:message] = "You Created Successfully!"

@@ -1,9 +1,9 @@
-User.create(name: 'hariom patidar', email: 'hariompatidar32498@gmail.com', password: 'hariom@123', type: 'Owner')
-User.create(name: 'herry patidar', email: 'herrypatidar32498@gmail.com', password: 'herry@123', type: 'Owner')
+User.create(name: 'hariom patidar', email: 'hariompatidar32498@gmail.com', password: '123456', type: 'Owner',contact: "9826260805")
+User.create(name: 'herry patidar', email: 'herrypatidar32498@gmail.com', password: '123456', type: 'Owner',contact: "9826260806")
 
-User.create(name: 'sachin paidar', email: 'sachin@123gmail.com', password: 'sachin@123', type: 'Customer')
-User.create(name: 'devendra patidar', email: 'devendra@123gmail.com', password: 'devendra@123gmail.com',
-            type: 'Customer')
+User.create(name: 'sachin paidar', email: 'sachin@123gmail.com', password: '123456', type: 'Customer',contact: "9826245776")
+User.create(name: 'devendra patidar', email: 'devendra@123gmail.com', password: '123456',
+            type: 'Customer',contact: "9165976224")
 
 Category.create(name: 'Indian')
 Category.create(name: 'Chines')
