@@ -29,6 +29,13 @@ Rails.application.routes.draw do
   end
 
   resources :orders do
-    post 'razorpay_callback', on: :member
+    post '/create_payment', action: :create_payment, on: :member
   end
 end
+
+
+
+      # resources :orders, only: %i[index new create show destroy] do
+      #   resources :order_items, only: [:index]
+      #   get '/payment', action: :payment, on: :member
+      # end

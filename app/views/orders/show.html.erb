@@ -70,7 +70,10 @@
             <td><%= order_item.quantity %></td>
             <td><%= order_item.total_amount %></td>
           </tr>
+          <%= button_to "Pay now", create_payment_order_path(@order), method: :post if @order.payment_status == "payment_pending" %>
         <% end %>
+
+
       </tbody>
     </table>
   <% else %>
@@ -79,4 +82,3 @@
 </body>
 
 </html>
-  

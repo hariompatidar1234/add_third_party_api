@@ -109,3 +109,4 @@ group :development, :test do
 end
 
 gem 'razorpay'
+gem 'dotenv-rails', groups: [:development, :test]
