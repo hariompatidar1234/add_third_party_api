@@ -111,7 +111,7 @@ RSpec.describe "Restaurants", type: :request do
 
   describe "DELETE /destory/id" do
     context " owner delete  own restaurant" do
-      it "destroys the requested category" do
+      it "destroys the requested restaurant" do
         delete "/restaurants/#{restaurant.id}"
          expect(response).to redirect_to root_path
       end

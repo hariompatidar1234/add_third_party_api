@@ -29,7 +29,7 @@ Rails.application.routes.draw do
   end
 
   resources :orders do
-    post '/create_payment', action: :create_payment, on: :member
+    post 'create_payment', action: :create_payment, on: :member
   end
 end
 

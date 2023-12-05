@@ -1,84 +1,15 @@
 
-<body>
-  <h1>Order Details</h1>
-
-  <p><strong>Order ID:</strong> <%= @order.id %></p>
-  <p><strong>Address:</strong> <%= @order.address %></p>
-
-  <% if @order.order_items.any? %>
-    <table>
-      <thead>
-        <tr>
-          <th>Dish</th>
-          <th>Quantity</th>
-          <th>Total Amount</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @order.order_items.each do |order_item| %>
-          <tr>
-            <td><%= order_item.dish.name %></td>
-            <td><%= order_item.quantity %></td>
-            <td><%= order_item.total_amount %></td>
-          </tr>
-        <% end %>
-        <!-- Add Razorpay payment form -->
-        <tr>
-          <td colspan="3">
-            <form action="<%= create_payment_order_path(@order) %>" method="POST" id="razorpay-form">
-              <script
-                src="https://checkout.razorpay.com/v1/checkout.js"
-                data-key="<%= YOUR_RAZORPAY_KEY %>"
-                data-amount="<%= @order.total_amount * 100 %>"
-                data-currency="INR"
-                data-order_id="<%= @order.razorpay_order_id %>"
-                data-buttontext="Pay now"
-                data-name="Your Company Name"
-                data-description="Order Payment"
-                data-prefill.name="<%= current_user.name %>"
-                data-prefill.email="<%= current_user.email %>"
-                data-theme.color="#007bff"
-              ></script>
-            </form>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <!-- Standalone "Pay now" button -->
-    <button onclick="initiateRazorpayPayment()">Pay now</button>
-  <% else %>
-    <p>No items in this order.</p>
+  <%= form_tag(create_payment_order_path, method: :post) do %>
+    <script
+      src="https://checkout.razorpay.com/v1/checkout.js"
+      data-key="<%= ENV["RAZORPAY_KEY_ID"] %>"
+      data-amount="<%= 100 %>"
+      data-buttontext="Pay with Razorpay"
+      data-name="Swiggy"
+      data-description="A description of your product"
+      data-image="path/to/your/logo.png"
+      data-prefill.name="<%= current_user.name %>"
+      data-prefill.email="<%= current_user.email %>"
+      data-theme.color="#F37254"
+    ></script>
   <% end %>
-
-  <!-- JavaScript to initiate Razorpay payment -->
-  <script>
-    function initiateRazorpayPayment() {
-      var options = {
-        key: '<%= YOUR_RAZORPAY_KEY %>',
-        amount: <%= @order.total_amount * 100 %>,
-        currency: 'INR',
-        order_id: '<%= @order.razorpay_order_id %>',
-        name: 'Your Company Name',
-        description: 'Order Payment',
-        prefill: {
-          name: '<%= current_user.name %>',
-          email: '<%= current_user.email %>',
-        },
-        theme: {
-          color: '#007bff',
-        },
-        handler: function (response) {
-          // Handle the response, e.g., update the payment status
-          console.log(response);
-
-          // Submit the form for server-side processing
-          document.getElementById('razorpay-form').submit();
-        },
-      };
-
-      var rzp = new Razorpay(options);
-      rzp.open();
-    }
-  </script>
-</body>

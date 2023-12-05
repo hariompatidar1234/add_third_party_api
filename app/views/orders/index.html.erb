@@ -68,7 +68,9 @@
         <tr>
           <th>Order ID</th>
           <th>Address</th>
+          <!-- <th>Status</th> -->
           <th>Actions</th>
+          <th>payment_status</th>
         </tr>
       </thead>
       <tbody>
@@ -77,8 +79,13 @@
           <tr>
             <td><%= order.id %></td>
             <td><%= order.address %></td>
+            <!-- <td><%= order.payment_status %></td> -->
             <td>
               <%= link_to 'Show', order_path(order), class: 'btn-show', method: :get %>
+            </td>
+            <td>
+              <% byebug %>
+               <%= link_to "Pay now", create_payment_order_path(order), method: :post %>
             </td>
           </tr>
 

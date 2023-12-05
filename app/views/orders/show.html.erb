@@ -89,7 +89,8 @@
             <td><%= order_item.total_amount %></td>
             <td>
               <% if @order.payment_status == "payment_pending" %>
-                <%= button_to "Pay now", create_payment_order_path(order_item), method: :post %>
+              <%byebug%>
+                <%= button_to "Pay now", create_payment_order_path(@order), method: :post %>
               <% else %>
                 Payment completed
               <% end %>

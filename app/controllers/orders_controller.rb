@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   # before_action :find_order, only: [:show]
-  # before_action :set_order, only: [:create_payment]
+  before_action :set_order, only: [:create_payment]
   def index
     # @orders_ = current_user.orders
     # order = current_user.orders
@@ -24,9 +24,8 @@ class OrdersController < ApplicationController
       if @order.save
         # OrderMailer.order_confirm(current_user).deliver_now
          # OrderMailer.notify_owner(order.id, owner_email).deliver_later
-        create_order_items(@order)
-        flash[:notice] = 'Order created successfully!'
-        redirect_to orders_path
+          flash[:notice] = 'Order created successfully!'
+          redirect_to orders_path
       else
         flash[:error] = @order.errors.full_messages.join(', ')
         render 'new' # Render the new order form again
@@ -34,49 +33,29 @@ class OrdersController < ApplicationController
     end
   end
 
-  def create_payment
-    # amount_in_paise = (@order.order_items.total_amount * 100).to_i
-
-    payment = Razorpay::Payment.create({
-      # amount: amount_in_paise,
-      currency: 'INR',
-      payment_capture: 1,
-      # notes: {
-      #   order_id: @order.id
-      # }
-    })
-
-    if payment.present? && payment['status'] == 'captured'
-      @order.update(razorpay_payment_id: payment['id'], payment_status: 'payment_confirmed')
-      current_user.cart.destroy
-      # redirect_to create_payment_order_path(order_id: @order.id)
-      render json: { message: 'Payment confirmed successfully!', order_id: @order.id }
-    else
-      render json: { error: 'Failed to confirm payment' }, status: :unprocessable_entity
-    end
-  end
-  # def create_payment
-  #   if @order.update(razorpay_payment_id: params[:razorpay_payment_id], payment_status: "payment_confirmed")
-  #     current_user.cart.destroy
-  #     redirect_to create_payment_order_path(@order)
-  #     render json: { message: 'Payment confirmed successfully!', order_id: @order.id }
-  #   else
-  #     render json: { error: 'Failed to confirm payment', errors: @order.errors.full_messages }, status: :unprocessable_entity
-  #   end
-  # end
 
  def create_order_items(order)
-   cart_items = current_user.cart.cart_items.includes(:dish)
-   cart_items.each do |cart_item|
+  cart_items.each do |cart_item|
      order_item = order.order_items.new(
        dish_id: cart_item.dish.id,
        quantity: cart_item.quantity,
        total_amount: cart_item.quantity * cart_item.dish.price
      )
      order_item.save
-   end
    # current_user.cart.cart_items.destroy_all
+   end
  end
+
+  def create_payment
+    byebug
+    if @order.update(razorpay_payment_id: params[:razorpay_payment_id], payment_status: "payment_confirmed")
+      # current_user.cart.cart_item.destroy  # destroy_cart_item
+      redirect_to create_payment_order_path(@order)
+    else
+      render :payment
+    end
+  end
+
 
   def show
     @order = Order.find_by_id(params[:id])
@@ -91,7 +70,7 @@ class OrdersController < ApplicationController
   #   render json: { error: 'Order not found' }, status: :not_found unless @order
   # end
 
-  
+
   def set_order
     @order = Order.find(params[:id])
   end

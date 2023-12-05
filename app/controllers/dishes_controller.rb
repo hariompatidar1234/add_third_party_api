@@ -1,14 +1,19 @@
 class DishesController < ApplicationController
   before_action :set_dish, only: %i[show update destroy]
 
+  # def index
+  #   byebug
+  #   if params[:restaurant_id]
+  #     restaurant = Restaurant.find_by_id(params[:restaurant_id])
+  #     filter_dishes(restaurant.dishes)
+  #   else
+  #     @dishes = Dish.all
+  #     filter_dishes(@dishes)
+  #   end
+  # end
   def index
-    if params[:restaurant_id]
-      restaurant = Restaurant.find_by_id(params[:restaurant_id])
-      filter_dishes(restaurant.dishes)
-    else
-      @dishes = Dish.all
-      filter_dishes(@dishes)
-    end
+    @dishes = Dish.all
+    filter_dishes(@dishes)
   end
 
   def new
@@ -16,7 +21,9 @@ class DishesController < ApplicationController
   end
 
   def create
-    @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
+    # byebug
+    # @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
+    @restaurant = Restaurant.find_by_id(params[:restaurant_id])
     if @restaurant && @restaurant.owner == current_user
       @dish = @restaurant.dishes.new(dish_params)
       if @dish.save
@@ -89,6 +96,7 @@ class DishesController < ApplicationController
 
   def filter_dishes(dishes)
     @dishes = dishes.where(category_id: params[:category_id]) if params[:category_id]
+    @dishes =  dishes.where(restaurant_id: params[:restaurant_id]) if params[:restaurant_id]
     @dishes = dishes.where('name LIKE ?', "%#{params[:name]}%") if params[:name]
     @dishes = dishes.page(params[:page]).per(5) if params[:page]
     @dishes = dishes
