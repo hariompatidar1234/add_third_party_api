@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   # before_action :find_order, only: [:show]
-
+  # before_action :set_order, only: [:create_payment]
   def index
     # @orders_ = current_user.orders
     # order = current_user.orders
@@ -34,21 +34,36 @@ class OrdersController < ApplicationController
     end
   end
 
-  # def payment
-  #    if @order.payment_status == "payment_confirmed"
-  #      redirect_to api_v1_order_order_items_path(@order)
-  #    end
-  #  end
-
   def create_payment
-    if @order.update(razorpay_payment_id: params[:razorpay_payment_id], payment_status: "payment_confirmed")
-      current_user.cart.destroy  # destroy_cart_item
-      redirect_to create_payment_order_path(@order)
-    # else
-    #   render :payment
+    # amount_in_paise = (@order.order_items.total_amount * 100).to_i
+
+    payment = Razorpay::Payment.create({
+      # amount: amount_in_paise,
+      currency: 'INR',
+      payment_capture: 1,
+      # notes: {
+      #   order_id: @order.id
+      # }
+    })
+
+    if payment.present? && payment['status'] == 'captured'
+      @order.update(razorpay_payment_id: payment['id'], payment_status: 'payment_confirmed')
+      current_user.cart.destroy
+      # redirect_to create_payment_order_path(order_id: @order.id)
+      render json: { message: 'Payment confirmed successfully!', order_id: @order.id }
+    else
+      render json: { error: 'Failed to confirm payment' }, status: :unprocessable_entity
     end
   end
-
+  # def create_payment
+  #   if @order.update(razorpay_payment_id: params[:razorpay_payment_id], payment_status: "payment_confirmed")
+  #     current_user.cart.destroy
+  #     redirect_to create_payment_order_path(@order)
+  #     render json: { message: 'Payment confirmed successfully!', order_id: @order.id }
+  #   else
+  #     render json: { error: 'Failed to confirm payment', errors: @order.errors.full_messages }, status: :unprocessable_entity
+  #   end
+  # end
 
  def create_order_items(order)
    cart_items = current_user.cart.cart_items.includes(:dish)
@@ -75,4 +90,9 @@ class OrdersController < ApplicationController
   #   @order = current_user&.orders&.find_by_id(params[:id])
   #   render json: { error: 'Order not found' }, status: :not_found unless @order
   # end
+
+  
+  def set_order
+    @order = Order.find(params[:id])
+  end
 end

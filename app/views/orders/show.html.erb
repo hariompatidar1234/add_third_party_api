@@ -44,6 +44,23 @@
     td {
       background-color: #fff;
     }
+
+  .pay-now-button {
+  background-color: #007bff;
+  color: #fff;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 14px;
+  }
+
+/* Style for disabled state */
+  .pay-now-button[disabled] {
+  background-color: #ccc;
+  cursor: not-allowed;
+  }
   </style>
 
 </head>
@@ -61,6 +78,7 @@
           <th>Dish</th>
           <th>Quantity</th>
           <th>Total Amount</th>
+          <th>Action</th>
         </tr>
       </thead>
       <tbody>
@@ -69,16 +87,21 @@
             <td><%= order_item.dish.name %></td>
             <td><%= order_item.quantity %></td>
             <td><%= order_item.total_amount %></td>
+            <td>
+              <% if @order.payment_status == "payment_pending" %>
+                <%= button_to "Pay now", create_payment_order_path(order_item), method: :post %>
+              <% else %>
+                Payment completed
+              <% end %>
+            </td>
           </tr>
-          <%= button_to "Pay now", create_payment_order_path(@order), method: :post if @order.payment_status == "payment_pending" %>
         <% end %>
-
-
       </tbody>
     </table>
   <% else %>
     <p>No items in this order.</p>
   <% end %>
 </body>
+
 
 </html>
