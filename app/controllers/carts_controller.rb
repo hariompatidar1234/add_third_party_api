@@ -34,18 +34,6 @@ class CartsController < ApplicationController
 
   def show
     @cart_item = CartItem.find(params[:id])
-
-    if @cart_item
-      respond_to do |format|
-        format.html # This will render the default show.html.erb template
-        format.json { render json: @cart_item }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to carts_path, alert: 'Cart Item not found' }
-        format.json { render json: { error: 'Cart Item not found' }, status: :not_found }
-      end
-    end
   end
 
   def edit
@@ -60,28 +48,17 @@ class CartsController < ApplicationController
         @cart_item.update(quantity: new_quantity)
         redirect_to carts_path, notice: 'Cart Item quantity updated successfully!'
       else
-        redirect_to edit_cart_path(@cart_item), alert: 'Quantity must be greater than 0'
+        redirect_to edit_cart_path(@cart_item), alert: 'Quantity must be greater than 0', status: :unprocessable_entity
       end
-    else
-      redirect_to carts_path, alert: 'Cart Item not found'
     end
   end
 
   def destroy
-    @cart_item = CartItem.find(params[:id])
-
-    if @cart_item
+    byebug
+    @cart_item = current_user&.cart&.cart_items&.find_by_id(params[:id])
       @cart_item.destroy
-      respond_to do |format|
-        format.html { redirect_to carts_path, notice: 'Cart Item Removed Successfully' }
-        format.json { render json: 'Cart Item Removed Successfully', status: :ok }
-      end
-    else
-      respond_to do |format|
-        format.html { redirect_to carts_path, alert: 'Cart Item not found' }
-        format.json { render json: 'Cart Item not found', status: :not_found }
-      end
-    end
+      redirect_to carts_path
+      flash[:notice] ='Cart Item Removed Successfully'
   end
 
   private
@@ -94,9 +71,9 @@ class CartsController < ApplicationController
     cart.cart_items.empty? || cart.cart_items.first.dish.restaurant == restaurant
   end
 
-  def find_cart_item
-    @cart_item = current_user&.cart&.cart_items&.find_by_id(params[:id])
-  end
+  # def find_cart_item
+  #   @cart_item = current_user&.cart&.cart_items&.find_by_id(params[:id])
+  # end
 
   def cart_not_empty?
     if current_user&.cart&.cart_items&.empty?

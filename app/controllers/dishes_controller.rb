@@ -21,9 +21,8 @@ class DishesController < ApplicationController
   end
 
   def create
-    # byebug
-    # @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
-    @restaurant = Restaurant.find_by_id(params[:restaurant_id])
+    @restaurant = Restaurant.find_by_id(params[:dish][:restaurant_id])
+    # @restaurant = Restaurant.find_by_id(params[:restaurant_id])
     if @restaurant && @restaurant.owner == current_user
       @dish = @restaurant.dishes.new(dish_params)
       if @dish.save
@@ -33,8 +32,8 @@ class DishesController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     else
-      redirect_to root_path
-      flash[:message] = 'You are not authorized to add a dish to this restaurant.'
+      redirect_to root_path ,  status: :unauthorized
+      flash[:message] = 'You are not authorized to add a dish to this restaurant!'
     end
   end
 

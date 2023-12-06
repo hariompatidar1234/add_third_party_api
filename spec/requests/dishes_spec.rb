@@ -2,22 +2,17 @@ require 'rails_helper'
 
 RSpec.describe "Dishes", type: :request do
   let(:user) { FactoryBot.create(:owner, type: 'Owner') }
+  let(:user1) { FactoryBot.create(:owner, type: 'Owner') }
   let(:restaurant) {FactoryBot.create(:restaurant , user_id: user.id)}
-  let(:restaurant1) {FactoryBot.create(:restaurant , user_id: user.id)}
+  let(:restaurant1) {FactoryBot.create(:restaurant , user_id: user1.id)}
   let(:category) {FactoryBot.create(:category)}
   let(:dish) {FactoryBot.create(:dish, category_id: category.id , restaurant_id: restaurant.id)}
-  let(:dish1) {FactoryBot.create(:dish, category_id: category.id , restaurant_id: restaurant.id)}
+  let(:dish1) {FactoryBot.create(:dish, category_id: category.id , restaurant_id: restaurant1.id)}
 
   before do
     sign_in user
     allow(controller).to receive(:current_user).and_return(user)
     current_user = controller.current_user
-
-    # @restaurant = FactoryBot.create(:restaurant , user_id: user.id)
-    # @restaurant1 = FactoryBot.create(:restaurant , user_id: user.id)
-    # @category = FactoryBot.create(:category)
-    # @dish = FactoryBot.create(:dish, category_id: @category.id , restaurant_id: @restaurant.id)
-    # @dish1= FactoryBot.create(:dish, category_id: @category.id , restaurant_id: @restaurant1.id)
   end
 
 
@@ -50,19 +45,25 @@ RSpec.describe "Dishes", type: :request do
 
 
   describe 'POST /dishes' do
-    it 'creates a dish for owners' do
-      # byebug
-      post '/dishes',params: { dish: { name: 'paneer',price: 90,  category_id: category.id, restaurant_id: restaurant.id } }
-      expect(response).to redirect_to dish_path(dish)
-
+    context 'when params are correct' do
+        let(:dish_params) {FactoryBot.build(:dish, category_id: category.id , restaurant_id: restaurant.id)}
+      it 'creates a dish for owners' do
+        byebug
+        post '/dishes',params: { dish: dish_params }
+       expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(dish_path(Dish.last))
+        expect(flash[:message]).to eq("You added dish Successfully!")
     end
+      end
     it 'returns an error for other owner trying to create a dish' do
       post '/dishes',
-           params: { name: 'Dish Name', price: 9.99, restaurant_id: restaurant1.id, category_id: category.id }
+           params: { name: 'manchurian', price: 99.9, restaurant_id: restaurant1.id, category_id: category.id }
       expect(response).to have_http_status(:unauthorized)
+      expect(flash[:message]).to eq('You are not authorized to add a dish to this restaurant!')
     end
     it 'returns an error for invalid dish creation' do
-      post '/dishes', params: { name: nil, price: nil, restaurant_id: restaurant1.id, category_id: category.id }
+      post '/dishes', params: { name: "", price: nil, restaurant_id: restaurant1.id, category_id: category.id }
+      expect(response).to render_template(:new)
       expect(response).to have_http_status(:unprocessable_entity)
     end
   end
