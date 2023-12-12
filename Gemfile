@@ -118,3 +118,6 @@ gem 'omniauth-rails_csrf_protection'
 
 
 # gem 'sass-rails'
+# gem 'sass-rails'
+gem 'sass-rails'
+gem 'sassc', '< 2.2.0'

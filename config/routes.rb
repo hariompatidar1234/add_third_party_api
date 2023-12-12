@@ -2,7 +2,14 @@ Rails.application.routes.draw do
   # devise_for :admin_users, ActiveAdmin::Devise.config
   # ActiveAdmin.routes(self)
 
-  devise_for :users
+  # devise_for :users
+
+    devise_for :users, controllers: {
+      omniauth_callbacks: 'users/omniauth_callbacks',
+      sessions: 'users/sessions',
+      registrations: 'users/registrations'
+    }
+
   root to: "restaurants#index"
 
 
@@ -39,3 +46,4 @@ end
       #   resources :order_items, only: [:index]
       #   get '/payment', action: :payment, on: :member
       # end
+
