@@ -1,0 +1,19 @@
+current directory: /home/hp/Desktop/add_third_party_api/.gems/ruby/3.2.0/gems/debug-1.9.0/ext/debug
+/usr/share/rvm/rubies/ruby-3.2.2/bin/ruby extconf.rb
+creating Makefile
+
+current directory: /home/hp/Desktop/add_third_party_api/.gems/ruby/3.2.0/gems/debug-1.9.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20231212-29784-tzuws2 sitelibdir\=./.gem.20231212-29784-tzuws2 clean
+
+current directory: /home/hp/Desktop/add_third_party_api/.gems/ruby/3.2.0/gems/debug-1.9.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20231212-29784-tzuws2 sitelibdir\=./.gem.20231212-29784-tzuws2
+compiling debug.c
+compiling iseq_collector.c
+linking shared-object debug/debug.so
+
+current directory: /home/hp/Desktop/add_third_party_api/.gems/ruby/3.2.0/gems/debug-1.9.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20231212-29784-tzuws2 sitelibdir\=./.gem.20231212-29784-tzuws2 install
+/usr/bin/install -m 0755 debug.so ./.gem.20231212-29784-tzuws2/debug
+
+current directory: /home/hp/Desktop/add_third_party_api/.gems/ruby/3.2.0/gems/debug-1.9.0/ext/debug
+make DESTDIR\= sitearchdir\=./.gem.20231212-29784-tzuws2 sitelibdir\=./.gem.20231212-29784-tzuws2 clean
