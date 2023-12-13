@@ -20,9 +20,10 @@
 
 
 
-  <%- if devise_mapping.omniauthable? %>
+<%- if devise_mapping.omniauthable? %>
 
   <%- resource_class.omniauth_providers.each do |provider| %>
     <%= button_to "Sign in with #{provider}", send("user_#{provider}_omniauth_authorize_path"), data: { turbo: false }, style: "cursor:pointer;" %><br />
   <% end %>
 <% end %>
+

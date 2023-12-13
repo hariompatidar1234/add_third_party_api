@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   require 'razorpay'
-  protect_from_forgery
+  # protect_from_forgery with: :null_session
+  # skip_before_action :verify_authenticity_token
  # before_action :authenticate_admin_user!
  before_action :authenticate_user!
 
