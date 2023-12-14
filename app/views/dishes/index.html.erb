@@ -162,6 +162,7 @@
   <a href="<%= new_restaurant_path %>">Create Restaurants</a>
   <a href="<%= new_category_path %>">Create Category</a>
   <a href="dishes">Dish List</a>
+  <a href="restaurant"></a>
   <a href="categories">Category List</a>
   <!-- Add more links as needed -->
   <div class="dropdown">
@@ -199,6 +200,7 @@
         <div class="price-details">
           <p>Price: <%= d.price %></p>
         </div>
+        <p> Restaurant: <%=Restaurant.find_by_id(d.restaurant.id).name %></p>
         <p>Category: <%= Category.find_by_id(d.category_id).name %></p>
         <%# <p>Other Details: <!-- Add other details here --></p> %>
         <!-- <p><%= link_to "Show", dish_path(d), class: "button" %></p> -->

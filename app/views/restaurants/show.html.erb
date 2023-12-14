@@ -107,6 +107,23 @@
   <p><strong>Address:</strong> <%= @restaurant.address %></p>
   <p><strong>Owner:</strong> <%= User.find_by_id(@restaurant.owner.id).name %></p>
 
+  <h1>Dish Details</h1>
+  <div class="dish-container">
+    <% if @dishes.any? %>
+      <% @dishes.each do |dish| %>
+        <div class="dish-details">
+          <div>
+            <p><strong>Dish Name:</strong> <%= dish.name %></p>
+            <p><strong>Price:</strong> <%= dish.price %></p>
+            <p><strong>Category:</strong> <%= Category.find_by_id(dish.category_id).name %></p>
+            <br>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p>dish not found</p>
+    <% end %>
+  </div>
   <%= link_to "Back", restaurants_path, class: 'back-btn' %>
 
   <div class="user-actions">

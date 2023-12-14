@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          # for Google OmniAuth
-         :omniauthable, omniauth_providers: [:google_oauth2,:facebook]
+         :omniauthable, omniauth_providers: [:google_oauth2,:facebook, :twitter]
   validates :type, inclusion: { in: %w[Owner Customer] }
   validates :name, :email, :password, presence: true
   validates :email, uniqueness: true,
@@ -44,7 +44,6 @@ class User < ApplicationRecord
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
-    byebug
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email

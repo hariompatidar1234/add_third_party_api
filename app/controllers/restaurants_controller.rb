@@ -33,7 +33,9 @@ class RestaurantsController < ApplicationController
 
   def show
     @restaurant = Restaurant.find_by_id(params[:id])
+    @dishes = @restaurant.dishes
   end
+
 
   def edit
     @restaurant = Restaurant.find_by_id(params[:id])
