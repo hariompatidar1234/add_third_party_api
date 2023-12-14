@@ -121,3 +121,10 @@ gem 'omniauth-twitter'
 # gem 'sass-rails'
 gem 'sass-rails'
 gem 'sassc', '< 2.2.0'
+gem 'omniauth-github', '~> 2.0.0'
+
+gem 'executable-hooks', '~> 1.6', '>= 1.6.1'
+
+
+gem 'ajax-datatables-rails'
+gem 'jquery-datatables'

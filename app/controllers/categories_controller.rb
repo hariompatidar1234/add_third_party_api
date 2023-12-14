@@ -1,10 +1,17 @@
 class CategoriesController < ApplicationController
   before_action :set_category, only: %i[show update destroy]
 
+  # def index
+  #   @categories = Category.all
+  #   # render json: @categories
+  # end
   def index
-    @categories = Category.all
-    # render json: @categories
-  end
+     @categories = Category.all
+     respond_to do |format|
+       format.html
+       format.json { render json: CategoryDatatable.new(view_context) }
+     end
+   end
 
   def new
     @category = Category.new

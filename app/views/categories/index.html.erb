@@ -1,4 +1,105 @@
 
+<h1>Category Type</h1>
+<div class="category-container">
+  <div class="container">
+    <table id="categories-table" class="display" style="width:100%">
+     <thead>
+       <tr>
+         <th>Id</th>
+         <th>Category name</th>
+         <th>Show</th>
+       </tr>
+     </thead>
+
+      <tbody>
+        <% @categories.each do |r| %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.name %></td>
+            <td><%= link_to "show", category_path(r), class: 'btn btn-primary'%></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<%= link_to "Back", restaurants_path %>
+
+<!--
+<script>
+  $(document).ready(function() {
+    $('#categories-table').dataTable({
+      ajax: '<%= categories_path(format: :json) %>',
+      processing: true,
+      serverSide: true,
+      columns: [
+        { data: 'id' },
+        { data: 'name' },
+        { data: 'show' }
+      ]
+    });
+  });
+</script>
+
+
+
+ -->
+
+<script>
+    jQuery(document).ready(function() {
+        $('#blogs-datatable').dataTable({
+            "processing": true,
+            "serverSide": true,
+            "columnDefs": [{ "orderable": false, "targets": -1 }],
+            "ajax": $('#categories-datatable').data('source'),
+
+            "columns": [
+                {"data": "id"},
+                {"data": "name"},
+                {"data": "show"}
+            ]
+            // pagingType is optional, if you want full pagination controls.
+            // Check dataTables documentation to learn more about
+            // available options.
+        });
+    });
+ </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <style>
 td {
   border: 1px solid#000; padding: 8px;
@@ -16,7 +117,7 @@ td {
     justify-content: space-around;
     padding: 20px;
   /*}*/
-
+}
     /* Dish container */
 .category-container {
   width: calc(33.33% - 20px);
@@ -29,33 +130,4 @@ td {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s;
 }
-
-
-
-
-</style>
-<h1>Category Type</h1>
-<div class="category-container">
-  <div class="container">
-    <table style="background-color: pink; ">
-      <thead style="color: green; background-color: black; ">
-        <tr>
-          <th> Id </th>
-          <th> Category name</th>
-          <th> show </th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% @categories.each do |r| %>
-          <tr>
-            <td><%= r.id %></td>
-            <td><%= r.name %></td>
-            <td><%= link_to "show", category_path(r), class: 'btn btn-primary'%></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-</div>
-<%= link_to "Back", restaurants_path %>
+</style> -->

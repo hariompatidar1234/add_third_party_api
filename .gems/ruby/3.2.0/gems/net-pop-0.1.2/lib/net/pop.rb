@@ -907,6 +907,7 @@ module Net
     def auth(account, password)
       check_response_auth(critical {
         check_response_auth(get_response('USER %s', account))
+        byebug
         get_response('PASS %s', password)
       })
     end
