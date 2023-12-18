@@ -2,6 +2,8 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show update destroy]
 
   def index
+    byebug
+    TwilioSms.send_text(current_user.phone_number, "Hello, Welcome to the swiggy app")
     restaurants = Restaurant.all
     @restaurants = if params[:name]
                     restaurants.where('name LIKE ?', "%#{params[:name]}%").page(params[:page]).per(3)

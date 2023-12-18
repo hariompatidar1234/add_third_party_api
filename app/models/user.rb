@@ -10,9 +10,9 @@ class User < ApplicationRecord
   validates :email, uniqueness: true,
                     format: { with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i, message: 'Invalid email id!!!!' }
 
-  # validates :contact,
-  #     presence: true,
-  #     uniqueness: true,format: { with: /\d[0-9]\)*\z/ }
+  validates :phone_number,
+      presence: true,
+      uniqueness: true,format: { with: /\d[0-9]\)*\z/ }
   has_one_attached :picture
 
   # def self.ransackable_attributes(auth_object = nil)
@@ -23,10 +23,8 @@ class User < ApplicationRecord
   #   ["picture_attachment", "picture_blob"]
   # end
 
-
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_initialize do |user|
-      byebug
       user.provider = auth.provider
       user.uid = auth.uid
       user.email = auth.info.email
@@ -38,7 +36,6 @@ class User < ApplicationRecord
       unless user.save
         puts "Error saving user: #{user.errors.full_messages.join(', ')}"
       end
-
     end
   end
 
