@@ -1,9 +1,9 @@
-User.create(name: 'hariom patidar', email: 'hariompatidar32498@gmail.com', password: '123456', type: 'Owner',contact: "9826260805")
-User.create(name: 'herry patidar', email: 'herrypatidar32498@gmail.com', password: '123456', type: 'Owner',contact: "9826260806")
+User.create(name: 'hariom patidar', email: 'hariompatidar32498@gmail.com', password: '123456', type: 'Owner',phone_number: "9826260805")
+User.create(name: 'herry patidar', email: 'herrypatidar32498@gmail.com', password: '123456', type: 'Owner',phone_number: "9826260806")
 
-User.create(name: 'sachin paidar', email: 'sachin@123gmail.com', password: '123456', type: 'Customer',contact: "9826245776")
+User.create(name: 'sachin paidar', email: 'sachin@123gmail.com', password: '123456', type: 'Customer',phone_number: "9826245776")
 User.create(name: 'devendra patidar', email: 'devendra@123gmail.com', password: '123456',
-            type: 'Customer',contact: "9165976224")
+            type: 'Customer',phone_number: "9165976224")
 
 Category.create(name: 'Indian')
 Category.create(name: 'Chines')
@@ -16,7 +16,7 @@ Restaurant.create(name: 'pamchali', address: 'khajrana square', status: 'open', 
 Restaurant.create(name: 'kismat', address: '', status: 'closed', user_id: 2)
 
 Dish.create(name: 'paneer', price: 110, restaurant_id: 1, category_id: 1)
-Dish.create(name: 'dal', price: 100, restaurant_id: 1, category_id: 1)
+Dish.create(name: 'dal' , price: 100, restaurant_id: 1, category_id: 1)
 Dish.create(name: 'dal', price: 80, restaurant_id: 2, category_id: 1)
 Dish.create(name: 'dal', price: 90, restaurant_id: 3, category_id: 1)
 Dish.create(name: 'jeera rise', price: 70, restaurant_id: 4, category_id: 1)
@@ -30,3 +30,5 @@ Dish.create(name: 'Momos', price: 110, restaurant_id: 4, category_id: 2)
 Dish.create(name: 'Momos', price: 80, restaurant_id: 5, category_id: 2)
 Dish.create(name: 'noodles', price: 75, restaurant_id: 2, category_id: 2)
 AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?
+
+

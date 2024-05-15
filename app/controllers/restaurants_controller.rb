@@ -2,7 +2,6 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: %i[show update destroy]
 
   def index
-    byebug
     TwilioSms.send_text(current_user.phone_number, "Hello, Welcome to the swiggy app")
     restaurants = Restaurant.all
     @restaurants = if params[:name]
@@ -14,7 +13,7 @@ class RestaurantsController < ApplicationController
                   else
                     restaurants.page(params[:page]).per(5)
                   end
-    # render json: @restaurants
+    # render json: @RestaurantsController
   end
 
 
@@ -88,3 +87,6 @@ class RestaurantsController < ApplicationController
     render json: { error: 'Restaurant not found' }, status: :not_found unless @restaurant
   end
 end
+
+
+
